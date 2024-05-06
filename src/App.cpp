@@ -38,7 +38,7 @@ void App::update()
     const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;
 
-    _angle += 10.0f * elapsedTime;
+    // _angle += 10.0f * elapsedTime;
     // _angle = std::fmod(_angle, 360.0f);
 
     render();

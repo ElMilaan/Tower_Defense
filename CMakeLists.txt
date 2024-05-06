@@ -32,6 +32,7 @@ endif()
 
 # Get source files from the src folder
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "src/*")
+file(GLOB_RECURSE OTHER_SRC_FILES CONFIGURE_DEPENDS "src/*/*")
 target_sources(${PROJECT_NAME} PRIVATE ${SRC_FILES})
 
 # Set src folder as an include directory to be able to include files from the same folder (put .cpp and .hpp files in the same folder)

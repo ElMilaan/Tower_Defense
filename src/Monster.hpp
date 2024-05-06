@@ -2,6 +2,13 @@
 
 using namespace std;
 
+enum class MonsterType
+{
+    Zombie,
+    Witch,
+    Skull,
+    Orc,
+};
 class Monster
 {
 public:
@@ -18,12 +25,4 @@ private:
     string path_sprite{};
     bool isBoss{};
     bool isDead{};
-};
-
-enum class MonsterType
-{
-    Zombie,
-    Witch,
-    Skull,
-    Orc,
 };

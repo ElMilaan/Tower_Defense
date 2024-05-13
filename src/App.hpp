@@ -3,11 +3,12 @@
 #include <glad/glad.h>
 #include <simpletext.h>
 
+
 class App
 {
 public:
     App();
-
+    double bank_sold{20};
     void setup();
     void update();
 

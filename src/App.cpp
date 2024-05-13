@@ -10,12 +10,16 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
+#include "Bank.hpp"
+
+
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
-    img::Image test{img::load(make_absolute_path("images/level.png", true), 3, true)};
-
+    img::Image test{img::load(make_absolute_path("images/Map_projetV3.png", true), 3, true)};
+    img::Image test2{img::load(make_absolute_path("images/barricadeV3.png", true), 3, true)};
     _texture = loadTexture(test);
 }
 
@@ -65,8 +69,17 @@ void App::render()
     glRotatef(_angle, 0.0f, 0.0f, 1.0f);
     draw_quad_with_texture(_texture);
     glPopMatrix();
+    
 
-    TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
+    std::string bank_amount_text{100};
+    std::stringstream stream2{};
+    stream2 << std::fixed << " : " << std::setprecision(2) << bank_sold;
+    bank_amount_text = stream2.str();
+
+    TextRenderer.Label(bank_amount_text.c_str(), _width / 2.6, _height / 19, SimpleText::CENTER);
+    TextRenderer.Label("30", _width / 1.335, _height / 2.5, SimpleText::CENTER);
+    TextRenderer.Label("10", _width / 1.335, _height / 2, SimpleText::CENTER);
+    TextRenderer.Label("20", _width / 1.335, _height / 1.665, SimpleText::CENTER);
 
     // Without set precision
     // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
@@ -115,10 +128,10 @@ void App::size_callback(int width, int height)
     glLoadIdentity();
     if (aspectRatio > 1.0f)
     {
-        glOrtho(-_viewSize / 2.0f * aspectRatio, _viewSize / 2.0f * aspectRatio, -_viewSize / 2.0f, _viewSize / 2.0f, -1.0f, 1.0f);
+        glOrtho(-_viewSize / 5.0f * aspectRatio, _viewSize / 5.0f * aspectRatio, -_viewSize / 5.0f, _viewSize / 5.0f, -1.0f, 1.0f);
     }
     else
     {
-        glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+        glOrtho(-_viewSize / 5.0f, _viewSize / 5.0f, -_viewSize / 5.0f / aspectRatio, _viewSize / 5.0f / aspectRatio, -1.0f, 1.0f);
     }
 }

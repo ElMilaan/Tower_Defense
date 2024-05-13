@@ -7,6 +7,7 @@
 
 #include "App.hpp"
 
+
 namespace
 {
     App &window_as_app(GLFWwindow *window)
@@ -85,10 +86,10 @@ int main()
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
-
+        
         // Get time (in second) at loop beginning
         double startTime{glfwGetTime()};
-
+        app.bank_sold += 0.005;
         app.update();
 
         // Swap front and back buffers

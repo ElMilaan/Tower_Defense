@@ -38,9 +38,9 @@ void App::setup()
 void App::update()
 {
 
-    const double currentTime{glfwGetTime()};
-    const double elapsedTime{currentTime - _previousTime};
-    _previousTime = currentTime;
+    // const double currentTime{glfwGetTime()};
+    // const double elapsedTime{currentTime - _previousTime};
+    // _previousTime = currentTime;
 
     // _angle += 10.0f * elapsedTime;
     // _angle = std::fmod(_angle, 360.0f);
@@ -87,12 +87,12 @@ void App::render()
     // const std::string angle_label_text { std::format("Angle: {:.2f}", _angle) };
 
     // Using stringstream to format the string with fixed precision
-    std::string angle_label_text{};
-    std::stringstream stream{};
-    stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
-    angle_label_text = stream.str();
+    // std::string angle_label_text{};
+    // std::stringstream stream{};
+    // stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
+    // angle_label_text = stream.str();
 
-    TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+    // TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
     TextRenderer.Render();
 }

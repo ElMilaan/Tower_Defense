@@ -6,8 +6,6 @@
 // enum class TowerType
 // {
 //     //idee de types ?
-//     Fire,
-//     Ice,
 // };
 
 // class Tower

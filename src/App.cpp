@@ -18,8 +18,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
-    img::Image test{img::load(make_absolute_path("images/Map_projetV3.png", true), 3, true)};
-    img::Image test2{img::load(make_absolute_path("images/barricadeV3.png", true), 3, true)};
+    img::Image test{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _texture = loadTexture(test);
 }
 
@@ -31,7 +30,7 @@ void App::setup()
     // Setup the text renderer with blending enabled and white text color
     TextRenderer.ResetFont();
     TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
-    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
+    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 1.f, 1.f, 1.f, 1.f);
     TextRenderer.EnableBlending(true);
 }
 

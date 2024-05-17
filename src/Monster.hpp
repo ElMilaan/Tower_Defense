@@ -4,10 +4,10 @@
 
 // enum class MonsterType
 // {
-//     Zombie,
-//     Witch,
-//     Skull,
-//     Orc,
+//     Orque,
+//     Meduse,
+//     Poseidon,
+//     Requin,
 // };
 // class Monster
 // {

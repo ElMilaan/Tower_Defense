@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Location.hpp"
+#include "../Entities/Location.hpp"
 #include "Tile.hpp"
 
 using namespace std;

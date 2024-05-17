@@ -10,9 +10,7 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
-#include "Bank.hpp"
-
-
+#include "Bank/Bank.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -68,7 +66,6 @@ void App::render()
     glRotatef(_angle, 0.0f, 0.0f, 1.0f);
     draw_quad_with_texture(_texture);
     glPopMatrix();
-    
 
     std::string bank_amount_text{100};
     std::stringstream stream2{};

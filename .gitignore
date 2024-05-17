@@ -3,5 +3,6 @@ bin/
 .vs/
 .vscode/
 .cache/
+*.pdf
 
 .DS_Store

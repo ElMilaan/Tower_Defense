@@ -27,9 +27,14 @@ private:
     MonsterLocation location{};
 
 public:
-    Monster(double health_points, double speed, MonsterType type, bool isBoss); // constructor
+    Monster(double health_points, double speed, MonsterType type, bool isBoss);
     void find_path_sprite();
     void change_speed(float coeff);
     void take_damage(float damage);
     MonsterLocation getMonsterLocation();
+    double getMaxHealth();
+    double getHealthPoints();
+    double getSpeed();
+    bool getIsBoss();
+    bool getIsDead();
 };

@@ -2,13 +2,18 @@ ITD
 
 # nom du fichier map 
 map images/map.png
+
 # blanc
 path 255 255 255 255
+
 # bleu
 in 0 0 255 255
+
 # rouge
 out 255 0 0 255
+
 # graphe
+
 graph 18
 node 0 0 7 1
 node 1 1 7 2 4

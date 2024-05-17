@@ -52,6 +52,31 @@ void Monster::take_damage(float damage)
     health_points -= damage;
     if (health_points <= 0)
     {
-        isDead = true;
+        this->isDead = true;
     }
+}
+
+double Monster::getMaxHealth()
+{
+    return this->max_health;
+}
+
+double Monster::getHealthPoints()
+{
+    return this->health_points;
+}
+
+double Monster::getSpeed()
+{
+    return this->speed;
+}
+
+bool Monster::getIsBoss()
+{
+    return this->isBoss;
+}
+
+bool Monster::getIsDead()
+{
+    return this->isDead;
 }

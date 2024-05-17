@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Monster.hpp"
+#include "Location.hpp"
 
 using namespace std;
 
@@ -12,6 +13,11 @@ Monster::Monster(double max_health, double speed, MonsterType type, bool isBoss)
     this->type = type;
     this->isBoss = isBoss;
     this->isDead = false;
+}
+
+MonsterLocation Monster::getMonsterLocation()
+{
+    return location;
 }
 
 void Monster::find_path_sprite()

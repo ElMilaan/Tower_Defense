@@ -39,7 +39,7 @@ void Tower::level_up(float cost, float bank_sold)
     bank_sold -= cost;
 }
 
-void Tower::build(vector<float> emplacement)
+void Tower::build(pair<float, float> location)
 {
 }
 
@@ -47,17 +47,18 @@ void Tower::destruct()
 {
 }
 
-bool is_Monster_in_range(Monster monster)
-{
-    if (/*peut etre une fonction get_distance(monster, tower) <= this->range*/)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
+// bool is_Monster_in_range(Monster monster)
+// {
+//     if (monster.location < range)
+//     {
+//         return 1;
+//     }
+//     else
+//     {
+//         return 0;
+//     }
+// }
+
 void attack(Monster monster)
 {
     // stack<Monster>file_attente_attaque{};
@@ -70,10 +71,10 @@ void attack(Monster monster)
     //     file_attente_attaque.top
     // }
 
-    while (is_Monster_in_range(monster) == 1 or monster.health_points != 0)
-    {
-        double Time{glfwGetTime() * Tower->attack_speed};
+    // while (is_Monster_in_range(monster) == 1 or monster.health_points != 0)
+    // {
+    //     double Time{glfwGetTime() * Tower->attack_speed};
 
-        monster.health_points -= Tower->damage;
-    }
+    //     monster.health_points -= Tower->damage;
+    // }
 }

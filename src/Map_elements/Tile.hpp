@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "../Entities/Location.hpp"
+#include "Entities/Location.hpp"
 
 using namespace std;
 
@@ -18,18 +18,18 @@ class Tile
 {
 private:
     static const int SIZE{64};
-    Location location{};
-    string tile_path{};
+    string tile_string_path{};
     bool isStart{};
     bool isEnd{};
     bool isClosed{};
+    TileType type{};
 
 public:
-    Tile(double x, double y, bool isStart, bool isEnd);
-    Location getLocation();
+    Tile(double x, double y, bool isStart, bool isEnd, TileType type);
     bool getIsStart();
     bool getIsEnd();
     bool getIsClosed();
-    void setLocation(Location loc);
     void toggleIsClosed();
+    bool isPath();
+    void setStringPath();
 };

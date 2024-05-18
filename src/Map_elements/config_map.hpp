@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Map.hpp"
 
-void configmap (){};
+Map config_map();

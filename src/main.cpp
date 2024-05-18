@@ -7,6 +7,8 @@
 
 #include "App.hpp"
 
+using namespace std;
+
 namespace
 {
     App &window_as_app(GLFWwindow *window)

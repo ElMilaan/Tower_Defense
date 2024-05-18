@@ -1,7 +1,7 @@
+#include "Map.hpp"
+#include "Tile.hpp"
 #include <iostream>
 #include <vector>
-#include "Tile.hpp"
-#include "Map.hpp"
 
 using namespace std;
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Location.hpp"
+#include "../Map_elements/Map.hpp"
 
 using namespace std;
 
@@ -7,18 +8,10 @@ Location::Location()
 {
 }
 
-Location::Location(double &x, double &y) // Map map)
+Location::Location(double &x, double &y)
 {
     this->x = x;
     this->y = y;
-    // if (map.isWay(x, y))
-    // {
-    //     isPath = true;
-    // }
-    // else
-    // {
-    //     isPath = false;
-    // }
 }
 
 double Location::getX()
@@ -53,6 +46,7 @@ void Location::setIsPath(bool isPath)
 
 MonsterLocation::MonsterLocation()
 {
+    // Coordonnées de la case de départ
     this->setX(7);
     this->setY(0);
 }

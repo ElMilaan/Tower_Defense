@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "../Map_elements/Map.hpp"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ private:
 
 public:
     Location();
-    Location(double &x, double &y); // Map map);
+    Location(double &x, double &y);
     double getX();
     double getY();
     bool getIsPath();

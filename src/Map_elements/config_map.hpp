@@ -3,4 +3,4 @@
 #include <string>
 #include "Map.hpp"
 
-Map config_map();
+void config_map();

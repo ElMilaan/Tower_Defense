@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Map config_map()
+void config_map()
 {
     ifstream myfile;
     string map_location;
@@ -17,7 +17,6 @@ Map config_map()
     vector<int> in_color;
     vector<int> out_color;
     int nbNodes;
-    Map map{};
 
     myfile.open("Itd/config_map.itd");
     string myline;
@@ -61,6 +60,4 @@ Map config_map()
     {
         cout << "Couldn't open file\n";
     }
-
-    return map;
 }

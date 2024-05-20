@@ -1,4 +1,6 @@
 #include <iostream>
+#include "Entities/Tower.hpp"
+#include "Entities/Monster.hpp"
 #include "Bank.hpp"
 
 using namespace std;

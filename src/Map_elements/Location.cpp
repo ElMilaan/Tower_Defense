@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Location.hpp"
-#include "../Map_elements/Map.hpp"
+#include "Map_elements/Map.hpp"
 
 using namespace std;
 

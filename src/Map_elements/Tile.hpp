@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "Entities/Location.hpp"
+#include "Map_elements/Location.hpp"
 
 using namespace std;
 

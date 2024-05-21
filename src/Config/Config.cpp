@@ -3,11 +3,11 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Config.hpp"
+#include "../../include/Config.hpp"
 
 using namespace std;
 
-const string Config::ITD_FILE = "data/config_map.itd";
+const string Config::ITD_FILE = "../../data/config_map.itd";
 
 void Color::setColor(const int &r, const int &g, const int &b, const int &t)
 {
@@ -15,6 +15,36 @@ void Color::setColor(const int &r, const int &g, const int &b, const int &t)
     this->blue = b;
     this->green = g;
     this->transparency = t;
+}
+
+vector<string> split_string(string str)
+{
+    stringstream ss(str);
+    istream_iterator<string> begin(ss);
+    istream_iterator<string> end;
+    vector<string> split_line(begin, end);
+    return split_line;
+}
+
+Color Config::getColorIn()
+{
+    return color_in;
+}
+Color Config::getColorOut()
+{
+    return color_out;
+}
+Color Config::getColorPath()
+{
+    return color_path;
+}
+int Config::getNbNodes()
+{
+    return nbNodes;
+}
+vector<Node> Config::getNodes()
+{
+    return nodes;
 }
 
 void Config::map_config()
@@ -50,28 +80,7 @@ void Config::map_config()
             }
             else if (myline.starts_with("node"))
             {
-                Node node(stoi(split_line[0]), stoi(split_line[1]), stoi(split_line[2]));
-
-                if (stoi(split_line[0]) != this->nbNodes - 1)
-                {
-                    if (stoi(split_line[0]) == 0)
-                    {
-                        node.setStatus(NodeStatus::Start);
-                    }
-                    else
-                    {
-                        node.setStatus(NodeStatus::Path);
-                    }
-                    for (int i{3}; i < split_line.size(); i++)
-                    {
-                        node.addNeighbor(stoi(split_line[i]));
-                    }
-                }
-
-                else
-                {
-                    node.setStatus(NodeStatus::End);
-                }
+                getNodesFromItdFile(split_line);
             }
         }
     }
@@ -81,11 +90,28 @@ void Config::map_config()
     }
 }
 
-vector<string> split_string(string str)
+void Config::getNodesFromItdFile(vector<string> split_line)
 {
-    stringstream ss(str);
-    istream_iterator<string> begin(ss);
-    istream_iterator<string> end;
-    vector<string> split_line(begin, end);
-    return split_line;
+    Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
+
+    if (stoi(split_line[1]) != this->nbNodes - 1)
+    {
+        if (stoi(split_line[1]) == 0)
+        {
+            node.setStatus(NodeStatus::Start);
+        }
+        else
+        {
+            node.setStatus(NodeStatus::Path);
+        }
+        for (int i{4}; i < split_line.size(); i++)
+        {
+            node.addNeighbor(stoi(split_line[i]));
+        }
+    }
+    else
+    {
+        node.setStatus(NodeStatus::End);
+    }
+    nodes.push_back(node);
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "Tower.hpp"
-#include "Monster.hpp"
+#include "../../include/Tower.hpp"
+#include "../../include/Monster.hpp"
 #include <stack>
 #include "GLFW/glfw3.h"
 

@@ -4,9 +4,9 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "Map_elements/Graph.hpp"
-
-#include "App.hpp"
+#include "../include/Graph.hpp"
+#include "../include/App.hpp"
+#include "../include/Config.hpp"
 
 using namespace std;
 
@@ -23,16 +23,20 @@ constexpr double TARGET_TIME_FOR_FRAME{1.0 / 60.0};
 
 int main()
 {
-    AdjacencyMatrix adj_mat;
-    adj_mat.setMatrix();
-    Graph::WeightedGraph graph1{Graph::build_from_adjacency_matrix(adj_mat.matrix)};
 
-    std::unordered_map<int, std::pair<float, int>> result{graph1.dijkstra(1, 18)};
-    cout << result;
+    Config config{};
 
-    cout << endl
-         << "Le plus court chemin est : ";
-    Graph::display_shortest_path(result, 1, 18);
+    config.map_config();
+
+    cout << "Nb nodes : " << config.getNbNodes() << endl;
+    cout << "In : ( " << config.getColorIn().red << " , " << config.getColorIn().green << " , " << config.getColorIn().blue << " )" << endl;
+    cout << "Path : ( " << config.getColorPath().red << " , " << config.getColorPath().green << " , " << config.getColorPath().blue << " )" << endl;
+    cout << "Out : ( " << config.getColorOut().red << " , " << config.getColorOut().green << " , " << config.getColorOut().blue << " )" << endl;
+
+    for (Node n : config.getNodes())
+    {
+        cout << n.getId() << " | ";
+    }
 
     //     // Set an error callback to display glfw errors
     //     glfwSetErrorCallback([](int error, const char *description)

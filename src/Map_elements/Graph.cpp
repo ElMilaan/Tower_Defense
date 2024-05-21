@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Graph.hpp"
+#include "../../include/Graph.hpp"
 #include <stack>
 #include <queue>
 #include <functional>
@@ -54,12 +54,6 @@ namespace Graph
         adjacency_list.at(from).push_back({to, weight});
     }
 
-    void WeightedGraph::add_undirected_edge(int const from, int const to, float const weight)
-    {
-        add_directed_edge(from, to, weight);
-        add_directed_edge(to, from, weight);
-    }
-
     WeightedGraph build_from_adjacency_matrix(vector<vector<float>> const &adjacency_matrix)
     {
         WeightedGraph graph{};
@@ -77,31 +71,6 @@ namespace Graph
         return graph;
     }
 
-    void WeightedGraph::print_DFS(int const start) const
-    {
-        stack<int> stk{};
-        vector<int> vertexAlreadyPrint{start};
-        stk.push(start);
-        int sum{0};
-        while (!stk.empty())
-        {
-            int current{stk.top()};
-            cout << current << " ";
-            stk.pop();
-            if (adjacency_list.find(current) != adjacency_list.end())
-            {
-                for (WeightedGraphEdge adjVertex : adjacency_list.at(current))
-                {
-                    // On vérifie que le sommet à ajouter à la pile n'a pas déjà été affiché
-                    if (!isIn(vertexAlreadyPrint, adjVertex.to))
-                    {
-                        stk.push(adjVertex.to);
-                        vertexAlreadyPrint.push_back(adjVertex.to);
-                    }
-                }
-            }
-        }
-    }
     void WeightedGraph::print_BFS(int const start) const
     {
         queue<int> q{};
@@ -111,31 +80,6 @@ namespace Graph
         {
             int current{q.front()};
             cout << current << " ";
-            q.pop();
-            if (adjacency_list.find(current) != adjacency_list.end())
-            {
-                for (WeightedGraphEdge adjVertex : adjacency_list.at(current))
-                {
-                    // On vérifie que le sommet à ajouter à la pile n'a pas déjà été affiché
-                    if (!isIn(vertexAlreadyPrint, adjVertex.to))
-                    {
-                        q.push(adjVertex.to);
-                        vertexAlreadyPrint.push_back(adjVertex.to);
-                    }
-                }
-            }
-        }
-    }
-
-    void WeightedGraph::BFS(int const start, function<void(int const)> callback) const
-    {
-        queue<int> q{};
-        vector<int> vertexAlreadyPrint{start};
-        q.push(start);
-        while (!q.empty())
-        {
-            int current{q.front()};
-            callback(current);
             q.pop();
             if (adjacency_list.find(current) != adjacency_list.end())
             {

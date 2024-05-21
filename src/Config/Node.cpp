@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "Location.hpp"
-#include "Node.hpp"
+#include "../../include/Location.hpp"
+#include "../../include/Node.hpp"
 
 Node::Node()
 {
@@ -40,7 +40,7 @@ void Node::setStatus(NodeStatus status)
     this->status = status;
 }
 
-void Node::addNeighbor(const int &neighbor)
+void Node::addNeighbor(int neighbor)
 {
     this->neighbors.push_back(neighbor);
 }

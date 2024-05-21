@@ -1,16 +1,16 @@
 #define GLFW_INCLUDE_NONE
 
-#include "App.hpp"
+#include "../include/App.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <img/img.hpp>
 
 #include "simpletext.h"
-#include "utils.hpp"
-#include "GLHelpers.hpp"
+#include "../include/utils.hpp"
+#include "../include/GLHelpers.hpp"
 
-#include "Bank/Bank.hpp"
+#include "../include/Bank.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {

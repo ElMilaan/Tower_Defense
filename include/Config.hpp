@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "Map_elements/Node.hpp"
+#include "Node.hpp"
 
 using namespace std;
 
@@ -27,6 +27,14 @@ private:
     vector<Node> nodes{};
 
 public:
+    Color getColorIn();
+    Color getColorOut();
+    Color getColorPath();
+    int getNbNodes();
+    vector<Node> getNodes();
     static const string ITD_FILE;
     void map_config();
+    void getNodesFromItdFile(vector<string> split_line);
 };
+
+vector<string> split_string(string str);

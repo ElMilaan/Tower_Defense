@@ -27,5 +27,5 @@ public:
     Location getLocation();
     vector<int> getNeighbors();
     void setStatus(NodeStatus status);
-    void addNeighbor(const int &neighbor);
+    void addNeighbor(int neighbor);
 };

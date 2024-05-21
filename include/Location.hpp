@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "Map_elements/Map.hpp"
+#include "Map.hpp"
 
 using namespace std;
 

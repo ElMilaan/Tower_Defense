@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Entities/Tower.hpp"
-#include "Entities/Monster.hpp"
-#include "Bank.hpp"
+#include "../../include/Tower.hpp"
+#include "../../include/Monster.hpp"
+#include "../../include/Bank.hpp"
 
 using namespace std;
 

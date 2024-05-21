@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Entities/Tower.hpp"
-#include "Entities/Monster.hpp"
+#include "Tower.hpp"
+#include "Monster.hpp"
 
 using namespace std;
 

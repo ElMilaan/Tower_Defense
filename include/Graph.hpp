@@ -29,16 +29,15 @@ namespace Graph
         void add_vertex(int const id);
 
         void add_directed_edge(int const from, int const to, float const weight = 1.0f);
-        void add_undirected_edge(int const from, int const to, float const weight = 1.0f);
 
         bool operator==(WeightedGraph const &other) const;
         bool operator!=(WeightedGraph const &other) const;
 
-        void print_DFS(int const start) const;
         void print_BFS(int const start) const;
-        void BFS(int const start, function<void(int const)> callback) const;
+
         unordered_map<int, pair<float, int>> dijkstra(int const &start, int const &end);
     };
+
     WeightedGraph build_from_adjacency_matrix(vector<vector<float>> const &adjacency_matrix);
     void display_shortest_path(unordered_map<int, pair<float, int>> tab, int start, int end);
 

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Monster.hpp"
-#include "Map_elements/Location.hpp"
+#include "../../include/Monster.hpp"
+#include "../../include/Location.hpp"
 
 using namespace std;
 

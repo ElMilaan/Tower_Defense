@@ -64,15 +64,15 @@ void Config::map_config()
 
             if (myline.starts_with("path"))
             {
-                this->color_path.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+                getColorFromItd(this->color_path, split_line);
             }
             else if (myline.starts_with("in"))
             {
-                this->color_in.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+                getColorFromItd(this->color_in, split_line);
             }
             else if (myline.starts_with("out"))
             {
-                this->color_out.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+                getColorFromItd(this->color_out, split_line);
             }
             else if (myline.starts_with("graph"))
             {
@@ -88,6 +88,11 @@ void Config::map_config()
     {
         cout << "Couldn't open file\n";
     }
+}
+
+void getColorFromItd(Color &color, vector<string> split_line)
+{
+    color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
 }
 
 void Config::getNodesFromItdFile(vector<string> split_line)

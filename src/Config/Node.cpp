@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "../../include/Location.hpp"
-#include "../../include/Node.hpp"
+#include "Position.hpp"
+#include "Node.hpp"
 
 Node::Node()
 {
@@ -10,9 +10,9 @@ Node::Node()
 Node::Node(int id, int x, int y)
 {
     this->id = id;
-    this->location.setX(x);
-    this->location.setY(y);
-    this->location.setIsPath(true);
+    this->position.setX(x);
+    this->position.setY(y);
+    this->position.setIsPath(true);
 }
 
 int Node::getId()
@@ -25,9 +25,9 @@ NodeStatus Node::getStatus()
     return this->status;
 }
 
-Location Node::getLocation()
+Position Node::getPosition()
 {
-    return this->location;
+    return this->position;
 }
 
 vector<int> Node::getNeighbors()
@@ -43,4 +43,11 @@ void Node::setStatus(NodeStatus status)
 void Node::addNeighbor(int neighbor)
 {
     this->neighbors.push_back(neighbor);
+}
+
+double Node::distanceBetweenNodes(Node target)
+{
+    double absX = abs(target.getPosition().getX() - this->getPosition().getX());
+    double absY = abs(target.getPosition().getY() - this->getPosition().getY());
+    return absX + absY;
 }

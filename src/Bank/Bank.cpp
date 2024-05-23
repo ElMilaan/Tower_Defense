@@ -1,7 +1,7 @@
 #include <iostream>
-#include "../../include/Tower.hpp"
-#include "../../include/Monster.hpp"
-#include "../../include/Bank.hpp"
+#include "Tower.hpp"
+#include "Monster.hpp"
+#include "Bank.hpp"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ Bank::Bank()
     this->sold = 0;
 }
 
-void Bank::addMoney(float amount_to_add)
+void Bank::addMoney(double amount_to_add)
 {
     if (!this->sold + amount_to_add > MAX)
     {
@@ -22,7 +22,7 @@ void Bank::addMoney(float amount_to_add)
     }
 }
 
-void Bank::removeMoney(float amount_to_remove)
+void Bank::removeMoney(double amount_to_remove)
 {
     if (!this->sold - amount_to_remove < MIN)
     {
@@ -34,12 +34,12 @@ void Bank::removeMoney(float amount_to_remove)
     }
 }
 
-float Bank::getBankSold()
+double Bank::getBankSold()
 {
     return this->sold;
 }
 
-void Bank::setBankSold(float new_sold)
+void Bank::setBankSold(double new_sold)
 {
     this->sold = new_sold;
 }

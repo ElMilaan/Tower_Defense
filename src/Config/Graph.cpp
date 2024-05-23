@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../include/Graph.hpp"
+#include "Graph.hpp"
 #include <stack>
 #include <queue>
 #include <functional>
@@ -45,16 +45,14 @@ namespace Graph
         }
     }
 
-    void WeightedGraph::add_directed_edge(int const from, int const to, float const weight)
+    void WeightedGraph::add_directed_edge(int const from, int const to, double const weight)
     {
-        if (!exists(to))
-        {
-            add_vertex(to);
-        }
+        add_vertex(from);
+        add_vertex(to);
         adjacency_list.at(from).push_back({to, weight});
     }
 
-    WeightedGraph build_from_adjacency_matrix(vector<vector<float>> const &adjacency_matrix)
+    WeightedGraph build_from_adjacency_matrix(vector<vector<double>> const &adjacency_matrix)
     {
         WeightedGraph graph{};
         for (int i{0}; i < adjacency_matrix.size(); i++)
@@ -96,9 +94,9 @@ namespace Graph
         }
     }
 
-    unordered_map<int, pair<float, int>> WeightedGraph::dijkstra(int const &start, int const &end)
+    unordered_map<int, pair<double, int>> WeightedGraph::dijkstra(int const &start, int const &end)
     {
-        unordered_map<int, pair<float, int>> tab{};
+        unordered_map<int, pair<double, int>> tab{};
         tab.insert({start, {0, 1}});
         // On définit la priorité comme décroissante pour avoir le plus petit élément retourné par .top()
         priority_queue<int, std::vector<int>, std::greater<int>> toVisit{};
@@ -112,7 +110,7 @@ namespace Graph
             for (WeightedGraphEdge edge : adjacency_list.at(current))
             {
                 // On calcul la distance depuis le sommet initial jusqu'à celui-ci
-                float newWeight{edge.weight + tab.at(current).first};
+                double newWeight{edge.weight + tab.at(current).first};
                 // On vérifie que le sommet n'a pas encore été ajouté ou que la nouvelle distance est plus courte que celle calculée pour ce même sommet précédemment ou que le sommet est accessible (barrage de castor non placé)
                 if ((tab.find(edge.to) == tab.end() || newWeight < tab.at(edge.to).first) && !edge.isClosed)
                 {
@@ -131,7 +129,7 @@ namespace Graph
         return tab;
     }
 
-    void display_shortest_path(std::unordered_map<int, std::pair<float, int>> tab, int start, int end)
+    void display_shortest_path(std::unordered_map<int, std::pair<double, int>> tab, int start, int end)
     {
         int currentVertex{end};
         vector<int> vertexes{start};
@@ -173,7 +171,7 @@ ostream &operator<<(ostream &os, const Graph::WeightedGraph graph)
     return os;
 }
 
-ostream &operator<<(ostream &os, const unordered_map<int, pair<float, int>> map)
+ostream &operator<<(ostream &os, const unordered_map<int, pair<double, int>> map)
 {
     for (pair p : map)
     {
@@ -182,7 +180,7 @@ ostream &operator<<(ostream &os, const unordered_map<int, pair<float, int>> map)
     return os;
 }
 
-ostream &operator<<(ostream &os, const vector<vector<float>> adj_mat)
+ostream &operator<<(ostream &os, const vector<vector<double>> adj_mat)
 {
     for (int i{0}; i < adj_mat.size(); i++)
     {

@@ -2,6 +2,6 @@
 
 int random_int(int min, int max);
 
-float random_float(float min, float max);
+double random_double(double min, double max);
 
 void set_random_seed(int seed);

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../../include/Monster.hpp"
-#include "../../include/Location.hpp"
+#include "Monster.hpp"
+#include "Position.hpp"
 
 using namespace std;
 
@@ -15,9 +15,9 @@ Monster::Monster(double max_health, double speed, MonsterType type, bool isBoss)
     this->isDead = false;
 }
 
-MonsterLocation Monster::getMonsterLocation()
+MonsterPosition Monster::getMonsterPosition()
 {
-    return location;
+    return position;
 }
 
 void Monster::find_path_sprite()
@@ -42,12 +42,12 @@ void Monster::find_path_sprite()
     }
 }
 
-void Monster::change_speed(float coeff)
+void Monster::change_speed(double coeff)
 {
     speed *= coeff;
 }
 
-void Monster::take_damage(float damage)
+void Monster::take_damage(double damage)
 {
     health_points -= damage;
     if (health_points <= 0)

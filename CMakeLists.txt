@@ -36,7 +36,7 @@ file(GLOB_RECURSE OTHER_SRC_FILES CONFIGURE_DEPENDS "src/*/*")
 target_sources(${PROJECT_NAME} PRIVATE ${SRC_FILES})
 
 # Set src folder as an include directory to be able to include files from the same folder (put .cpp and .hpp files in the same folder)
-target_include_directories(${PROJECT_NAME} PRIVATE "src/")
+target_include_directories(${PROJECT_NAME} PRIVATE "src/" "include/")
 
 
 # Pass the CMAKE_SOURCE_DIR to the code, so that we can make our paths relative to it---

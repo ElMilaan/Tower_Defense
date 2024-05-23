@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Location.hpp"
+#include "Position.hpp"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class Node
 private:
     int id{};
     NodeStatus status{};
-    Location location{};
+    Position position{};
     vector<int> neighbors{};
 
 public:
@@ -24,8 +24,9 @@ public:
     Node(int id, int x, int y);
     int getId();
     NodeStatus getStatus();
-    Location getLocation();
+    Position getPosition();
     vector<int> getNeighbors();
     void setStatus(NodeStatus status);
     void addNeighbor(int neighbor);
+    double distanceBetweenNodes(Node target);
 };

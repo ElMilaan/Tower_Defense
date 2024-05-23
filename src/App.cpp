@@ -1,16 +1,16 @@
 #define GLFW_INCLUDE_NONE
 
-#include "../include/App.hpp"
+#include "App.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <img/img.hpp>
 
 #include "simpletext.h"
-#include "../include/utils.hpp"
-#include "../include/GLHelpers.hpp"
+#include "utils.hpp"
+#include "GLHelpers.hpp"
 
-#include "../include/Bank.hpp"
+#include "Bank.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -117,7 +117,7 @@ void App::size_callback(int width, int height)
     // make sure the viewport matches the new window dimensions
     glViewport(0, 0, _width, _height);
 
-    const float aspectRatio{_width / (float)_height};
+    const double aspectRatio{_width / (double)_height};
 
     // Change the projection matrix
     glMatrixMode(GL_PROJECTION);

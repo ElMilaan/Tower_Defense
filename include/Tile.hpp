@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "Location.hpp"
+#include "Position.hpp"
 
 using namespace std;
 

@@ -15,9 +15,9 @@ int random_int(int min, int max)
     return distribution(generator());
 }
 
-float random_float(float min, float max)
+double random_double(double min, double max)
 {
-    uniform_real_distribution<float> distribution{min, max};
+    uniform_real_distribution<double> distribution{min, max};
     return distribution(generator());
 }
 

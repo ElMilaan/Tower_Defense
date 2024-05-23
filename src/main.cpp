@@ -4,9 +4,9 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "../include/Graph.hpp"
-#include "../include/App.hpp"
-#include "../include/Config.hpp"
+#include "Graph.hpp"
+#include "App.hpp"
+#include "Config.hpp"
 
 using namespace std;
 
@@ -24,8 +24,9 @@ constexpr double TARGET_TIME_FOR_FRAME{1.0 / 60.0};
 int main()
 {
 
-    Config config{};
+    // ================================== TESTS ====================================
 
+    Config config{};
     config.map_config();
 
     cout << "Nb nodes : " << config.getNbNodes() << endl;
@@ -35,8 +36,21 @@ int main()
 
     for (Node n : config.getNodes())
     {
-        cout << n.getId() << " | ";
+        cout << "( id : " << n.getId() << "; position |" << n.getPosition().getX() << "," << n.getPosition().getY() << "| ; voisins : ";
+        for (int nei : n.getNeighbors())
+        {
+            cout << nei << ", ";
+        }
+        cout << " )" << endl;
     }
+
+    cout << endl;
+
+    config.createGraphFromNodes();
+
+    cout << config.getGraph();
+
+    // ===================================================================================
 
     //     // Set an error callback to display glfw errors
     //     glfwSetErrorCallback([](int error, const char *description)

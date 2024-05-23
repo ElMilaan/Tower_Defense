@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "../../include/Config.hpp"
+#include "Config.hpp"
 
 using namespace std;
 
@@ -45,6 +45,44 @@ int Config::getNbNodes()
 vector<Node> Config::getNodes()
 {
     return nodes;
+}
+
+Graph::WeightedGraph Config::getGraph()
+{
+    return graph;
+}
+
+/* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
+
+void Config::getColorFromItd(Color &color, vector<string> split_line)
+{
+    color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+}
+
+void Config::getNodesFromItdFile(vector<string> split_line)
+{
+    Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
+
+    if (stoi(split_line[1]) != this->nbNodes - 1)
+    {
+        if (stoi(split_line[1]) == 0)
+        {
+            node.setStatus(NodeStatus::Start);
+        }
+        else
+        {
+            node.setStatus(NodeStatus::Path);
+        }
+        for (int i{4}; i < split_line.size(); i++)
+        {
+            node.addNeighbor(stoi(split_line[i]));
+        }
+    }
+    else
+    {
+        node.setStatus(NodeStatus::End);
+    }
+    nodes.push_back(node);
 }
 
 void Config::map_config()
@@ -90,33 +128,16 @@ void Config::map_config()
     }
 }
 
-void getColorFromItd(Color &color, vector<string> split_line)
-{
-    color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
-}
+/* --------------- CONSTRUCTION DU GRAPHE A PARTIR DES NODES RECUPEREES --------------- */
 
-void Config::getNodesFromItdFile(vector<string> split_line)
+void Config::createGraphFromNodes()
 {
-    Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
-
-    if (stoi(split_line[1]) != this->nbNodes - 1)
+    for (Node n : nodes)
     {
-        if (stoi(split_line[1]) == 0)
+        for (int neighbor : n.getNeighbors())
         {
-            node.setStatus(NodeStatus::Start);
-        }
-        else
-        {
-            node.setStatus(NodeStatus::Path);
-        }
-        for (int i{4}; i < split_line.size(); i++)
-        {
-            node.addNeighbor(stoi(split_line[i]));
+            double dist = n.distanceBetweenNodes(nodes[neighbor]);
+            graph.add_directed_edge(n.getId(), neighbor, dist);
         }
     }
-    else
-    {
-        node.setStatus(NodeStatus::End);
-    }
-    nodes.push_back(node);
 }

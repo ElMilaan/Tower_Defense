@@ -9,12 +9,12 @@ class Bank
 private:
     static const int MAX{1000};
     static const int MIN{0};
-    float sold{};
+    double sold{};
 
 public:
     Bank();
-    void addMoney(float amount_to_add);
-    void removeMoney(float amount_to_remove);
-    float getBankSold();
-    void setBankSold(float new_sold);
+    void addMoney(double amount_to_add);
+    void removeMoney(double amount_to_remove);
+    double getBankSold();
+    void setBankSold(double new_sold);
 };

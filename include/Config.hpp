@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Node.hpp"
+#include "Graph.hpp"
 
 using namespace std;
 
@@ -22,9 +23,10 @@ private:
     Color color_in;
     Color color_out;
     Color color_path;
-    string map_string_path{};
     int nbNodes{};
     vector<Node> nodes{};
+    Graph::WeightedGraph graph{};
+    string map_string_path{};
 
 public:
     Color getColorIn();
@@ -32,9 +34,12 @@ public:
     Color getColorPath();
     int getNbNodes();
     vector<Node> getNodes();
+    Graph::WeightedGraph getGraph();
     static const string ITD_FILE;
     void map_config();
     void getNodesFromItdFile(vector<string> split_line);
+    void getColorFromItd(Color &color, vector<string> split_line);
+    void createGraphFromNodes();
 };
 
 vector<string> split_string(string str);

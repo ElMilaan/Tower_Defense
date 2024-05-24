@@ -6,6 +6,11 @@
 #include <vector>
 #include "Config.hpp"
 
+#include <stb_image/stb_image.h>
+#include <img/img.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 using namespace std;
 
 const string Config::ITD_FILE = "../../data/config_map.itd";
@@ -140,5 +145,38 @@ void Config::createGraphFromNodes()
             double dist = n.distanceBetweenNodes(nodes[neighbor]);
             graph.add_directed_edge(n.getId(), neighbor, dist);
         }
+    }
+}
+
+unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n)
+{
+    switch (type)
+    {
+    case TileType::Grass:
+        return stbi_load("/images/grass.png", &x, &y, &n, 0);
+    case TileType::Curve:
+        return stbi_load("/images/curve.png", &x, &y, &n, 0);
+    case TileType::FourWays:
+        return stbi_load("/images/four_ways.png", &x, &y, &n, 0);
+    case TileType::ThreeWays:
+        return stbi_load("/images/three_ways.png", &x, &y, &n, 0);
+    case TileType::Straight:
+        return stbi_load("/images/straight.png", &x, &y, &n, 0);
+    }
+}
+
+void Config::setTextures()
+{
+    vector<GLuint> textures(sizeof(TileType));
+
+    for (int i{0}; i < sizeof(TileType); i++)
+    {
+        int x{}, y{}, n{};
+        unsigned char *texture{getMatchingTexture(static_cast<TileType>(i), x, y, n)};
+
+        glGenTextures(1, &textures[i]);
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
     }
 }

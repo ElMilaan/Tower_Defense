@@ -19,10 +19,9 @@ struct Color
 
 struct Pixel
 {
-    int posX {};
-    int posY {};
+    int posX{};
+    int posY{};
     Color color{};
-
 };
 class Config
 {
@@ -34,7 +33,8 @@ private:
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     string map_string_path{};
-    vector<Pixel> pixels {};
+    vector<Pixel> pixels{};
+    vector<GLuint> textures{};
 
 public:
     Color getColorIn();
@@ -48,9 +48,9 @@ public:
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
+    void setTextures();
     vector<Pixel> imgRead();
-
 };
 
 vector<string> split_string(string str);
-
+unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n);

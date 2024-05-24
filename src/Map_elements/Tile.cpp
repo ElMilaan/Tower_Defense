@@ -49,7 +49,7 @@ void Tile::setStringPath()
         this->tile_string_path = "/images/grass.png";
         break;
     case TileType::Curve:
-        this->tile_string_path = "/images/cuve.png";
+        this->tile_string_path = "/images/curve.png";
         break;
     case TileType::FourWays:
         this->tile_string_path = "/images/four_ways.png";

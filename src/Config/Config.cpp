@@ -10,6 +10,7 @@
 #include <img/img.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "utils.hpp"
 
 using namespace std;
 
@@ -180,3 +181,19 @@ void Config::setTextures()
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
     }
 }
+
+vector<Pixel> Config::imgRead(){
+    pixelized_map = img::load(make_absolute_path(map_string_path, true), 4, false);
+    Color color{};  
+    for (int i{0}; i <pixelized_map.data_size(); i+=pixelized_map.channels_count()){
+            color.red = pixelized_map.data()[i];
+            color.green = pixelized_map.data()[i + 1];
+            color.blue = pixelized_map.data()[i + 2];
+            color.transparency = pixelized_map.data()[i + 3];
+            int x = i / pixelized_map.channels_count() % pixelized_map.width();
+            int y = i / pixelized_map.channels_count() / pixelized_map.height();
+            pixels.push_back({x, y, color});
+    }
+        
+}
+

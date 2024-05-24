@@ -52,6 +52,8 @@ public:
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
+    vector<GLuint> getTextures();
+    vector<Pixel> getPixels();
     static const string ITD_FILE;
     void itdConfig();
     void getNodesFromItdFile(vector<string> split_line);

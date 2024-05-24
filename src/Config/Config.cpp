@@ -59,6 +59,16 @@ Graph::WeightedGraph Config::getGraph()
     return graph;
 }
 
+vector<GLuint> Config::getTextures()
+{
+    return textures;
+}
+
+vector<Pixel> Config::getPixels()
+{
+    return pixels;
+}
+
 /* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
 
 void Config::getColorFromItd(Color &color, vector<string> split_line)

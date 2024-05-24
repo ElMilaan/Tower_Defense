@@ -17,6 +17,13 @@ struct Color
     void setColor(const int &r, const int &g, const int &b, const int &t);
 };
 
+struct Pixel
+{
+    int posX {};
+    int posY {};
+    Color color{};
+
+};
 class Config
 {
 private:
@@ -27,6 +34,7 @@ private:
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     string map_string_path{};
+    vector<Pixel> pixels {};
 
 public:
     Color getColorIn();
@@ -40,6 +48,9 @@ public:
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
+    vector<Pixel> imgRead();
+
 };
 
 vector<string> split_string(string str);
+

@@ -118,3 +118,32 @@ add_library(simpletext INTERFACE)
 target_include_directories(simpletext SYSTEM INTERFACE ${simpletext_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE simpletext)
+
+# ---img---
+FetchContent_Declare(
+    img
+    GIT_REPOSITORY https://github.com/CoolLibs/img
+    GIT_TAG da961a78b622db4f4b26df690b38ac3054e61806
+)
+
+FetchContent_MakeAvailable(img)
+
+# Link the library
+target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
+
+# Pass the CMAKE_SOURCE_DIR to the code, so that we can make our paths relative to it---
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    CMAKE_SOURCE_DIR=\"${CMAKE_SOURCE_DIR}\"
+)
+
+# Download the library
+include(FetchContent)
+FetchContent_Declare(
+    sil
+    GIT_REPOSITORY https://github.com/JulesFouchy/Simple-Image-Lib
+    GIT_TAG 89bd175cd55fb6daa9e99b218e869c3d516043f4
+)
+FetchContent_MakeAvailable(sil)
+
+# Link the library into your project
+target_link_libraries(${PROJECT_NAME} PRIVATE sil::sil)

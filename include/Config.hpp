@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Node.hpp"
+#include <img/img.hpp>
 #include "Graph.hpp"
 #include <img/img.hpp>
 #include <glad/glad.h>
@@ -25,6 +26,7 @@ struct Pixel
     int posX{};
     int posY{};
     Color color{};
+    TileType typeChemin{};
 };
 class Config
 {
@@ -38,6 +40,7 @@ private:
     string map_string_path{};
     vector<Pixel> pixels{};
     vector<GLuint> textures{};
+    img::Image pixelized_map;
 
 public:
     Color getColorIn();

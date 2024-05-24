@@ -50,9 +50,6 @@ int main()
 
     cout << config.getGraph();
 
-<<<<<<< HEAD
-    
-=======
     // config.setTextures();
 
     // cout << endl
@@ -72,7 +69,6 @@ int main()
     {
         cout << "(x=" << p.posX << ",y=" << p.posY << ",color(" << p.color.red << "," << p.color.green << "," << p.color.blue << "," << p.color.transparency << "))" << endl;
     }
->>>>>>> 8098478312f63498556d00263eb69e0928e275e2
 
     // ===================================================================================
 

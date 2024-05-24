@@ -8,6 +8,7 @@
 #include <img/img.hpp>
 #include "utils.hpp"
 
+
 using namespace std;
 
 const string Config::ITD_FILE = "../../data/config_map.itd";
@@ -157,7 +158,7 @@ vector<Pixel> Config::imgRead(){
         for (int j = 0; j < map.height(); j++)
         {
             
-            pixels.push_back({i, j, (i, j)})
+            pixels.push_back({i, j, })
         }
         
     }

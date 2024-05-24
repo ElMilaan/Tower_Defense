@@ -135,15 +135,3 @@ target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     CMAKE_SOURCE_DIR=\"${CMAKE_SOURCE_DIR}\"
 )
-
-# Download the library
-include(FetchContent)
-FetchContent_Declare(
-    sil
-    GIT_REPOSITORY https://github.com/JulesFouchy/Simple-Image-Lib
-    GIT_TAG 89bd175cd55fb6daa9e99b218e869c3d516043f4
-)
-FetchContent_MakeAvailable(sil)
-
-# Link the library into your project
-target_link_libraries(${PROJECT_NAME} PRIVATE sil::sil)

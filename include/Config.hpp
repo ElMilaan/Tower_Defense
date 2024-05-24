@@ -5,6 +5,8 @@
 #include "Node.hpp"
 #include <img/img.hpp>
 #include "Graph.hpp"
+#include "Tile.hpp"
+#include <GLFW/glfw3.h>
 
 using namespace std;
 

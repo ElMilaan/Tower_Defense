@@ -183,9 +183,8 @@ void Config::setTextures()
 }
 
 vector<Pixel> Config::imgRead(){
-    pixelized_map = img::load(make_absolute_path(map_string_path, true), 4, false);
     Color color{};  
-    for (int i{0}; i <pixelized_map.data_size(); i+=pixelized_map.channels_count()){
+    for (int i{0}; i < pixelized_map.data_size(); i+=pixelized_map.channels_count()){
             color.red = pixelized_map.data()[i];
             color.green = pixelized_map.data()[i + 1];
             color.blue = pixelized_map.data()[i + 2];

@@ -4,6 +4,9 @@
 #include <vector>
 #include "Node.hpp"
 #include "Graph.hpp"
+#include <img/img.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 
@@ -44,7 +47,7 @@ public:
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
     static const string ITD_FILE;
-    void map_config();
+    void itdConfig();
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();

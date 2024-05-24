@@ -91,7 +91,7 @@ void Config::getNodesFromItdFile(vector<string> split_line)
     nodes.push_back(node);
 }
 
-void Config::map_config()
+void Config::itdConfig()
 {
     ifstream myfile;
 
@@ -147,6 +147,8 @@ void Config::createGraphFromNodes()
         }
     }
 }
+
+/* --------------- RECUPERATION DES TEXTURES DANS UN TABLEAU D'ID -------------------- */
 
 unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n)
 {

@@ -32,14 +32,14 @@ void Tower::find_path_sprite()
     }
 }
 
-void Tower::level_up(float cost, float bank_sold)
+void Tower::level_up(double cost, double bank_sold)
 {
     level += 1;
     path_sprite = "";
     bank_sold -= cost;
 }
 
-void Tower::build(pair<float, float> location)
+void Tower::build(pair<double, double> position)
 {
 }
 
@@ -49,7 +49,7 @@ void Tower::destruct()
 
 // bool is_Monster_in_range(Monster monster)
 // {
-//     if (monster.location < range)
+//     if (monster.position < range)
 //     {
 //         return 1;
 //     }

@@ -2,10 +2,12 @@
 #include <filesystem>
 #include <glm/glm.hpp>
 
-std::filesystem::path make_absolute_path(std::filesystem::path const &path, bool check_path_exists = true);
+using namespace std;
+
+filesystem::path make_absolute_path(filesystem::path const &path, bool check_path_exists = true);
 
 template <glm::length_t N, typename T, glm::qualifier Q>
-std::ostream &operator<<(std::ostream &os, glm::vec<N, T, Q> const &vec)
+ostream &operator<<(ostream &os, glm::vec<N, T, Q> const &vec)
 {
     os << "(";
 
@@ -19,7 +21,7 @@ std::ostream &operator<<(std::ostream &os, glm::vec<N, T, Q> const &vec)
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &os, std::vector<T> const &vec)
+ostream &operator<<(ostream &os, vector<T> const &vec)
 {
     if (vec.empty())
     {

@@ -1,10 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include "Map.hpp"
 
 using namespace std;
 
-class Location
+class Position
 {
 private:
     double x{};
@@ -12,8 +13,8 @@ private:
     bool isPath{false};
 
 public:
-    Location();
-    Location(double &x, double &y); // Map map);
+    Position();
+    Position(double &x, double &y);
     double getX();
     double getY();
     bool getIsPath();
@@ -22,8 +23,8 @@ public:
     void setIsPath(bool isWay);
 };
 
-class MonsterLocation : Location
+class MonsterPosition : Position
 {
 public:
-    MonsterLocation();
+    MonsterPosition();
 };

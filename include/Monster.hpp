@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "Location.hpp"
+#include "Position.hpp"
 
 using namespace std;
 
@@ -24,14 +24,14 @@ private:
     string path_sprite{};
     bool isBoss{};
     bool isDead{};
-    MonsterLocation location{};
+    MonsterPosition position{};
 
 public:
     Monster(double health_points, double speed, MonsterType type, bool isBoss);
     void find_path_sprite();
-    void change_speed(float coeff);
-    void take_damage(float damage);
-    MonsterLocation getMonsterLocation();
+    void change_speed(double coeff);
+    void take_damage(double damage);
+    MonsterPosition getMonsterPosition();
     double getMaxHealth();
     double getHealthPoints();
     double getSpeed();

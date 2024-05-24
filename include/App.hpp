@@ -3,7 +3,6 @@
 #include <glad/glad.h>
 #include <simpletext.h>
 
-
 class App
 {
 public:
@@ -25,11 +24,11 @@ private:
     int _width{};
     int _height{};
     double _previousTime{};
-    float _viewSize{};
+    double _viewSize{};
 
     // Add your variables here
     GLuint _texture{};
-    float _angle{};
+    double _angle{};
 
     SimpleText TextRenderer{};
 };

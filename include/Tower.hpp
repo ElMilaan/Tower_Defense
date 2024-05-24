@@ -17,8 +17,8 @@ class Tower
 public:
     Tower(double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
     void find_path_sprite();
-    void level_up(float cost, float bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
-    void build(pair<float, float> location);
+    void level_up(double cost, double bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
+    void build(pair<double, double> position);
     void destruct();
     void attack(Monster monster);
     bool is_Monster_in_range(Monster monster);

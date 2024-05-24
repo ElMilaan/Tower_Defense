@@ -27,7 +27,7 @@ int main()
     // ================================== TESTS ====================================
 
     Config config{};
-    config.map_config();
+    config.itdConfig();
 
     cout << "Nb nodes : " << config.getNbNodes() << endl;
     cout << "In : ( " << config.getColorIn().red << " , " << config.getColorIn().green << " , " << config.getColorIn().blue << " )" << endl;

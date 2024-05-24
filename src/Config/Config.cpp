@@ -92,7 +92,7 @@ void Config::getNodesFromItdFile(vector<string> split_line)
     nodes.push_back(node);
 }
 
-void Config::map_config()
+void Config::itdConfig()
 {
     ifstream myfile;
 
@@ -149,6 +149,8 @@ void Config::createGraphFromNodes()
     }
 }
 
+/* --------------- RECUPERATION DES TEXTURES DANS UN TABLEAU D'ID -------------------- */
+
 unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n)
 {
     switch (type)
@@ -164,6 +166,8 @@ unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n)
     case TileType::Straight:
         return stbi_load("/images/straight.png", &x, &y, &n, 0);
     }
+
+    return {};
 }
 
 void Config::setTextures()
@@ -182,17 +186,14 @@ void Config::setTextures()
     }
 }
 
-vector<Pixel> Config::imgRead(){
-    Color color{};  
-    for (int i{0}; i < pixelized_map.data_size(); i+=pixelized_map.channels_count()){
-            color.red = pixelized_map.data()[i];
-            color.green = pixelized_map.data()[i + 1];
-            color.blue = pixelized_map.data()[i + 2];
-            color.transparency = pixelized_map.data()[i + 3];
-            int x = i / pixelized_map.channels_count() % pixelized_map.width();
-            int y = i / pixelized_map.channels_count() / pixelized_map.height();
-            pixels.push_back({x, y, color});
+void Config::imgRead()
+{
+    Color color{};
+    for (int i{0}; i < pixelized_map.data_size(); i += pixelized_map.channels_count())
+    {
+        color.setColor(pixelized_map.data()[i], pixelized_map.data()[i + 1], pixelized_map.data()[i + 2], pixelized_map.data()[i + 3]);
+        int x = i / pixelized_map.channels_count() % pixelized_map.width();
+        int y = i / pixelized_map.channels_count() / pixelized_map.height();
+        pixels.push_back({x, y, color});
     }
-        
 }
-

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <iterator>
 #include <vector>
 #include "Config.hpp"
 

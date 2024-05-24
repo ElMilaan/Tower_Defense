@@ -5,6 +5,9 @@
 #include "Node.hpp"
 #include <img/img.hpp>
 #include "Graph.hpp"
+#include "Tile.hpp"
+#include "utils.hpp"
+
 #include <img/img.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -40,7 +43,7 @@ private:
     string map_string_path{};
     vector<Pixel> pixels{};
     vector<GLuint> textures{};
-    img::Image pixelized_map;
+    img::Image pixelized_map{img::load(make_absolute_path("/image/map.png", true), 4, false)};
 
 public:
     Color getColorIn();
@@ -55,7 +58,7 @@ public:
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
     void setTextures();
-    vector<Pixel> imgRead();
+    void imgRead();
 };
 
 vector<string> split_string(string str);

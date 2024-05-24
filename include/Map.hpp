@@ -11,7 +11,7 @@ class Map
 {
 private:
     static const int PIXELS_DIMENSION{1024};
-    static const int TILES_DIMENSION{64};
+    static const int TILE_DIMENSION{64};
     vector<vector<Tile>> tiles{};
     Graph::WeightedGraph graph{};
 

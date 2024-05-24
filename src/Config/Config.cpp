@@ -5,6 +5,8 @@
 #include <iterator>
 #include <vector>
 #include "Config.hpp"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 

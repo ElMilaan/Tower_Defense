@@ -43,7 +43,7 @@ private:
     string map_string_path{};
     vector<Pixel> pixels{};
     vector<GLuint> textures{};
-    img::Image pixelized_map{img::load(make_absolute_path("/image/map.png", true), 4, false)};
+    img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
     Color getColorIn();
@@ -52,6 +52,8 @@ public:
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
+    vector<GLuint> getTextures();
+    vector<Pixel> getPixels();
     static const string ITD_FILE;
     void itdConfig();
     void getNodesFromItdFile(vector<string> split_line);

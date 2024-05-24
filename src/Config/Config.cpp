@@ -142,3 +142,18 @@ void Config::createGraphFromNodes()
         }
     }
 }
+
+
+/* ---- PARCOURS DE L'IMAGE POUR DEFINIR LA NATURE DE CHAQUE PIXEL ----*/
+
+struct Pixel
+{
+    int posX {};
+    int posY {};
+    Color color{};
+
+};
+
+vector<Pixel> parcours_img(){
+
+}

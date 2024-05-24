@@ -5,6 +5,8 @@
 #include <iterator>
 #include <vector>
 #include "Config.hpp"
+#include <img/img.hpp>
+#include "utils.hpp"
 
 using namespace std;
 
@@ -146,14 +148,18 @@ void Config::createGraphFromNodes()
 
 /* ---- PARCOURS DE L'IMAGE POUR DEFINIR LA NATURE DE CHAQUE PIXEL ----*/
 
-struct Pixel
-{
-    int posX {};
-    int posY {};
-    Color color{};
 
-};
 
-vector<Pixel> parcours_img(){
-
+vector<Pixel> Config::imgRead(){
+    img::Image map {img::load(make_absolute_path(map_string_path, true), 4, false)};
+    for (int i = 0; i < map.width(); i++)
+    {
+        for (int j = 0; j < map.height(); j++)
+        {
+            
+            pixels.push_back({i, j, (i, j)})
+        }
+        
+    }
+    
 }

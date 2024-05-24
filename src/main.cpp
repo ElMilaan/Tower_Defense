@@ -50,6 +50,8 @@ int main()
 
     cout << config.getGraph();
 
+    
+
     // ===================================================================================
 
     //     // Set an error callback to display glfw errors

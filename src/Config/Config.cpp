@@ -5,6 +5,7 @@
 #include <iterator>
 #include <vector>
 #include "Config.hpp"
+#include "GLHelpers.hpp"
 
 #include <stb_image/stb_image.h>
 #include <img/img.hpp>
@@ -24,7 +25,46 @@ void Color::setColor(const int &r, const int &g, const int &b, const int &t)
     this->transparency = t;
 }
 
-vector<string> split_string(string str)
+bool Color::isEqualTo(Color c)
+{
+    return this->red == c.red && this->blue == c.blue && this->green == c.green;
+}
+
+bool Color::isOut(Color out_color)
+{
+    return isEqualTo(out_color);
+}
+bool Color::isIn(Color in_color)
+{
+    return isEqualTo(in_color);
+}
+bool Color::isPath(Color path_color)
+{
+    return isEqualTo(path_color);
+}
+
+void Pixel::setStatus(Color c, Color in_color, Color path_color, Color out_color)
+{
+    if (c.isIn(in_color))
+    {
+        status = PixelStatus::In;
+    }
+    else if (c.isPath(path_color))
+    {
+        status = PixelStatus::Path;
+    }
+    else if (c.isOut(out_color))
+    {
+        status = PixelStatus::Out;
+    }
+    else
+    {
+        status = PixelStatus::Grass;
+    }
+}
+
+vector<string>
+split_string(string str)
 {
     stringstream ss(str);
     istream_iterator<string> begin(ss);
@@ -59,7 +99,7 @@ Graph::WeightedGraph Config::getGraph()
     return graph;
 }
 
-vector<GLuint> Config::getTextures()
+vector<pair<TileType, GLuint>> Config::getTextures()
 {
     return textures;
 }
@@ -104,36 +144,36 @@ void Config::getNodesFromItdFile(vector<string> split_line)
 
 void Config::itdConfig()
 {
-    ifstream myfile;
+    ifstream my_file;
 
-    myfile.open(this->ITD_FILE);
+    my_file.open(this->ITD_FILE);
 
-    string myline;
+    string my_line;
 
-    if (myfile.is_open())
+    if (my_file.is_open())
     {
-        while (myfile)
+        while (my_file)
         {
-            getline(myfile, myline);
-            vector<string> split_line = split_string(myline);
+            getline(my_file, my_line);
+            vector<string> split_line = split_string(my_line);
 
-            if (myline.starts_with("path"))
+            if (my_line.starts_with("path"))
             {
                 getColorFromItd(this->color_path, split_line);
             }
-            else if (myline.starts_with("in"))
+            else if (my_line.starts_with("in"))
             {
                 getColorFromItd(this->color_in, split_line);
             }
-            else if (myline.starts_with("out"))
+            else if (my_line.starts_with("out"))
             {
                 getColorFromItd(this->color_out, split_line);
             }
-            else if (myline.starts_with("graph"))
+            else if (my_line.starts_with("graph"))
             {
                 nbNodes = stoi(split_line[1]);
             }
-            else if (myline.starts_with("node"))
+            else if (my_line.starts_with("node"))
             {
                 getNodesFromItdFile(split_line);
             }
@@ -161,38 +201,29 @@ void Config::createGraphFromNodes()
 
 /* --------------- RECUPERATION DES TEXTURES DANS UN TABLEAU D'ID -------------------- */
 
-unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n)
+pair<TileType, img::Image> getMatchingTexture(TileType type)
 {
     switch (type)
     {
-    case TileType::Grass:
-        return stbi_load("/images/grass.png", &x, &y, &n, 0);
     case TileType::Curve:
-        return stbi_load("/images/curve.png", &x, &y, &n, 0);
+        return {TileType::Curve, img::Image{img::load(make_absolute_path("/images/curve.png", true), 4, false)}};
     case TileType::FourWays:
-        return stbi_load("/images/four_ways.png", &x, &y, &n, 0);
+        return {TileType::FourWays, img::Image{img::load(make_absolute_path("/images/four_ways.png", true), 4, false)}};
     case TileType::ThreeWays:
-        return stbi_load("/images/three_ways.png", &x, &y, &n, 0);
+        return {TileType::ThreeWays, img::Image{img::load(make_absolute_path("/images/three_ways.png", true), 4, false)}};
     case TileType::Straight:
-        return stbi_load("/images/straight.png", &x, &y, &n, 0);
+        return {TileType::Straight, img::Image{img::load(make_absolute_path("/images/straight.png", true), 4, false)}};
     }
-
-    return {};
+    return {TileType::Grass, img::Image{img::load(make_absolute_path("/images/grass.png", true), 4, false)}};
 }
+
+// CREATE TILES WITH
 
 void Config::setTextures()
 {
-    vector<GLuint> textures(sizeof(TileType));
-
     for (int i{0}; i < sizeof(TileType); i++)
     {
-        int x{}, y{}, n{};
-        unsigned char *texture{getMatchingTexture(static_cast<TileType>(i), x, y, n)};
-
-        glGenTextures(1, &textures[i]);
-        glBindTexture(GL_TEXTURE_2D, textures[i]);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, texture);
+        textures.push_back({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }
 }
 
@@ -204,6 +235,8 @@ void Config::imgRead()
         color.setColor(pixelized_map.data()[i], pixelized_map.data()[i + 1], pixelized_map.data()[i + 2], pixelized_map.data()[i + 3]);
         int x = i / pixelized_map.channels_count() % pixelized_map.width();
         int y = i / pixelized_map.channels_count() / pixelized_map.height();
-        pixels.push_back({x, y, color});
+        Pixel p{x, y, color};
+        p.setStatus(color, color_in, color_path, color_out);
+        pixels.push_back(p);
     }
 }

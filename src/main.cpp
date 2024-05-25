@@ -50,25 +50,36 @@ int main()
 
     cout << config.getGraph();
 
-    // config.setTextures();
-
-    // cout << endl
-    //      << endl;
-
-    // cout << "size of textures : " << config.getTextures().size();
-    // for (auto a : config.getTextures())
-    // {
-    //     cout << a << " , ";
-    // }
-
     config.imgRead();
 
     cout << "pixels size : " << config.getPixels().size() << endl;
 
     for (Pixel p : config.getPixels())
     {
-        cout << "(x=" << p.posX << ",y=" << p.posY << ",color(" << p.color.red << "," << p.color.green << "," << p.color.blue << "," << p.color.transparency << "))" << endl;
+        cout << "(x=" << p.posX << ",y=" << p.posY << ",color(" << p.color.red << "," << p.color.green << "," << p.color.blue << "," << p.color.transparency << "),status=";
+
+        switch (p.status)
+        {
+        case PixelStatus::In:
+            cout << "in";
+            break;
+        case PixelStatus::Path:
+            cout << "path";
+            break;
+        case PixelStatus::Out:
+            cout << "out";
+            break;
+        case PixelStatus::Grass:
+            cout << "grass";
+            break;
+
+        default:
+            break;
+        }
+        cout << endl;
     }
+
+    config.setTextures();
 
     // ===================================================================================
 

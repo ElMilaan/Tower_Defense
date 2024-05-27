@@ -11,6 +11,7 @@
 #include "GLHelpers.hpp"
 
 #include "Bank.hpp"
+#include "Config.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -18,7 +19,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _texture = loadTexture(deco);
-
+    Config config {};
+    
     
 }
 

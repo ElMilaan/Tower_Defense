@@ -221,7 +221,7 @@ pair<TileType, img::Image> getMatchingTexture(TileType type)
 
 void Config::setTextures()
 {
-    for (int i{0}; i < sizeof(TileType); i++)
+    for (int i{0}; i < 5; i++)
     {
         textures.push_back({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }

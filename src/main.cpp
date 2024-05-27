@@ -24,6 +24,45 @@ constexpr double TARGET_TIME_FOR_FRAME{1.0 / 60.0};
 int main()
 {
 
+    
+         glfwSetErrorCallback([](int error, const char *description)
+                             { cerr << "Error " << error << ": " << description << endl; });
+
+        // Initialize glfw
+        if (!glfwInit())
+        {
+            return -1;
+        }
+
+    #ifdef __APPLE__
+        // We need to explicitly ask for a 3.3 context on Mac
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    #endif
+
+        // Create window
+        GLFWwindow *window{glfwCreateWindow(1280, 720, "Window", nullptr, nullptr)};
+        if (!window)
+        {
+            cerr << "Failed to create window" << endl;
+            glfwTerminate();
+            return -1;
+        }
+
+        // Make the window's context current
+        glfwMakeContextCurrent(window);
+
+        // Intialize glad (loads the OpenGL functions)
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            cerr << "Failed to initialize OpenGL context" << endl;
+            glfwTerminate();
+            return -1;
+        }
+
+
     // ================================== TESTS ====================================
 
     Config config{};
@@ -84,42 +123,7 @@ int main()
     // ===================================================================================
 
     //     // Set an error callback to display glfw errors
-    //     glfwSetErrorCallback([](int error, const char *description)
-    //                          { cerr << "Error " << error << ": " << description << endl; });
-
-    //     // Initialize glfw
-    //     if (!glfwInit())
-    //     {
-    //         return -1;
-    //     }
-
-    // #ifdef __APPLE__
-    //     // We need to explicitly ask for a 3.3 context on Mac
-    //     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    //     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    // #endif
-
-    //     // Create window
-    //     GLFWwindow *window{glfwCreateWindow(1280, 720, "Window", nullptr, nullptr)};
-    //     if (!window)
-    //     {
-    //         cerr << "Failed to create window" << endl;
-    //         glfwTerminate();
-    //         return -1;
-    //     }
-
-    //     // Make the window's context current
-    //     glfwMakeContextCurrent(window);
-
-    //     // Intialize glad (loads the OpenGL functions)
-    //     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    //     {
-    //         cerr << "Failed to initialize OpenGL context" << endl;
-    //         glfwTerminate();
-    //         return -1;
-    //     }
+   
 
     //     App app{};
 

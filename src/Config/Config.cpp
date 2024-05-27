@@ -106,7 +106,7 @@ Graph::WeightedGraph Config::getGraph()
     return graph;
 }
 
-vector<pair<TileType, GLuint>> Config::getTextures()
+unordered_map<TileType, GLuint> Config::getTextures()
 {
     return textures;
 }
@@ -232,7 +232,7 @@ void Config::setTextures()
          << "Loading...." << endl;
     for (int i{0}; i < sizeof(TileType); i++)
     {
-        textures.push_back({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
+        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }
     cout << "Done !";
 }

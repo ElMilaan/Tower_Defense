@@ -11,6 +11,7 @@
 #include <img/img.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <unordered_map>
 
 using namespace std;
 
@@ -58,7 +59,7 @@ private:
     Graph::WeightedGraph graph{};
     string map_string_path{};
     vector<Pixel> pixels{};
-    vector<pair<TileType, GLuint>> textures{};
+    unordered_map <TileType, GLuint> textures{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
@@ -69,7 +70,7 @@ public:
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
-    vector<pair<TileType, GLuint>> getTextures();
+    unordered_map<TileType, GLuint> getTextures();
     vector<Pixel> getPixels();
     static const string ITD_FILE;
     void itdConfig();

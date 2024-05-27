@@ -13,21 +13,24 @@
 #include "Bank.hpp"
 #include "Config.hpp"
 
+Bank App::getBank()
+{
+    return bank;
+}
+
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _texture = loadTexture(deco);
-    Config config {};
-    
-    
+    Config config{};
 }
 
 void App::setup()
 {
-    // Set the clear color to a nice blue
-    glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
+    // Set the clear color to black
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // Setup the text renderer with blending enabled and white text color
     TextRenderer.ResetFont();
@@ -56,15 +59,6 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // render exemple quad
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.5f, -0.5f);
-    glVertex2f(0.5f, -0.5f);
-    glVertex2f(0.5f, 0.5f);
-    glVertex2f(-0.5f, 0.5f);
-    glEnd();
-
     glPushMatrix();
     glScalef(0.8f, 0.8f, 0.8f);
     glRotatef(_angle, 0.0f, 0.0f, 1.0f);
@@ -73,7 +67,7 @@ void App::render()
 
     std::string bank_amount_text{100};
     std::stringstream stream2{};
-    stream2 << std::fixed << " : " << std::setprecision(2) << bank_sold;
+    stream2 << std::fixed << " : " << std::setprecision(2) << bank.getBankSold();
     bank_amount_text = stream2.str();
 
     TextRenderer.Label(bank_amount_text.c_str(), _width / 2.6, _height / 19, SimpleText::CENTER);

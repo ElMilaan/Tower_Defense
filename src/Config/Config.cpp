@@ -73,7 +73,8 @@ split_string(string str)
     return split_line;
 }
 
-Config::Config(){
+Config::Config()
+{
     itdConfig();
     createGraphFromNodes();
     imgRead();
@@ -230,7 +231,7 @@ void Config::setTextures()
 {
     cout << endl
          << "Loading...." << endl;
-    for (int i{0}; i < sizeof(TileType); i++)
+    for (int i{0}; i < 5; i++)
     {
         textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }
@@ -250,4 +251,3 @@ void Config::imgRead()
         pixels.push_back(p);
     }
 }
-

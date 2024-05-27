@@ -2,14 +2,15 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
+#include "Bank.hpp"
 
 class App
 {
 public:
     App();
-    double bank_sold{20};
     void setup();
     void update();
+    Bank getBank();
 
     // GLFW callbacks binding
     void key_callback(int key, int scancode, int action, int mods);
@@ -20,7 +21,7 @@ public:
 
 private:
     void render();
-
+    Bank bank{};
     int _width{};
     int _height{};
     double _previousTime{};

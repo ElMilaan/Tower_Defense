@@ -62,6 +62,7 @@ private:
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
+    Config();
     Color getColorIn();
     Color getColorOut();
     Color getColorPath();
@@ -76,7 +77,7 @@ public:
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
     void setTextures();
-    void imgRead();
+    void imgRead(); 
 };
 
 vector<string> split_string(string str);

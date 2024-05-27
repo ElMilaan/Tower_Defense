@@ -24,7 +24,7 @@ constexpr double TARGET_TIME_FOR_FRAME{1.0 / 60.0};
 int main()
 {
 
-    
+
          glfwSetErrorCallback([](int error, const char *description)
                              { cerr << "Error " << error << ": " << description << endl; });
 
@@ -65,60 +65,61 @@ int main()
 
     // ================================== TESTS ====================================
 
-    Config config{};
-    config.itdConfig();
+    App app{};
+    // Config config{};
+    // config.itdConfig();
 
-    cout << "Nb nodes : " << config.getNbNodes() << endl;
-    cout << "In : ( " << config.getColorIn().red << " , " << config.getColorIn().green << " , " << config.getColorIn().blue << " )" << endl;
-    cout << "Path : ( " << config.getColorPath().red << " , " << config.getColorPath().green << " , " << config.getColorPath().blue << " )" << endl;
-    cout << "Out : ( " << config.getColorOut().red << " , " << config.getColorOut().green << " , " << config.getColorOut().blue << " )" << endl;
+    // cout << "Nb nodes : " << config.getNbNodes() << endl;
+    // cout << "In : ( " << config.getColorIn().red << " , " << config.getColorIn().green << " , " << config.getColorIn().blue << " )" << endl;
+    // cout << "Path : ( " << config.getColorPath().red << " , " << config.getColorPath().green << " , " << config.getColorPath().blue << " )" << endl;
+    // cout << "Out : ( " << config.getColorOut().red << " , " << config.getColorOut().green << " , " << config.getColorOut().blue << " )" << endl;
 
-    for (Node n : config.getNodes())
-    {
-        cout << "( id : " << n.getId() << "; position |" << n.getPosition().getX() << "," << n.getPosition().getY() << "| ; voisins : ";
-        for (int nei : n.getNeighbors())
-        {
-            cout << nei << ", ";
-        }
-        cout << " )" << endl;
-    }
+    // for (Node n : config.getNodes())
+    // {
+    //     cout << "( id : " << n.getId() << "; position |" << n.getPosition().getX() << "," << n.getPosition().getY() << "| ; voisins : ";
+    //     for (int nei : n.getNeighbors())
+    //     {
+    //         cout << nei << ", ";
+    //     }
+    //     cout << " )" << endl;
+    // }
 
-    cout << endl;
+    // cout << endl;
 
-    config.createGraphFromNodes();
+    // config.createGraphFromNodes();
 
-    cout << config.getGraph();
+    // cout << config.getGraph();
 
-    config.imgRead();
+    // config.imgRead();
 
-    cout << "pixels size : " << config.getPixels().size() << endl;
+    // cout << "pixels size : " << config.getPixels().size() << endl;
 
-    for (Pixel p : config.getPixels())
-    {
-        cout << "(x=" << p.posX << ",y=" << p.posY << ",color(" << p.color.red << "," << p.color.green << "," << p.color.blue << "," << p.color.transparency << "),status=";
+    // for (Pixel p : config.getPixels())
+    // {
+    //     cout << "(x=" << p.posX << ",y=" << p.posY << ",color(" << p.color.red << "," << p.color.green << "," << p.color.blue << "," << p.color.transparency << "),status=";
 
-        switch (p.status)
-        {
-        case PixelStatus::In:
-            cout << "in";
-            break;
-        case PixelStatus::Path:
-            cout << "path";
-            break;
-        case PixelStatus::Out:
-            cout << "out";
-            break;
-        case PixelStatus::Grass:
-            cout << "grass";
-            break;
+    //     switch (p.status)
+    //     {
+    //     case PixelStatus::In:
+    //         cout << "in";
+    //         break;
+    //     case PixelStatus::Path:
+    //         cout << "path";
+    //         break;
+    //     case PixelStatus::Out:
+    //         cout << "out";
+    //         break;
+    //     case PixelStatus::Grass:
+    //         cout << "grass";
+    //         break;
 
-        default:
-            break;
-        }
-        cout << endl;
-    }
+    //     default:
+    //         break;
+    //     }
+    //     cout << endl;
+    // }
 
-    config.setTextures();
+    // config.setTextures();
 
     // ===================================================================================
 

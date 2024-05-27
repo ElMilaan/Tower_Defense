@@ -73,6 +73,13 @@ split_string(string str)
     return split_line;
 }
 
+Config::Config(){
+    itdConfig();
+    createGraphFromNodes();
+    imgRead();
+    setTextures();
+}
+
 Color Config::getColorIn()
 {
     return color_in;
@@ -243,3 +250,4 @@ void Config::imgRead()
         pixels.push_back(p);
     }
 }
+

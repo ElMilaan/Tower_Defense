@@ -206,25 +206,28 @@ pair<TileType, img::Image> getMatchingTexture(TileType type)
     switch (type)
     {
     case TileType::Curve:
-        return {TileType::Curve, img::Image{img::load(make_absolute_path("/images/curve.png", true), 4, false)}};
+        return {TileType::Curve, img::Image{img::load(make_absolute_path("images/curve.png", true), 4, false)}};
     case TileType::FourWays:
-        return {TileType::FourWays, img::Image{img::load(make_absolute_path("/images/four_ways.png", true), 4, false)}};
+        return {TileType::FourWays, img::Image{img::load(make_absolute_path("images/four_ways.png", true), 4, false)}};
     case TileType::ThreeWays:
-        return {TileType::ThreeWays, img::Image{img::load(make_absolute_path("/images/three_ways.png", true), 4, false)}};
+        return {TileType::ThreeWays, img::Image{img::load(make_absolute_path("images/three_ways.png", true), 4, false)}};
     case TileType::Straight:
-        return {TileType::Straight, img::Image{img::load(make_absolute_path("/images/straight.png", true), 4, false)}};
+        return {TileType::Straight, img::Image{img::load(make_absolute_path("images/straight.png", true), 4, false)}};
     }
-    return {TileType::Grass, img::Image{img::load(make_absolute_path("/images/grass.png", true), 4, false)}};
+    return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
 }
 
 // CREATE TILES WITH
 
 void Config::setTextures()
 {
-    for (int i{0}; i < 5; i++)
+    cout << endl
+         << "Loading...." << endl;
+    for (int i{0}; i < sizeof(TileType); i++)
     {
         textures.push_back({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }
+    cout << "Done !";
 }
 
 void Config::imgRead()

@@ -16,8 +16,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
-    img::Image test{img::load(make_absolute_path("images/deco.png", true), 4, true)};
-    _texture = loadTexture(test);
+    img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
+    _texture = loadTexture(deco);
+
+    
 }
 
 void App::setup()

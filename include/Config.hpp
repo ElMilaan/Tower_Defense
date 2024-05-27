@@ -14,6 +14,14 @@
 
 using namespace std;
 
+enum class PixelStatus
+{
+    Grass,
+    Path,
+    In,
+    Out
+};
+
 struct Color
 {
     int red;
@@ -22,14 +30,22 @@ struct Color
     int transparency;
 
     void setColor(const int &r, const int &g, const int &b, const int &t);
+    bool isEqualTo(Color c);
+    bool isOut(Color out_color);
+    bool isIn(Color in_color);
+    bool isPath(Color path_color);
 };
+
+bool operator==(Color const &c1, Color const &c2);
 
 struct Pixel
 {
     int posX{};
     int posY{};
     Color color{};
-    TileType typeChemin{};
+    PixelStatus status{};
+
+    void setStatus(Color c, Color in_color, Color path_color, Color out_color);
 };
 class Config
 {
@@ -42,7 +58,7 @@ private:
     Graph::WeightedGraph graph{};
     string map_string_path{};
     vector<Pixel> pixels{};
-    vector<GLuint> textures{};
+    vector<pair<TileType, GLuint>> textures{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
@@ -52,7 +68,7 @@ public:
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
-    vector<GLuint> getTextures();
+    vector<pair<TileType, GLuint>> getTextures();
     vector<Pixel> getPixels();
     static const string ITD_FILE;
     void itdConfig();
@@ -64,4 +80,4 @@ public:
 };
 
 vector<string> split_string(string str);
-unsigned char *getMatchingTexture(TileType type, int &x, int &y, int &n);
+pair<TileType, img::Image> getMatchingTexture(TileType type);

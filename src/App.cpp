@@ -25,6 +25,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _texture = loadTexture(deco);
     Config config{};
+    for (pair p : config.getTextures())
+    {
+        cout << " " << p.second;
+    }
 }
 
 void App::setup()

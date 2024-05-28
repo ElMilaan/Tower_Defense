@@ -1,11 +1,13 @@
+#pragma once
+
 #include <iostream>
-#include <fstream>
-#include <string>
 #include <vector>
-#include "Node.hpp"
 #include <img/img.hpp>
+#include "Node.hpp"
 #include "Graph.hpp"
 #include "Tile.hpp"
+#include "Color.hpp"
+#include "Pixel.hpp"
 #include "utils.hpp"
 
 #include <img/img.hpp>
@@ -15,39 +17,6 @@
 
 using namespace std;
 
-enum class PixelStatus
-{
-    Grass,
-    Path,
-    In,
-    Out
-};
-
-struct Color
-{
-    int red;
-    int green;
-    int blue;
-    int transparency;
-
-    void setColor(const int &r, const int &g, const int &b, const int &t);
-    bool isEqualTo(Color c);
-    bool isOut(Color out_color);
-    bool isIn(Color in_color);
-    bool isPath(Color path_color);
-};
-
-bool operator==(Color const &c1, Color const &c2);
-
-struct Pixel
-{
-    int posX{};
-    int posY{};
-    Color color{};
-    PixelStatus status{};
-
-    void setStatus(Color c, Color in_color, Color path_color, Color out_color);
-};
 class Config
 {
 private:
@@ -59,7 +28,7 @@ private:
     Graph::WeightedGraph graph{};
     string map_string_path{};
     vector<Pixel> pixels{};
-    unordered_map <TileType, GLuint> textures{};
+    unordered_map<TileType, GLuint> textures{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
@@ -78,7 +47,7 @@ public:
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
     void setTextures();
-    void imgRead(); 
+    void imgRead();
 };
 
 vector<string> split_string(string str);

@@ -6,6 +6,8 @@
 #include <vector>
 #include "Config.hpp"
 #include "GLHelpers.hpp"
+#include "Color.hpp"
+#include "Pixel.hpp"
 
 #include <stb_image/stb_image.h>
 #include <img/img.hpp>
@@ -16,52 +18,6 @@
 using namespace std;
 
 const string Config::ITD_FILE = "../../data/config_map.itd";
-
-void Color::setColor(const int &r, const int &g, const int &b, const int &t)
-{
-    this->red = r;
-    this->blue = b;
-    this->green = g;
-    this->transparency = t;
-}
-
-bool Color::isEqualTo(Color c)
-{
-    return this->red == c.red && this->blue == c.blue && this->green == c.green;
-}
-
-bool Color::isOut(Color out_color)
-{
-    return isEqualTo(out_color);
-}
-bool Color::isIn(Color in_color)
-{
-    return isEqualTo(in_color);
-}
-bool Color::isPath(Color path_color)
-{
-    return isEqualTo(path_color);
-}
-
-void Pixel::setStatus(Color c, Color in_color, Color path_color, Color out_color)
-{
-    if (c.isIn(in_color))
-    {
-        status = PixelStatus::In;
-    }
-    else if (c.isPath(path_color))
-    {
-        status = PixelStatus::Path;
-    }
-    else if (c.isOut(out_color))
-    {
-        status = PixelStatus::Out;
-    }
-    else
-    {
-        status = PixelStatus::Grass;
-    }
-}
 
 vector<string>
 split_string(string str)

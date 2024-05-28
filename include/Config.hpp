@@ -16,7 +16,14 @@
 #include <unordered_map>
 
 using namespace std;
-
+template <>
+struct hash<std::pair<int, int>>
+{
+    std::size_t operator()(const std::pair<int, int> &p) const
+    {
+        return std::hash<int>()(p.first) ^ std::hash<int>()(p.second);
+    }
+};
 class Config
 {
 private:
@@ -27,7 +34,7 @@ private:
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     string map_string_path{};
-    vector<Pixel> pixels{};
+    unordered_map<pair<int, int>, Pixel> pixels;
     unordered_map<TileType, GLuint> textures{};
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};

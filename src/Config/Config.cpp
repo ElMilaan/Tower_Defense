@@ -68,7 +68,7 @@ unordered_map<TileType, GLuint> Config::getTextures()
     return textures;
 }
 
-vector<Pixel> Config::getPixels()
+unordered_map<pair<int, int>, Pixel> Config::getPixels()
 {
     return pixels;
 }
@@ -193,7 +193,7 @@ void Config::imgRead()
         int y = i / pixelized_map.channels_count() / pixelized_map.height();
         Pixel p{x, y, color};
         p.setStatus(color, color_in, color_path, color_out);
-        pixels.push_back(p);
+        pixels.insert({{x, y}, p});
     }
 }
 
@@ -214,11 +214,11 @@ void Config::setTextures()
 
 void Config::createTiles()
 {
-    for (Pixel p : pixels)
+    for (pair p : pixels)
     {
         bool isStart{false}, isEnd{false};
         TileType tt;
-        switch (p.status)
+        switch (p.second.status)
         {
         case PixelStatus::In:
             isStart = true;

@@ -27,7 +27,7 @@ private:
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     string map_string_path{};
-    unordered_map<pair<int, int>, Pixel> pixels{};
+    vector<Pixel> pixels{};
     unordered_map<TileType, GLuint> textures{};
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
@@ -41,7 +41,7 @@ public:
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
     unordered_map<TileType, GLuint> getTextures();
-    unordered_map<pair<int, int>, Pixel> getPixels();
+    vector<Pixel> getPixels();
     static const string ITD_FILE;
     void itdConfig();
     void getNodesFromItdFile(vector<string> split_line);

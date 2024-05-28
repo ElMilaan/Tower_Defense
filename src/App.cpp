@@ -45,7 +45,6 @@ void App::setup()
 
 void App::update()
 {
-
     // const double currentTime{glfwGetTime()};
     // const double elapsedTime{currentTime - _previousTime};
     // _previousTime = currentTime;

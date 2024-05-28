@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include "Position.hpp"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 
@@ -23,13 +25,15 @@ private:
     bool isEnd{};
     bool isClosed{};
     TileType type{};
+    GLuint texture{};
 
 public:
-    Tile(double x, double y, bool isStart, bool isEnd, TileType type);
+    Tile();
+    Tile(double x, double y, TileType type);
     bool getIsStart();
     bool getIsEnd();
     bool getIsClosed();
     void toggleIsClosed();
     bool isPath();
-    void setStringPath();
+    void setTexture(GLuint texture);
 };

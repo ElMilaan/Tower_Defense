@@ -3,13 +3,14 @@
 
 using namespace std;
 
-Tile::Tile(double x, double y, bool isStart, bool isEnd, TileType type)
+Tile::Tile()
 {
-    this->isStart = isStart;
-    this->isEnd = isEnd;
+}
+
+Tile::Tile(double x, double y, TileType type)
+{
     this->isClosed = false;
     this->type = type;
-    setStringPath();
 }
 
 bool Tile::getIsStart()
@@ -41,24 +42,7 @@ bool Tile::isPath()
     return false;
 }
 
-void Tile::setStringPath()
+void Tile::setTexture(GLuint texture)
 {
-    switch (this->type)
-    {
-    case TileType::Grass:
-        this->tile_string_path = "/images/grass.png";
-        break;
-    case TileType::Curve:
-        this->tile_string_path = "/images/curve.png";
-        break;
-    case TileType::FourWays:
-        this->tile_string_path = "/images/four_ways.png";
-        break;
-    case TileType::ThreeWays:
-        this->tile_string_path = "/images/three_ways.png";
-        break;
-    case TileType::Straight:
-        this->tile_string_path = "/images/straight.png";
-        break;
-    }
+    this->texture = texture;
 }

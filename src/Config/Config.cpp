@@ -181,18 +181,7 @@ pair<TileType, img::Image> getMatchingTexture(TileType type)
     return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
 }
 
-// CREATE TILES WITH
-
-void Config::setTextures()
-{
-    cout << endl
-         << "Loading...." << endl;
-    for (int i{0}; i < 5; i++)
-    {
-        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
-    }
-    cout << "Done !";
-}
+// LECTURE DU SCHEMA DE BASE 16x16
 
 void Config::imgRead()
 {
@@ -205,5 +194,45 @@ void Config::imgRead()
         Pixel p{x, y, color};
         p.setStatus(color, color_in, color_path, color_out);
         pixels.push_back(p);
+    }
+}
+
+// CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
+
+void Config::setTextures()
+{
+    cout << endl
+         << "Loading...." << endl;
+    for (int i{0}; i < 5; i++)
+    {
+        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
+    }
+    cout << "Done !";
+}
+
+// CREATION DES TILES
+
+void Config::createTiles()
+{
+    for (Pixel p : pixels)
+    {
+        bool isStart{false}, isEnd{false};
+        TileType tt;
+        switch (p.status)
+        {
+        case PixelStatus::In:
+            isStart = true;
+            tt = TileType::Straight;
+            break;
+        case PixelStatus::Out:
+            isEnd = true;
+            tt = TileType::Straight;
+            break;
+        case PixelStatus::Path:
+            break;
+        default:
+            tt = TileType::Grass;
+            break;
+        }
     }
 }

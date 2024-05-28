@@ -29,6 +29,7 @@ private:
     string map_string_path{};
     vector<Pixel> pixels{};
     unordered_map<TileType, GLuint> textures{};
+    vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
 
 public:
@@ -46,8 +47,9 @@ public:
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
-    void setTextures();
     void imgRead();
+    void setTextures();
+    void createTiles();
 };
 
 vector<string> split_string(string str);

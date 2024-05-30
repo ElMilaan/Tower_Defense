@@ -28,5 +28,5 @@ public:
     vector<int> getNeighbors();
     void setStatus(NodeStatus status);
     void addNeighbor(int neighbor);
-    double distanceBetweenNodes(Node target);
+    int distanceBetweenNodes(Node target);
 };

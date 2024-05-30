@@ -4,26 +4,9 @@
 
 using namespace std;
 
-class Position
+struct Position
 {
-private:
-    double x{};
-    double y{};
+    int x{};
+    int y{};
     bool isPath{false};
-
-public:
-    Position();
-    Position(double &x, double &y);
-    double getX();
-    double getY();
-    bool getIsPath();
-    void setX(double x);
-    void setY(double y);
-    void setIsPath(bool isWay);
-};
-
-class MonsterPosition : Position
-{
-public:
-    MonsterPosition();
 };

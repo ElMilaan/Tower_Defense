@@ -25,9 +25,18 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _texture = loadTexture(deco);
     Config config{};
-    for (pair p : config.getTextures())
+    config.itdConfig();
+    config.createGraphFromNodes();
+    config.imgRead();
+    // for (pair p : config.getPixels())
+    // {
+    //     cout << "Pixel = pos : (" << p.second.posX << "," << p.second.posY << ") | color : (" << p.second.color.red << "," << p.second.color.green << "," << p.second.color.blue << ")" << endl;
+    // }
+    config.setTextures();
+    config.createTiles();
+    for (pair p : config.getTiles())
     {
-        cout << " " << p.second;
+        cout << "Tile = pos : (" << p.first.first << "," << p.first.second << ") | texture : (" << p.second.texture << ") | rotate : (" << p.second.rotation << ")" << endl;
     }
 }
 

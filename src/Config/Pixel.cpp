@@ -21,3 +21,13 @@ void Pixel::setStatus(Color c, Color in_color, Color path_color, Color out_color
         status = PixelStatus::Grass;
     }
 }
+
+bool operator==(Pixel &p1, Pixel &p2)
+{
+    return p1.posX == p2.posX && p1.posY == p2.posY;
+}
+
+bool operator!=(Pixel &p1, Pixel &p2)
+{
+    return !(p1 == p2);
+}

@@ -24,14 +24,14 @@ private:
     string path_sprite{};
     bool isBoss{};
     bool isDead{};
-    MonsterPosition position{};
+    Position position{};
 
 public:
     Monster(double health_points, double speed, MonsterType type, bool isBoss);
     void find_path_sprite();
     void change_speed(double coeff);
     void take_damage(double damage);
-    MonsterPosition getMonsterPosition();
+    Position getMonsterPosition();
     double getMaxHealth();
     double getHealthPoints();
     double getSpeed();

@@ -15,7 +15,7 @@ Monster::Monster(double max_health, double speed, MonsterType type, bool isBoss)
     this->isDead = false;
 }
 
-MonsterPosition Monster::getMonsterPosition()
+Position Monster::getMonsterPosition()
 {
     return position;
 }

@@ -31,10 +31,11 @@ split_string(string str)
 
 Config::Config()
 {
-    itdConfig();
-    createGraphFromNodes();
-    imgRead();
-    setTextures();
+    // itdConfig();
+    // createGraphFromNodes();
+    // imgRead();
+    // setTextures();
+    // createTiles();
 }
 
 Color Config::getColorIn()
@@ -68,9 +69,14 @@ unordered_map<TileType, GLuint> Config::getTextures()
     return textures;
 }
 
-vector<Pixel> Config::getPixels()
+unordered_map<pair<int, int>, Pixel> Config::getPixels()
 {
     return pixels;
+}
+
+unordered_map<pair<int, int>, Tile> Config::getTiles()
+{
+    return tiles;
 }
 
 /* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
@@ -193,7 +199,7 @@ void Config::imgRead()
         int y = i / pixelized_map.channels_count() / pixelized_map.height();
         Pixel p{x, y, color};
         p.setStatus(color, color_in, color_path, color_out);
-        pixels.push_back(p);
+        pixels.insert({{x, y}, p});
     }
 }
 
@@ -212,27 +218,62 @@ void Config::setTextures()
 
 // CREATION DES TILES
 
+// retourne un vecteur -> 0 = top, 1 = right, 2 = bottom, 3 = left. true si c'est un chemin, false sinon
+vector<bool> Config::checkAround(Pixel &p)
+{
+    vector<bool> around{};
+    // on manipule les pixels de chemin, d'entrée et de sortie comme des chemins pour notre condition
+    ((pixels.at({p.posX, p.posY + 1}).status == PixelStatus::Path) || (pixels.at({p.posX, p.posY + 1}).status == PixelStatus::In) || (pixels.at({p.posX, p.posY + 1}).status == PixelStatus::Out)) ? around.push_back(true) : around.push_back(false); // top
+    ((pixels.at({p.posX + 1, p.posY}).status == PixelStatus::Path) || (pixels.at({p.posX + 1, p.posY}).status == PixelStatus::In) || (pixels.at({p.posX + 1, p.posY}).status == PixelStatus::Out)) ? around.push_back(true) : around.push_back(false); // right
+    ((pixels.at({p.posX, p.posY - 1}).status == PixelStatus::Path) || (pixels.at({p.posX, p.posY - 1}).status == PixelStatus::In) || (pixels.at({p.posX, p.posY - 1}).status == PixelStatus::Out)) ? around.push_back(true) : around.push_back(false); // bottom
+    ((pixels.at({p.posX - 1, p.posY}).status == PixelStatus::Path) || (pixels.at({p.posX - 1, p.posY}).status == PixelStatus::In) || (pixels.at({p.posX - 1, p.posY}).status == PixelStatus::Out)) ? around.push_back(true) : around.push_back(false); // left
+    return around;
+}
+
+// retourne le type de chemin + le coeff de rotation pour la sprite lors du rendu
+pair<TileType, int> Config::getPathType(Pixel &p)
+{
+    vector<bool> around{checkAround(p)};
+    int mask = 0;
+    if (around[0])
+        mask |= int(Direction::TOP);
+    if (around[1])
+        mask |= int(Direction::RIGHT);
+    if (around[2])
+        mask |= int(Direction::BOTTOM);
+    if (around[3])
+        mask |= int(Direction::LEFT);
+
+    return paths_rotations.at(mask);
+}
+
 void Config::createTiles()
 {
-    for (Pixel p : pixels)
+    for (pair p : pixels)
     {
+        if ((p.first.first == 7 && p.first.second == 1) || (p.first.first == 7 && p.first.second == 14))
+        {
+            bool a = true;
+        }
         bool isStart{false}, isEnd{false};
-        TileType tt;
-        switch (p.status)
+        pair<TileType, int> type_and_rotation;
+        switch (p.second.status)
         {
         case PixelStatus::In:
             isStart = true;
-            tt = TileType::Straight;
+            type_and_rotation = {TileType::Straight, 0};
             break;
         case PixelStatus::Out:
             isEnd = true;
-            tt = TileType::Straight;
+            type_and_rotation = {TileType::Straight, 0};
             break;
         case PixelStatus::Path:
-
+            type_and_rotation = getPathType(p.second);
+            break;
         default:
-            tt = TileType::Grass;
+            type_and_rotation = {TileType::Grass, 0};
             break;
         }
+        tiles.insert({{p.second.posX, p.second.posY}, {textures.at(type_and_rotation.first), type_and_rotation.first, type_and_rotation.second}});
     }
 }

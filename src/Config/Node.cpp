@@ -10,9 +10,9 @@ Node::Node()
 Node::Node(int id, int x, int y)
 {
     this->id = id;
-    this->position.setX(x);
-    this->position.setY(y);
-    this->position.setIsPath(true);
+    this->position.x;
+    this->position.y;
+    this->position.isPath;
 }
 
 int Node::getId()
@@ -45,9 +45,9 @@ void Node::addNeighbor(int neighbor)
     this->neighbors.push_back(neighbor);
 }
 
-double Node::distanceBetweenNodes(Node target)
+int Node::distanceBetweenNodes(Node target)
 {
-    double diffX{target.getPosition().getX() - this->getPosition().getX()};
-    double diffY{target.getPosition().getY() - this->getPosition().getY()};
+    int diffX{target.getPosition().x - this->getPosition().x};
+    int diffY{target.getPosition().y - this->getPosition().y};
     return abs(diffX + diffY);
 }

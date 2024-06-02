@@ -1,6 +1,7 @@
 #include "GLHelpers.hpp"
 
 #include "glad/glad.h"
+#include "Tile.hpp"
 
 GLuint loadTexture(uint8_t const *data, int width, int height)
 {
@@ -23,10 +24,10 @@ GLuint loadTexture(uint8_t const *data, int width, int height)
     return textureId;
 }
 
-void draw_quad_with_texture(GLuint textureId)
+void draw_quad_with_texture(GLuint &texture)
 {
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(GL_TEXTURE_2D, texture);
     glColor3ub(255, 255, 255);
     glBegin(GL_QUADS);
     glTexCoord2d(0, 0);

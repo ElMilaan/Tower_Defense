@@ -47,7 +47,7 @@ void Node::addNeighbor(int neighbor)
 
 int Node::distanceBetweenNodes(Node target)
 {
-    int diffX{target.getPosition().x - this->getPosition().x};
-    int diffY{target.getPosition().y - this->getPosition().y};
+    int diffX{target.getPosition().x - (int)this->getPosition().x};
+    int diffY{target.getPosition().y - (int)this->getPosition().y};
     return abs(diffX + diffY);
 }

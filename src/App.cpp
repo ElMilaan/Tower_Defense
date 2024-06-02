@@ -9,6 +9,7 @@
 #include "simpletext.h"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
+#include "Tile.hpp"
 
 #include "Bank.hpp"
 #include "Config.hpp"
@@ -23,20 +24,12 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     // load what needs to be loaded here (for example textures)
 
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
-    _texture = loadTexture(deco);
+    _deco_texture = loadTexture(deco);
     Config config{};
-    config.itdConfig();
-    config.createGraphFromNodes();
-    config.imgRead();
-    // for (pair p : config.getPixels())
-    // {
-    //     cout << "Pixel = pos : (" << p.second.posX << "," << p.second.posY << ") | color : (" << p.second.color.red << "," << p.second.color.green << "," << p.second.color.blue << ")" << endl;
-    // }
-    config.setTextures();
-    config.createTiles();
-    for (pair p : config.getTiles())
+    for (Tile t : config.getTiles())
     {
-        cout << "Tile = pos : (" << p.first.first << "," << p.first.second << ") | texture : (" << p.second.texture << ") | rotate : (" << p.second.rotation << ")" << endl;
+        //     cout << "Tile = pos : (" << t.x << "," << t.y << ") | texture : (" << t.texture << ") | rotate : (" << t.rotation << ")" << endl;
+        map_tiles.push_back(t);
     }
 }
 
@@ -58,9 +51,6 @@ void App::update()
     // const double elapsedTime{currentTime - _previousTime};
     // _previousTime = currentTime;
 
-    // _angle += 10.0f * elapsedTime;
-    // _angle = std::fmod(_angle, 360.0f);
-
     render();
 }
 
@@ -73,8 +63,13 @@ void App::render()
 
     glPushMatrix();
     glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    draw_quad_with_texture(_texture);
+    for (Tile t : map_tiles)
+    {
+        glPushMatrix();
+        draw_tile(t, 16.0f);
+        glPopMatrix();
+    }
+    draw_quad_with_texture(_deco_texture);
     glPopMatrix();
 
     std::string bank_amount_text{100};

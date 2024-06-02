@@ -18,9 +18,11 @@ enum class TileType
 
 struct Tile
 {
-    static const int SIZE{64};
+    GLfloat x{};
+    GLfloat y{};
     GLuint texture{};
     TileType type{};
-    int rotation{};
+    GLfloat rotation{};
     bool isClosed{};
+    const GLfloat SIZE{1};
 };

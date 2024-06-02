@@ -40,9 +40,6 @@ enum class Direction
 class Config
 {
 private:
-    static const int SCHEMA_DIMENSION{16};
-    static const int PIXELS_DIMENSION{1024};
-    static const int TILE_DIMENSION{64};
     Color color_in;
     Color color_out;
     Color color_path;
@@ -52,7 +49,7 @@ private:
     string map_string_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
     unordered_map<TileType, GLuint> textures{};
-    unordered_map<pair<int, int>, Tile> tiles{};
+    vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
     const unordered_map<int, pair<TileType, int>> paths_rotations = {
         {0b0101, {TileType::Straight, 0}},    // Haut-Bas
@@ -61,10 +58,10 @@ private:
         {0b1101, {TileType::ThreeWays, 180}}, // Haut-Bas-Gauche
         {0b1011, {TileType::ThreeWays, 270}}, // Haut-Droite-Gauche
         {0b1110, {TileType::ThreeWays, 90}},  // Droite-Bas-Gauche
-        {0b0110, {TileType::Curve, 0}},       // Bas-Droite
-        {0b1100, {TileType::Curve, 90}},      // Bas-Gauche
-        {0b1001, {TileType::Curve, 180}},     // Haut-Gauche
-        {0b0011, {TileType::Curve, 270}},     // Haut-Droite
+        {0b0110, {TileType::Curve, 270}},     // Bas-Droite
+        {0b1100, {TileType::Curve, 180}},     // Bas-Gauche
+        {0b1001, {TileType::Curve, 90}},      // Haut-Gauche
+        {0b0011, {TileType::Curve, 0}},       // Haut-Droite
         {0b1111, {TileType::FourWays, 0}}     // Tous les côtés
     };
 
@@ -78,7 +75,7 @@ public:
     Graph::WeightedGraph getGraph();
     unordered_map<TileType, GLuint> getTextures();
     unordered_map<pair<int, int>, Pixel> getPixels();
-    unordered_map<pair<int, int>, Tile> getTiles();
+    vector<Tile> getTiles();
     static const string ITD_FILE;
     void itdConfig();
     void getNodesFromItdFile(vector<string> split_line);

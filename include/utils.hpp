@@ -1,6 +1,8 @@
 #pragma once
 #include <filesystem>
 #include <glm/glm.hpp>
+#include "Position.hpp"
+#include "Tile.hpp"
 
 using namespace std;
 
@@ -35,3 +37,7 @@ ostream &operator<<(ostream &os, vector<T> const &vec)
     }
     return os << vec.back() << ']';
 }
+
+GLfloat glNormalize(GLfloat coord, GLfloat mapSize);
+
+void draw_tile(Tile &tile, GLfloat mapSize);

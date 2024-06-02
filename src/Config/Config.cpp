@@ -31,11 +31,11 @@ split_string(string str)
 
 Config::Config()
 {
-    // itdConfig();
-    // createGraphFromNodes();
-    // imgRead();
-    // setTextures();
-    // createTiles();
+    itdConfig();
+    createGraphFromNodes();
+    imgRead();
+    setTextures();
+    createTiles();
 }
 
 Color Config::getColorIn()
@@ -74,7 +74,7 @@ unordered_map<pair<int, int>, Pixel> Config::getPixels()
     return pixels;
 }
 
-unordered_map<pair<int, int>, Tile> Config::getTiles()
+vector<Tile> Config::getTiles()
 {
     return tiles;
 }
@@ -274,6 +274,6 @@ void Config::createTiles()
             type_and_rotation = {TileType::Grass, 0};
             break;
         }
-        tiles.insert({{p.second.posX, p.second.posY}, {textures.at(type_and_rotation.first), type_and_rotation.first, type_and_rotation.second}});
+        tiles.push_back({static_cast<GLfloat>(p.second.posX), static_cast<GLfloat>(p.second.posY), textures.at(type_and_rotation.first), type_and_rotation.first, static_cast<GLfloat>(type_and_rotation.second)});
     }
 }

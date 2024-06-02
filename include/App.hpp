@@ -2,7 +2,9 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
+#include <unordered_map>
 #include "Bank.hpp"
+#include "Tile.hpp"
 
 class App
 {
@@ -20,6 +22,7 @@ public:
     void size_callback(int width, int height);
 
 private:
+    static const int MAP_SIZE{16};
     void render();
     Bank bank{};
     int _width{};
@@ -28,7 +31,8 @@ private:
     double _viewSize{};
 
     // Add your variables here
-    GLuint _texture{};
+    vector<Tile> map_tiles;
+    GLuint _deco_texture;
     double _angle{};
 
     SimpleText TextRenderer{};

@@ -28,7 +28,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     Config config{};
     for (Tile t : config.getTiles())
     {
-        //     cout << "Tile = pos : (" << t.x << "," << t.y << ") | texture : (" << t.texture << ") | rotate : (" << t.rotation << ")" << endl;
+        cout << "Tile = pos : (" << t.x << "," << t.y << ") | texture : (" << t.texture << ") | rotate : (" << t.rotation << ")" << endl;
         map_tiles.push_back(t);
     }
 }
@@ -62,13 +62,15 @@ void App::render()
     glLoadIdentity();
 
     glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
     for (Tile t : map_tiles)
     {
         glPushMatrix();
+        glScalef(0.4f, 0.4f, 0.4f);
         draw_tile(t, 16.0f);
         glPopMatrix();
     }
+
+    glScalef(0.8f, 0.8f, 0.8f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();
 

@@ -50,7 +50,7 @@ private:
     unordered_map<pair<int, int>, Pixel> pixels;
     unordered_map<TileType, GLuint> textures{};
     vector<Tile> tiles{};
-    img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, false)};
+    img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, true)};
     const unordered_map<int, pair<TileType, int>> paths_rotations = {
         {0b0101, {TileType::Straight, 0}},    // Haut-Bas
         {0b1010, {TileType::Straight, 90}},   // Droite-Gauche

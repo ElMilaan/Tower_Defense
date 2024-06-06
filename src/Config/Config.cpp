@@ -8,6 +8,7 @@
 #include "GLHelpers.hpp"
 #include "Color.hpp"
 #include "Pixel.hpp"
+#include "Graph.hpp"
 
 #include <stb_image/stb_image.h>
 #include <img/img.hpp>
@@ -33,6 +34,7 @@ Config::Config()
 {
     itdConfig();
     createGraphFromNodes();
+    getVertexesToVisit();
     imgRead();
     setTextures();
     createTiles();
@@ -166,6 +168,18 @@ void Config::createGraphFromNodes()
             double dist = n.distanceBetweenNodes(nodes[neighbor]);
             graph.add_directed_edge(n.getId(), neighbor, dist);
         }
+    }
+}
+
+void Config::getVertexesToVisit()
+{
+    int start{nodes[0].getId()};
+    int end{nodes[nbNodes - 1].getId()};
+    unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
+    shortest_path = Graph::get_nodes_id_from_dijkstra(dij, start, end);
+    for (int i : shortest_path)
+    {
+        cout << i << " , ";
     }
 }
 

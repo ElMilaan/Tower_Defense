@@ -129,6 +129,25 @@ namespace Graph
         return tab;
     }
 
+    vector<int> get_nodes_id_from_dijkstra(unordered_map<int, pair<double, int>> tab, int start, int end)
+    {
+        int currentVertex{end};
+        vector<int> vertexes{start};
+
+        while (currentVertex != start)
+        {
+            if (currentVertex != end)
+            {
+                vertexes.push_back(currentVertex);
+            }
+            currentVertex = tab.at(currentVertex).second;
+        }
+        vertexes.push_back(end);
+        sort(vertexes.begin(), vertexes.end());
+
+        return vertexes;
+    }
+
     void display_shortest_path(std::unordered_map<int, std::pair<double, int>> tab, int start, int end)
     {
         int currentVertex{end};

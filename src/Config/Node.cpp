@@ -12,7 +12,6 @@ Node::Node(int id, int x, int y)
     this->id = id;
     this->position.x;
     this->position.y;
-    this->position.isPath;
 }
 
 int Node::getId()

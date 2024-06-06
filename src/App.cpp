@@ -21,8 +21,6 @@ Bank App::getBank()
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
-    // load what needs to be loaded here (for example textures)
-
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     Config config{};

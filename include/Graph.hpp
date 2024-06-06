@@ -40,6 +40,7 @@ namespace Graph
 
     WeightedGraph build_from_adjacency_matrix(vector<vector<double>> const &adjacency_matrix);
     void display_shortest_path(unordered_map<int, pair<double, int>> tab, int start, int end);
+    vector<int> get_nodes_id_from_dijkstra(unordered_map<int, pair<double, int>> tab, int start, int end);
 
 }
 

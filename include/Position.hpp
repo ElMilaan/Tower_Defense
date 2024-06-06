@@ -10,5 +10,4 @@ struct Position
 {
     int x{};
     int y{};
-    bool isPath{false};
 };

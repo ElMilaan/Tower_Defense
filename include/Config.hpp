@@ -46,6 +46,7 @@ private:
     int nbNodes{};
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
+    vector<int> shortest_path{};
     string map_string_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
     unordered_map<TileType, GLuint> textures{};
@@ -81,6 +82,7 @@ public:
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
+    void getVertexesToVisit();
     void imgRead();
     void setTextures();
     void createTiles();

@@ -37,7 +37,7 @@ namespace Graph
         return adjacency_list.find(id) != adjacency_list.end();
     }
 
-    void WeightedGraph::add_vertex(int const id)
+    void WeightedGraph::addVertex(int const id)
     {
         if (!exists(id))
         {
@@ -45,31 +45,31 @@ namespace Graph
         }
     }
 
-    void WeightedGraph::add_directed_edge(int const from, int const to, double const weight)
+    void WeightedGraph::addDirectedEdge(int const from, int const to, double const weight)
     {
-        add_vertex(from);
-        add_vertex(to);
+        addVertex(from);
+        addVertex(to);
         adjacency_list.at(from).push_back({to, weight});
     }
 
-    WeightedGraph build_from_adjacency_matrix(vector<vector<double>> const &adjacency_matrix)
+    WeightedGraph buildFromAdjacencyMatrix(vector<vector<double>> const &adjacency_matrix)
     {
         WeightedGraph graph{};
         for (int i{0}; i < adjacency_matrix.size(); i++)
         {
-            graph.add_vertex(i + 1);
+            graph.addVertex(i + 1);
             for (int j{0}; j < adjacency_matrix[i].size(); j++)
             {
                 if (adjacency_matrix[i][j] != 0)
                 {
-                    graph.add_directed_edge(i + 1, j + 1, adjacency_matrix[i][j]);
+                    graph.addDirectedEdge(i + 1, j + 1, adjacency_matrix[i][j]);
                 }
             }
         }
         return graph;
     }
 
-    void WeightedGraph::print_BFS(int const start) const
+    void WeightedGraph::printBFS(int const start) const
     {
         queue<int> q{};
         vector<int> vertexAlreadyPrint{start};
@@ -129,7 +129,7 @@ namespace Graph
         return tab;
     }
 
-    vector<int> get_nodes_id_from_dijkstra(unordered_map<int, pair<double, int>> tab, int start, int end)
+    vector<int> getNodesIdFromDijkstra(unordered_map<int, pair<double, int>> tab, int start, int end)
     {
         int currentVertex{end};
         vector<int> vertexes{start};
@@ -148,7 +148,7 @@ namespace Graph
         return vertexes;
     }
 
-    void display_shortest_path(std::unordered_map<int, std::pair<double, int>> tab, int start, int end)
+    void displayShortestPath(std::unordered_map<int, std::pair<double, int>> tab, int start, int end)
     {
         int currentVertex{end};
         vector<int> vertexes{start};

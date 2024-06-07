@@ -14,16 +14,8 @@ enum class TowerType
 
 class Tower
 {
-public:
-    Tower(double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
-    void find_path_sprite();
-    void level_up(double cost, double bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
-    void build(pair<double, double> position);
-    void destruct();
-    void attack(Monster monster);
-    bool is_Monster_in_range(Monster monster);
-
 private:
+    Position position{};
     double range{};
     double damage{};
     double attack_speed{};
@@ -31,4 +23,13 @@ private:
     double level{};
     TowerType type{};
     string path_sprite{};
+
+public:
+    Tower(Position position, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
+    void findPathSprite();
+    void levelUp(double cost, double bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
+    void build(Position);
+    void destruct();
+    void attack(Monster monster);
+    bool isMonsterInRange(Monster monster);
 };

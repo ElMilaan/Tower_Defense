@@ -20,12 +20,17 @@ filesystem::path make_absolute_path(filesystem::path const &path, bool check_pat
     return res;
 }
 
+int getDistanceBetweenTwoPoints(Position p1, Position p2)
+{
+    return abs(p1.x - p2.x + p1.y - p2.y);
+}
+
 GLfloat glNormalize(GLfloat coord, GLfloat mapSize)
 {
     return static_cast<GLfloat>(2.0f * coord / mapSize - 1);
 }
 
-void draw_tile(Tile &tile, GLfloat mapSize)
+void drawTile(Tile &tile, GLfloat mapSize)
 {
 
     float x = glNormalize(tile.x, mapSize);

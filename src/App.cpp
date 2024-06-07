@@ -12,7 +12,7 @@
 #include "Tile.hpp"
 
 #include "Bank.hpp"
-#include "Config.hpp"
+#include "Map.hpp"
 
 Bank App::getBank()
 {
@@ -23,12 +23,6 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
-    Config config{};
-    for (Tile t : config.getTiles())
-    {
-        cout << "Tile = pos : (" << t.x << "," << t.y << ") | texture : (" << t.texture << ") | rotate : (" << t.rotation << ")" << endl;
-        map_tiles.push_back(t);
-    }
 }
 
 void App::setup()
@@ -37,10 +31,16 @@ void App::setup()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // Setup the text renderer with blending enabled and white text color
-    TextRenderer.ResetFont();
-    TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
-    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 1.f, 1.f, 1.f, 1.f);
-    TextRenderer.EnableBlending(true);
+    text_renderer.ResetFont();
+    text_renderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
+    text_renderer.SetColorf(SimpleText::BACKGROUND_COLOR, 1.f, 1.f, 1.f, 1.f);
+    text_renderer.EnableBlending(true);
+
+    map.itdMap();
+    map.createGraphFromNodes();
+    map.getVertexesToVisit();
+    map.imgRead();
+    map.createTiles();
 }
 
 void App::update()
@@ -60,11 +60,11 @@ void App::render()
     glLoadIdentity();
 
     glPushMatrix();
-    for (Tile t : map_tiles)
+    for (Tile t : map.getTiles())
     {
         glPushMatrix();
         glScalef(0.4f, 0.4f, 0.4f);
-        draw_tile(t, 16.0f);
+        drawTile(t, 16.0f);
         glPopMatrix();
     }
 
@@ -77,10 +77,10 @@ void App::render()
     stream2 << std::fixed << " : " << std::setprecision(2) << bank.getBankSold();
     bank_amount_text = stream2.str();
 
-    TextRenderer.Label(bank_amount_text.c_str(), _width / 2.6, _height / 19, SimpleText::CENTER);
-    TextRenderer.Label("30", _width / 1.335, _height / 2.5, SimpleText::CENTER);
-    TextRenderer.Label("10", _width / 1.335, _height / 2, SimpleText::CENTER);
-    TextRenderer.Label("20", _width / 1.335, _height / 1.665, SimpleText::CENTER);
+    text_renderer.Label(bank_amount_text.c_str(), _width / 2.6, _height / 19, SimpleText::CENTER);
+    text_renderer.Label("30", _width / 1.335, _height / 2.5, SimpleText::CENTER);
+    text_renderer.Label("10", _width / 1.335, _height / 2, SimpleText::CENTER);
+    text_renderer.Label("20", _width / 1.335, _height / 1.665, SimpleText::CENTER);
 
     // Without set precision
     // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
@@ -93,9 +93,9 @@ void App::render()
     // stream << std::fixed << "Angle: " << std::setprecision(2) << _angle;
     // angle_label_text = stream.str();
 
-    // TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
+    // text_renderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
-    TextRenderer.Render();
+    text_renderer.Render();
 }
 
 void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)

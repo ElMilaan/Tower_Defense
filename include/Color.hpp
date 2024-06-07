@@ -16,5 +16,3 @@ struct Color
     bool isIn(Color in_color);
     bool isPath(Color path_color);
 };
-
-bool operator==(Color const &c1, Color const &c2);

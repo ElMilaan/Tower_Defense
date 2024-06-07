@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "Bank.hpp"
 #include "Tile.hpp"
+#include "Map.hpp"
 
 class App
 {
@@ -23,17 +24,14 @@ public:
 
 private:
     static const int MAP_SIZE{16};
-    void render();
     Bank bank{};
     int _width{};
     int _height{};
     double _previousTime{};
     double _viewSize{};
-
-    // Add your variables here
-    vector<Tile> map_tiles;
+    Map map{};
     GLuint _deco_texture;
     double _angle{};
-
-    SimpleText TextRenderer{};
+    SimpleText text_renderer{};
+    void render();
 };

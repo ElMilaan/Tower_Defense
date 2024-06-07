@@ -37,7 +37,7 @@ enum class Direction
     LEFT = 1 << 3
 };
 
-class Config
+class Map
 {
 private:
     Color color_in;
@@ -67,7 +67,7 @@ private:
     };
 
 public:
-    Config();
+    Map();
     Color getColorIn();
     Color getColorOut();
     Color getColorPath();
@@ -78,7 +78,7 @@ public:
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     static const string ITD_FILE;
-    void itdConfig();
+    void itdMap();
     void getNodesFromItdFile(vector<string> split_line);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
@@ -90,5 +90,5 @@ public:
     pair<TileType, int> getPathType(Pixel &p);
 };
 
-vector<string> split_string(string str);
+vector<string> splitString(string str);
 pair<TileType, img::Image> getMatchingTexture(TileType type);

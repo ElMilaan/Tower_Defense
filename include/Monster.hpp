@@ -22,19 +22,24 @@ private:
     double speed{};
     MonsterType type{};
     string path_sprite{};
-    bool isBoss{};
-    bool isDead{};
+    bool is_boss{};
+    bool is_dead{};
+    bool is_moving{};
+    bool is_freeze{};
+    bool is_burning{};
     Position position{};
 
 public:
-    Monster(double health_points, double speed, MonsterType type, bool isBoss);
-    void find_path_sprite();
-    void change_speed(double coeff);
-    void take_damage(double damage);
     Position getMonsterPosition();
     double getMaxHealth();
     double getHealthPoints();
     double getSpeed();
     bool getIsBoss();
     bool getIsDead();
+    Monster(double health_points, double speed, MonsterType type, bool is_boss, bool is_freeze);
+    void findPathSprite();
+    void changeSpeed(double coeff);
+    void takeDamage(double damage);
+    void toggleFreeze();
+    void toggleBurn();
 };

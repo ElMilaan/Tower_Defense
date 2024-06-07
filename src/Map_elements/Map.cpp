@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iterator>
 #include <vector>
-#include "Config.hpp"
+#include "Map.hpp"
 #include "GLHelpers.hpp"
 #include "Color.hpp"
 #include "Pixel.hpp"
@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const string Config::ITD_FILE = "../../data/config_map.itd";
+const string Map::ITD_FILE = "../../data/config_map.itd";
 
 vector<string>
 split_string(string str)
@@ -30,65 +30,60 @@ split_string(string str)
     return split_line;
 }
 
-Config::Config()
+Map::Map()
 {
-    itdConfig();
-    createGraphFromNodes();
-    getVertexesToVisit();
-    imgRead();
     setTextures();
-    createTiles();
 }
 
-Color Config::getColorIn()
+Color Map::getColorIn()
 {
     return color_in;
 }
-Color Config::getColorOut()
+Color Map::getColorOut()
 {
     return color_out;
 }
-Color Config::getColorPath()
+Color Map::getColorPath()
 {
     return color_path;
 }
-int Config::getNbNodes()
+int Map::getNbNodes()
 {
     return nbNodes;
 }
-vector<Node> Config::getNodes()
+vector<Node> Map::getNodes()
 {
     return nodes;
 }
 
-Graph::WeightedGraph Config::getGraph()
+Graph::WeightedGraph Map::getGraph()
 {
     return graph;
 }
 
-unordered_map<TileType, GLuint> Config::getTextures()
+unordered_map<TileType, GLuint> Map::getTextures()
 {
     return textures;
 }
 
-unordered_map<pair<int, int>, Pixel> Config::getPixels()
+unordered_map<pair<int, int>, Pixel> Map::getPixels()
 {
     return pixels;
 }
 
-vector<Tile> Config::getTiles()
+vector<Tile> Map::getTiles()
 {
     return tiles;
 }
 
 /* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
 
-void Config::getColorFromItd(Color &color, vector<string> split_line)
+void Map::getColorFromItd(Color &color, vector<string> split_line)
 {
     color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
 }
 
-void Config::getNodesFromItdFile(vector<string> split_line)
+void Map::getNodesFromItdFile(vector<string> split_line)
 {
     Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
 
@@ -114,7 +109,7 @@ void Config::getNodesFromItdFile(vector<string> split_line)
     nodes.push_back(node);
 }
 
-void Config::itdConfig()
+void Map::itdMap()
 {
     ifstream my_file;
 
@@ -159,24 +154,24 @@ void Config::itdConfig()
 
 /* --------------- CONSTRUCTION DU GRAPHE A PARTIR DES NODES RECUPEREES --------------- */
 
-void Config::createGraphFromNodes()
+void Map::createGraphFromNodes()
 {
     for (Node n : nodes)
     {
         for (int neighbor : n.getNeighbors())
         {
             double dist = n.distanceBetweenNodes(nodes[neighbor]);
-            graph.add_directed_edge(n.getId(), neighbor, dist);
+            graph.addDirectedEdge(n.getId(), neighbor, dist);
         }
     }
 }
 
-void Config::getVertexesToVisit()
+void Map::getVertexesToVisit()
 {
     int start{nodes[0].getId()};
     int end{nodes[nbNodes - 1].getId()};
     unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
-    shortest_path = Graph::get_nodes_id_from_dijkstra(dij, start, end);
+    shortest_path = Graph::getNodesIdFromDijkstra(dij, start, end);
     for (int i : shortest_path)
     {
         cout << i << " , ";
@@ -201,9 +196,23 @@ pair<TileType, img::Image> getMatchingTexture(TileType type)
     return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
 }
 
+// CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
+
+void Map::setTextures()
+{
+    cout << endl
+         << "Loading...." << endl;
+
+    for (int i{0}; i < 5; i++)
+    {
+        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
+    }
+    cout << "Done !";
+}
+
 // LECTURE DU SCHEMA DE BASE 16x16
 
-void Config::imgRead()
+void Map::imgRead()
 {
     Color color{};
     for (int i{0}; i < pixelized_map.data_size(); i += pixelized_map.channels_count())
@@ -217,23 +226,10 @@ void Config::imgRead()
     }
 }
 
-// CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
-
-void Config::setTextures()
-{
-    cout << endl
-         << "Loading...." << endl;
-    for (int i{0}; i < 5; i++)
-    {
-        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
-    }
-    cout << "Done !";
-}
-
 // CREATION DES TILES
 
 // retourne un vecteur -> 0 = top, 1 = right, 2 = bottom, 3 = left. true si c'est un chemin, false sinon
-vector<bool> Config::checkAround(Pixel &p)
+vector<bool> Map::checkAround(Pixel &p)
 {
     vector<bool> around{};
     // on manipule les pixels de chemin, d'entrée et de sortie comme des chemins pour notre condition
@@ -245,7 +241,7 @@ vector<bool> Config::checkAround(Pixel &p)
 }
 
 // retourne le type de chemin + le coeff de rotation pour la sprite lors du rendu
-pair<TileType, int> Config::getPathType(Pixel &p)
+pair<TileType, int> Map::getPathType(Pixel &p)
 {
     vector<bool> around{checkAround(p)};
     int mask = 0;
@@ -261,7 +257,7 @@ pair<TileType, int> Config::getPathType(Pixel &p)
     return paths_rotations.at(mask);
 }
 
-void Config::createTiles()
+void Map::createTiles()
 {
     for (pair p : pixels)
     {

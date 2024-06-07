@@ -26,21 +26,21 @@ namespace Graph
 
         bool exists(int const id);
 
-        void add_vertex(int const id);
+        void addVertex(int const id);
 
-        void add_directed_edge(int const from, int const to, double const weight = 1.0f);
+        void addDirectedEdge(int const from, int const to, double const weight = 1.0f);
 
         bool operator==(WeightedGraph const &other) const;
         bool operator!=(WeightedGraph const &other) const;
 
-        void print_BFS(int const start) const;
+        void printBFS(int const start) const;
 
         unordered_map<int, pair<double, int>> dijkstra(int const &start, int const &end);
     };
 
-    WeightedGraph build_from_adjacency_matrix(vector<vector<double>> const &adjacency_matrix);
-    void display_shortest_path(unordered_map<int, pair<double, int>> tab, int start, int end);
-    vector<int> get_nodes_id_from_dijkstra(unordered_map<int, pair<double, int>> tab, int start, int end);
+    WeightedGraph buildFromAdjacencyMatrix(vector<vector<double>> const &adjacency_matrix);
+    void displayShortestPath(unordered_map<int, pair<double, int>> tab, int start, int end);
+    vector<int> getNodesIdFromDijkstra(unordered_map<int, pair<double, int>> tab, int start, int end);
 
 }
 

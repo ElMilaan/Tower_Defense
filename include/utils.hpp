@@ -38,6 +38,6 @@ ostream &operator<<(ostream &os, vector<T> const &vec)
     return os << vec.back() << ']';
 }
 
+int getDistanceBetweenTwoPoints(Position p1, Position p2);
 GLfloat glNormalize(GLfloat coord, GLfloat mapSize);
-
-void draw_tile(Tile &tile, GLfloat mapSize);
+void drawTile(Tile &tile, GLfloat mapSize);

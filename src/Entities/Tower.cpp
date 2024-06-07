@@ -2,11 +2,13 @@
 #include <vector>
 #include "Tower.hpp"
 #include "Monster.hpp"
+#include "utils.hpp"
 #include <stack>
 #include "GLFW/glfw3.h"
 
-Tower::Tower(double range, double damage, double level, TowerType type, double construction_cost, double attack_speed)
+Tower::Tower(Position position, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed)
 {
+    this->position = position;
     this->range = range;
     this->damage = damage;
     this->level = level;
@@ -16,7 +18,7 @@ Tower::Tower(double range, double damage, double level, TowerType type, double c
     this->path_sprite = path_sprite;
 }
 
-void Tower::find_path_sprite()
+void Tower::findPathSprite()
 {
     switch (type)
     {
@@ -32,14 +34,14 @@ void Tower::find_path_sprite()
     }
 }
 
-void Tower::level_up(double cost, double bank_sold)
+void Tower::levelUp(double cost, double bank_sold)
 {
     level += 1;
     path_sprite = "";
     bank_sold -= cost;
 }
 
-void Tower::build(pair<double, double> position)
+void Tower::build(Position position)
 {
 }
 
@@ -47,34 +49,30 @@ void Tower::destruct()
 {
 }
 
-// bool is_Monster_in_range(Monster monster)
-// {
-//     if (monster.position < range)
-//     {
-//         return 1;
-//     }
-//     else
-//     {
-//         return 0;
-//     }
-// }
-
-void attack(Monster monster)
+// update
+bool Tower::isMonsterInRange(Monster monster)
 {
-    // stack<Monster>file_attente_attaque{};
-    // if (is_Monster_in_range == 1)
-    // {
-    //     file_attente_attaque.push_back(monster);
-    // }
-    // while (file_attente_attaque.empty() == 0)
-    // {
-    //     file_attente_attaque.top
-    // }
+    if (getDistanceBetweenTwoPoints(position, monster.getMonsterPosition()) < range)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
-    // while (is_Monster_in_range(monster) == 1 or monster.health_points != 0)
-    // {
-    //     double Time{glfwGetTime() * Tower->attack_speed};
+void Tower::attack(Monster monster)
+{
+    if (isMonsterInRange(monster))
+    {
+        switch (type)
+        {
+        case TowerType::Fire:
 
-    //     monster.health_points -= Tower->damage;
-    // }
+            break;
+        case TowerType::Ice:
+            break;
+        }
+    }
 }

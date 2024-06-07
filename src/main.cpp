@@ -6,7 +6,7 @@
 #include <iostream>
 #include "Graph.hpp"
 #include "App.hpp"
-#include "Config.hpp"
+#include "Map.hpp"
 
 using namespace std;
 

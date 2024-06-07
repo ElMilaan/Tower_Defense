@@ -23,6 +23,6 @@ struct Tile
     GLuint texture{};
     TileType type{};
     GLfloat rotation{};
-    bool isClosed{};
+    bool is_closed{};
     const GLfloat SIZE{1};
 };

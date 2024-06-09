@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const string Map::ITD_FILE = "../../data/config_map.itd";
+const string Map::ITD_FILE = "data/config_map.itd";
 
 vector<string>
 split_string(string str)
@@ -174,7 +174,6 @@ void Map::createGraphFromNodes()
 
 void Map::deployBarrage(Barrage b)
 {
-    cout << b.getNodeId() - 2 << endl;
     for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
     {
         if (wge.to == b.getNodeId())

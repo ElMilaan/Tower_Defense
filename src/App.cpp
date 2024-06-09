@@ -46,7 +46,7 @@ void App::setup()
     map.createTiles();
 
     Barrage b{};
-    b.setNodeId(3);
+    b.setNodeId(8);
     map.deployBarrage(b);
     map.setVertexesToVisit();
 }

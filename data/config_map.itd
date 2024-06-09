@@ -23,7 +23,7 @@ barrage 3 2 7 5
 node 4 3 4 5
 node 5 3 7 6
 node 6 4 7 7 8
-node 7 4 10 8
+node 7 4 10 9
 barrage 8 5 7 10
 node 9 6 10 10
 node 10 6 7 11

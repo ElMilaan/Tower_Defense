@@ -9,10 +9,6 @@ using namespace std;
 
 namespace Graph
 {
-    void WeightedGraphEdge::toggleClosed()
-    {
-        isClosed = !isClosed;
-    }
     bool WeightedGraphEdge::operator==(WeightedGraphEdge const &other) const
     {
         return to == other.to && weight == other.weight;
@@ -37,6 +33,11 @@ namespace Graph
         return adjacency_list.find(id) != adjacency_list.end();
     }
 
+    void WeightedGraph::clear()
+    {
+        adjacency_list.clear();
+    }
+
     void WeightedGraph::addVertex(int const id)
     {
         if (!exists(id))
@@ -50,6 +51,17 @@ namespace Graph
         addVertex(from);
         addVertex(to);
         adjacency_list.at(from).push_back({to, weight});
+    }
+
+    void WeightedGraph::closeEdge(int const from, int const to)
+    {
+        for (WeightedGraphEdge wge : adjacency_list.at(from))
+        {
+            if (wge.to == to)
+            {
+                wge.isClosed = true;
+            }
+        }
     }
 
     WeightedGraph buildFromAdjacencyMatrix(vector<vector<double>> const &adjacency_matrix)

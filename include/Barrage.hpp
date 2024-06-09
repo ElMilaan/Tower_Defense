@@ -1,22 +1,19 @@
+#pragma once
+
 #include <iostream>
+#include "Graph.hpp"
+#include "Position.hpp"
 
 using namespace std;
-
-enum class BarrageLocation
-{
-    First,
-    Second,
-    Third,
-    Fourth
-};
 
 class Barrage
 {
 private:
-    BarrageLocation location{};
-    string sprite_path{};
+    int node_id;
+    string sprite_path{"images/barrage6464.png"};
 
 public:
-    BarrageLocation getLocation();
+    int getNodeId();
     string getSpritePath();
+    void setNodeId(int id);
 };

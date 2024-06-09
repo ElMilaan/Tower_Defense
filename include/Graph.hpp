@@ -15,7 +15,6 @@ namespace Graph
         double weight{1.0f};
         bool isClosed{false};
 
-        void toggleClosed();
         bool operator==(WeightedGraphEdge const &other) const;
         bool operator!=(WeightedGraphEdge const &other) const;
     };
@@ -26,9 +25,12 @@ namespace Graph
 
         bool exists(int const id);
 
+        void clear();
+
         void addVertex(int const id);
 
         void addDirectedEdge(int const from, int const to, double const weight = 1.0f);
+        void closeEdge(int const from, int const to);
 
         bool operator==(WeightedGraph const &other) const;
         bool operator!=(WeightedGraph const &other) const;

@@ -18,11 +18,12 @@ private:
     NodeStatus status{};
     Position position{};
     vector<int> neighbors{};
+    bool isBarrage{};
 
 public:
     Node();
     Node(int id, int x, int y);
-    Node(int id, bool isTowerPlace, bool isBarragePlace, int x, int y);
+    Node(int id, bool isBarragePlace, int x, int y);
     int getId();
     NodeStatus getStatus();
     Position getPosition();

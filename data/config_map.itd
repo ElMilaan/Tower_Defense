@@ -14,22 +14,28 @@ out 255 0 0 255
 
 # graphe
 
-graph 18
+graph 22
+
 node 0 0 7 1
-node 1 1 7 2 4
-node 2 1 4 3
-node 3 3 4 4
-node 4 3 7 5
-node 5 4 7 6 8
-node 6 4 10 7
-node 7 6 10 8
-node 8 6 7 9
-node 9 7 7 10 12
-node 10 7 4 11
-node 11 9 4 12
-node 12 9 7 13
-node 13 10 7 14 16
-node 14 10 10 15
-node 15 12 10 16
-node 16 12 7 17
-node 17 15 7  
+node 1 1 7 2 3
+node 2 1 4 4
+barrage 3 2 7 5
+node 4 3 4 5
+node 5 3 7 6
+node 6 4 7 7 8
+node 7 4 10 8
+barrage 8 5 7 10
+node 9 6 10 10
+node 10 6 7 11
+node 11 7 7 12 13
+node 12 7 4 14
+barrage 13 8 7 15
+node 14 9 4 15
+node 15 9 7 16
+node 16 10 7 17 18
+node 17 10 10 19
+barrage 18 11 7 20
+node 19 12 10 20
+node 20 12 7 21
+node 21 15 7  
+

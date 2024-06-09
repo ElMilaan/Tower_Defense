@@ -14,6 +14,8 @@
 #include "Bank.hpp"
 #include "Map.hpp"
 
+#include "Barrage.hpp"
+
 Bank App::getBank()
 {
     return bank;
@@ -36,11 +38,17 @@ void App::setup()
     text_renderer.SetColorf(SimpleText::BACKGROUND_COLOR, 1.f, 1.f, 1.f, 1.f);
     text_renderer.EnableBlending(true);
 
+    // Config de la map
     map.itdMap();
     map.createGraphFromNodes();
-    map.getVertexesToVisit();
+    map.setVertexesToVisit();
     map.imgRead();
     map.createTiles();
+
+    Barrage b{};
+    b.setNodeId(3);
+    map.deployBarrage(b);
+    map.setVertexesToVisit();
 }
 
 void App::update()
@@ -48,6 +56,8 @@ void App::update()
     // const double currentTime{glfwGetTime()};
     // const double elapsedTime{currentTime - _previousTime};
     // _previousTime = currentTime;
+
+    // on rappelle cette fonction pour mettre a jour le plus court chemin (si jamais un barrage a été posé)
 
     render();
 }
@@ -59,6 +69,7 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // Render de la map
     glPushMatrix();
     for (Tile t : map.getTiles())
     {

@@ -10,6 +10,7 @@
 #include "Pixel.hpp"
 #include "utils.hpp"
 #include "Position.hpp"
+#include "Barrage.hpp"
 
 #include <img/img.hpp>
 #include <glad/glad.h>
@@ -49,7 +50,7 @@ private:
     vector<int> shortest_path{};
     string map_string_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
-    unordered_map<TileType, GLuint> textures{};
+    unordered_map<TileType, GLuint> tile_textures{};
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, true)};
     const unordered_map<int, pair<TileType, int>> paths_rotations = {
@@ -74,15 +75,16 @@ public:
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
-    unordered_map<TileType, GLuint> getTextures();
+    unordered_map<TileType, GLuint> getTileTextures();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     static const string ITD_FILE;
     void itdMap();
-    void getNodesFromItdFile(vector<string> split_line);
+    void getNodesFromItdFile(vector<string> split_line, bool isBarrage);
     void getColorFromItd(Color &color, vector<string> split_line);
     void createGraphFromNodes();
-    void getVertexesToVisit();
+    void deployBarrage(Barrage b);
+    void setVertexesToVisit();
     void imgRead();
     void setTextures();
     void createTiles();

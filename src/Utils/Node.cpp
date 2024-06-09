@@ -12,6 +12,15 @@ Node::Node(int id, int x, int y)
     this->id = id;
     this->position.x;
     this->position.y;
+    this->isBarrage = false;
+}
+
+Node::Node(int id, bool isBarrage, int x, int y)
+{
+    this->id = id;
+    this->position.x;
+    this->position.y;
+    this->isBarrage = isBarrage;
 }
 
 int Node::getId()

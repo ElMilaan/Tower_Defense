@@ -30,6 +30,7 @@ split_string(string str)
     return split_line;
 }
 
+// constructeur
 Map::Map()
 {
     setTextures();
@@ -61,9 +62,9 @@ Graph::WeightedGraph Map::getGraph()
     return graph;
 }
 
-unordered_map<TileType, GLuint> Map::getTextures()
+unordered_map<TileType, GLuint> Map::getTileTextures()
 {
-    return textures;
+    return tile_textures;
 }
 
 unordered_map<pair<int, int>, Pixel> Map::getPixels()
@@ -83,9 +84,9 @@ void Map::getColorFromItd(Color &color, vector<string> split_line)
     color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
 }
 
-void Map::getNodesFromItdFile(vector<string> split_line)
+void Map::getNodesFromItdFile(vector<string> split_line, bool is_barrage)
 {
-    Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
+    Node node(stoi(split_line[1]), is_barrage, stoi(split_line[2]), stoi(split_line[3]));
 
     if (stoi(split_line[1]) != this->nbNodes - 1)
     {
@@ -142,7 +143,11 @@ void Map::itdMap()
             }
             else if (my_line.starts_with("node"))
             {
-                getNodesFromItdFile(split_line);
+                getNodesFromItdFile(split_line, 0);
+            }
+            else if (my_line.starts_with("barrage"))
+            {
+                getNodesFromItdFile(split_line, 1);
             }
         }
     }
@@ -156,6 +161,7 @@ void Map::itdMap()
 
 void Map::createGraphFromNodes()
 {
+    graph.clear();
     for (Node n : nodes)
     {
         for (int neighbor : n.getNeighbors())
@@ -166,7 +172,19 @@ void Map::createGraphFromNodes()
     }
 }
 
-void Map::getVertexesToVisit()
+void Map::deployBarrage(Barrage b)
+{
+    cout << b.getNodeId() - 2 << endl;
+    for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
+    {
+        if (wge.to == b.getNodeId())
+        {
+            wge.isClosed = true;
+        }
+    }
+}
+
+void Map::setVertexesToVisit()
 {
     int start{nodes[0].getId()};
     int end{nodes[nbNodes - 1].getId()};
@@ -176,9 +194,10 @@ void Map::getVertexesToVisit()
     {
         cout << i << " , ";
     }
+    cout << endl;
 }
 
-/* --------------- RECUPERATION DES TEXTURES DANS UN TABLEAU D'ID -------------------- */
+/* --------------- RECUPERATION DES TEXTURES de TILES DANS UN TABLEAU D'ID -------------------- */
 
 pair<TileType, img::Image> getMatchingTexture(TileType type)
 {
@@ -205,7 +224,7 @@ void Map::setTextures()
 
     for (int i{0}; i < 5; i++)
     {
-        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
+        tile_textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
     }
     cout << "Done !";
 }
@@ -284,6 +303,6 @@ void Map::createTiles()
             type_and_rotation = {TileType::Grass, 0};
             break;
         }
-        tiles.push_back({static_cast<GLfloat>(p.second.posX), static_cast<GLfloat>(p.second.posY), textures.at(type_and_rotation.first), type_and_rotation.first, static_cast<GLfloat>(type_and_rotation.second)});
+        tiles.push_back({static_cast<GLfloat>(p.second.posX), static_cast<GLfloat>(p.second.posY), tile_textures.at(type_and_rotation.first), type_and_rotation.first, static_cast<GLfloat>(type_and_rotation.second)});
     }
 }

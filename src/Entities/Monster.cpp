@@ -9,7 +9,7 @@ Monster::Monster(double max_health, double speed, MonsterType type, bool is_boss
     this->max_health = max_health;
     this->health_points = max_health;
     this->speed = speed;
-    this->path_sprite = path_sprite;
+    // this->path_sprite = path_sprite;
     this->type = type;
     this->is_boss = is_boss;
     this->is_freeze = is_freeze;

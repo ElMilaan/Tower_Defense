@@ -29,35 +29,3 @@ GLfloat glNormalize(GLfloat coord, GLfloat mapSize)
 {
     return static_cast<GLfloat>(2.0f * coord / mapSize - 1);
 }
-
-void drawTile(Tile &tile, GLfloat mapSize)
-{
-
-    float x = glNormalize(tile.x, mapSize);
-    float y = glNormalize(tile.y, mapSize);
-    float size = 2.0f / mapSize;
-
-    // cout << x << " , " << y << endl;
-
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, tile.texture);
-    glTranslatef(x + size / 2, y + size / 2, 0.0f);
-    glRotatef(tile.rotation, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-(x + size / 2), -(y + size / 2), 0.0f);
-
-    glBegin(GL_QUADS);
-
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(x, y);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex2f(x + size, y);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex2f(x + size, y + size);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex2f(x, y + size);
-
-    glEnd();
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_TEXTURE_2D);
-}

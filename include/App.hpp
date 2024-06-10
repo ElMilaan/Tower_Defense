@@ -6,6 +6,7 @@
 #include "Bank.hpp"
 #include "Tile.hpp"
 #include "Map.hpp"
+#include "Monster.hpp"
 
 class App
 {
@@ -31,6 +32,8 @@ private:
     double _viewSize{};
     Map map{};
     GLuint _deco_texture;
+    unordered_map<TileType, GLuint> tile_textures{};
+    unordered_map<MonsterType, GLuint> monster_textures{};
     double _angle{};
     SimpleText text_renderer{};
     void render();

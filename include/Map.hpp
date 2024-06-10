@@ -13,7 +13,6 @@
 #include "Barrage.hpp"
 #include "Monster.hpp"
 
-#include <img/img.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <unordered_map>
@@ -49,10 +48,7 @@ private:
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     vector<int> shortest_path{};
-    string map_string_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
-    unordered_map<TileType, GLuint> tile_textures{};
-    unordered_map<MonsterType, GLuint> monster_textures{};
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, true)};
     const unordered_map<int, pair<TileType, int>> paths_rotations = {
@@ -70,14 +66,12 @@ private:
     };
 
 public:
-    Map();
     Color getColorIn();
     Color getColorOut();
     Color getColorPath();
     int getNbNodes();
     vector<Node> getNodes();
     Graph::WeightedGraph getGraph();
-    unordered_map<TileType, GLuint> getTileTextures();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     static const string ITD_FILE;
@@ -88,8 +82,7 @@ public:
     void deployBarrage(Barrage b);
     void setVertexesToVisit();
     void imgRead();
-    void setTextures();
-    void createTiles();
+    void createTiles(unordered_map<TileType, GLuint> &textures);
     vector<bool> checkAround(Pixel &p);
     pair<TileType, int> getPathType(Pixel &p);
 };

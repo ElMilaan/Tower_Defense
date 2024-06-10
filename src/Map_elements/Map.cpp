@@ -20,20 +20,13 @@ using namespace std;
 
 const string Map::ITD_FILE = "../../data/config_map.itd";
 
-vector<string>
-split_string(string str)
+vector<string> splitString(string str)
 {
     stringstream ss(str);
     istream_iterator<string> begin(ss);
     istream_iterator<string> end;
     vector<string> split_line(begin, end);
     return split_line;
-}
-
-// constructeur
-Map::Map()
-{
-    setTextures();
 }
 
 Color Map::getColorIn()
@@ -60,11 +53,6 @@ vector<Node> Map::getNodes()
 Graph::WeightedGraph Map::getGraph()
 {
     return graph;
-}
-
-unordered_map<TileType, GLuint> Map::getTileTextures()
-{
-    return tile_textures;
 }
 
 unordered_map<pair<int, int>, Pixel> Map::getPixels()
@@ -123,7 +111,7 @@ void Map::itdMap()
         while (my_file)
         {
             getline(my_file, my_line);
-            vector<string> split_line = split_string(my_line);
+            vector<string> split_line = splitString(my_line);
 
             if (my_line.starts_with("path"))
             {
@@ -196,57 +184,6 @@ void Map::setVertexesToVisit()
     cout << endl;
 }
 
-/* --------------- RECUPERATION DES TEXTURES de TILES ET DE MONSTRES DANS UN TABLEAU D'ID -------------------- */
-
-pair<TileType, img::Image> getMatchingTileTexture(TileType type)
-{
-    switch (type)
-    {
-    case TileType::Curve:
-        return {TileType::Curve, img::Image{img::load(make_absolute_path("images/curve.png", true), 4, false)}};
-    case TileType::FourWays:
-        return {TileType::FourWays, img::Image{img::load(make_absolute_path("images/four_ways.png", true), 4, false)}};
-    case TileType::ThreeWays:
-        return {TileType::ThreeWays, img::Image{img::load(make_absolute_path("images/three_ways.png", true), 4, false)}};
-    case TileType::Straight:
-        return {TileType::Straight, img::Image{img::load(make_absolute_path("images/straight.png", true), 4, false)}};
-    }
-    return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
-}
-
-pair<MonsterType, img::Image> getMatchingMonsterTexture(MonsterType type)
-{
-    switch (type)
-    {
-    case MonsterType::Meduse:
-        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/meduse.png", true), 4, false)}};
-    case MonsterType::Orque:
-        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/orque.png", true), 4, false)}};
-    case MonsterType::Poseidon:
-        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/poseidon.png", true), 4, false)}};
-    case MonsterType::Requin:
-        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/requin.png", true), 4, false)}};
-    }
-}
-
-// CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
-
-void Map::setTextures()
-{
-    cout << endl
-         << "Loading...." << endl;
-
-    for (int i{0}; i < 5; i++)
-    {
-        tile_textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTileTexture(static_cast<TileType>(i)).second)});
-    }
-    cout << "Done !";
-    for (int i{0}; i < 4; i++)
-    {
-        monster_textures.insert({static_cast<MonsterType>(i), loadTexture(getMatchingMonsterTexture(static_cast<MonsterType>(i)).second)});
-    }
-}
-
 // LECTURE DU SCHEMA DE BASE 16x16
 
 void Map::imgRead()
@@ -294,7 +231,7 @@ pair<TileType, int> Map::getPathType(Pixel &p)
     return paths_rotations.at(mask);
 }
 
-void Map::createTiles()
+void Map::createTiles(unordered_map<TileType, GLuint> &textures)
 {
     for (pair p : pixels)
     {
@@ -321,6 +258,6 @@ void Map::createTiles()
             type_and_rotation = {TileType::Grass, 0};
             break;
         }
-        tiles.push_back({static_cast<GLfloat>(p.second.posX), static_cast<GLfloat>(p.second.posY), tile_textures.at(type_and_rotation.first), type_and_rotation.first, static_cast<GLfloat>(type_and_rotation.second)});
+        tiles.push_back({static_cast<GLfloat>(p.second.posX), static_cast<GLfloat>(p.second.posY), textures.at(type_and_rotation.first), type_and_rotation.first, static_cast<GLfloat>(type_and_rotation.second)});
     }
 }

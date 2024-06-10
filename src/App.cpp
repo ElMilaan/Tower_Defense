@@ -8,6 +8,7 @@
 
 #include "simpletext.h"
 #include "utils.hpp"
+#include "Draw.hpp"
 #include "GLHelpers.hpp"
 #include "Tile.hpp"
 
@@ -25,6 +26,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
+    tile_textures = setTileTextures();
+    monster_textures = setMonsterTextures();
 }
 
 void App::setup()
@@ -43,7 +46,7 @@ void App::setup()
     map.createGraphFromNodes();
     map.setVertexesToVisit();
     map.imgRead();
-    map.createTiles();
+    map.createTiles(tile_textures);
 
     // Barrage b{};
     // b.setNodeId(8);

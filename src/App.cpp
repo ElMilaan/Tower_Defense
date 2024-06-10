@@ -45,10 +45,10 @@ void App::setup()
     map.imgRead();
     map.createTiles();
 
-    Barrage b{};
-    b.setNodeId(8);
-    map.deployBarrage(b);
-    map.setVertexesToVisit();
+    // Barrage b{};
+    // b.setNodeId(8);
+    // map.deployBarrage(b);
+    // map.setVertexesToVisit();
 }
 
 void App::update()
@@ -78,7 +78,6 @@ void App::render()
         drawTile(t, 16.0f);
         glPopMatrix();
     }
-
     glScalef(0.8f, 0.8f, 0.8f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();

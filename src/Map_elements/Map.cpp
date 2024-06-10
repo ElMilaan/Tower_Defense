@@ -196,9 +196,9 @@ void Map::setVertexesToVisit()
     cout << endl;
 }
 
-/* --------------- RECUPERATION DES TEXTURES de TILES DANS UN TABLEAU D'ID -------------------- */
+/* --------------- RECUPERATION DES TEXTURES de TILES ET DE MONSTRES DANS UN TABLEAU D'ID -------------------- */
 
-pair<TileType, img::Image> getMatchingTexture(TileType type)
+pair<TileType, img::Image> getMatchingTileTexture(TileType type)
 {
     switch (type)
     {
@@ -214,6 +214,21 @@ pair<TileType, img::Image> getMatchingTexture(TileType type)
     return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
 }
 
+pair<MonsterType, img::Image> getMatchingMonsterTexture(MonsterType type)
+{
+    switch (type)
+    {
+    case MonsterType::Meduse:
+        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/curve.png", true), 4, false)}};
+    case MonsterType::Orque:
+        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/four_ways.png", true), 4, false)}};
+    case MonsterType::Poseidon:
+        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/three_ways.png", true), 4, false)}};
+    case MonsterType::Requin:
+        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/straight.png", true), 4, false)}};
+    }
+}
+
 // CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
 
 void Map::setTextures()
@@ -223,9 +238,13 @@ void Map::setTextures()
 
     for (int i{0}; i < 5; i++)
     {
-        tile_textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
+        tile_textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTileTexture(static_cast<TileType>(i)).second)});
     }
     cout << "Done !";
+    for (int i{0}; i < 4; i++)
+    {
+        monster_textures.insert({static_cast<MonsterType>(i), loadTexture(getMatchingMonsterTexture(static_cast<MonsterType>(i)).second)});
+    }
 }
 
 // LECTURE DU SCHEMA DE BASE 16x16

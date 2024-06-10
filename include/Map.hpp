@@ -11,6 +11,7 @@
 #include "utils.hpp"
 #include "Position.hpp"
 #include "Barrage.hpp"
+#include "Monster.hpp"
 
 #include <img/img.hpp>
 #include <glad/glad.h>
@@ -51,6 +52,7 @@ private:
     string map_string_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
     unordered_map<TileType, GLuint> tile_textures{};
+    unordered_map<MonsterType, GLuint> monster_textures{};
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, true)};
     const unordered_map<int, pair<TileType, int>> paths_rotations = {
@@ -93,4 +95,5 @@ public:
 };
 
 vector<string> splitString(string str);
-pair<TileType, img::Image> getMatchingTexture(TileType type);
+pair<TileType, img::Image> getMatchingTileTexture(TileType type);
+pair<MonsterType, img::Image> getMatchingMonsterTexture(MonsterType type);

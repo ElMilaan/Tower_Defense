@@ -47,24 +47,24 @@ bool Monster::getIsDead()
     return this->is_dead;
 }
 
-void Monster::findPathSprite()
-{
-    switch (type)
-    {
-    case MonsterType::Orque:
-        path_sprite = "images/orque6464.png";
-        break;
+// void Monster::findPathSprite()
+// {
+//     switch (type)
+//     {
+//     case MonsterType::Orque:
+//         path_sprite = "images/orque6464.png";
+//         break;
 
-    case MonsterType::Meduse:
-        path_sprite = "";
+//     case MonsterType::Meduse:
+//         path_sprite = "";
 
-    case MonsterType::Poseidon:
-        path_sprite = "";
+//     case MonsterType::Poseidon:
+//         path_sprite = "";
 
-    case MonsterType::Requin:
-        path_sprite = "";
-    }
-}
+//     case MonsterType::Requin:
+//         path_sprite = "";
+//     }
+// }
 
 void Monster::changeSpeed(double coeff)
 {

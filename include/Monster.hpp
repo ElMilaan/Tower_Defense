@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Position.hpp"
+#include "GlFW/glfw3.h"
 
 using namespace std;
 
@@ -21,13 +22,14 @@ private:
     double health_points{};
     double speed{};
     MonsterType type{};
-    string path_sprite{};
+    unordered_map<TileType, GLuint> Texture();
     bool is_boss{};
     bool is_dead{};
     bool is_moving{};
     bool is_freeze{};
     bool is_burning{};
     Position position{};
+    
 
 public:
     Position getMonsterPosition();
@@ -42,4 +44,5 @@ public:
     void takeDamage(double damage);
     void toggleFreeze();
     void toggleBurn();
+    
 };

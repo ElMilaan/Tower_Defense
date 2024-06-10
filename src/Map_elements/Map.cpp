@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const string Map::ITD_FILE = "data/config_map.itd";
+const string Map::ITD_FILE = "../../data/config_map.itd";
 
 vector<string>
 split_string(string str)

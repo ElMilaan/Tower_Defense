@@ -219,13 +219,13 @@ pair<MonsterType, img::Image> getMatchingMonsterTexture(MonsterType type)
     switch (type)
     {
     case MonsterType::Meduse:
-        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/curve.png", true), 4, false)}};
+        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/meduse.png", true), 4, false)}};
     case MonsterType::Orque:
-        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/four_ways.png", true), 4, false)}};
+        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/orque.png", true), 4, false)}};
     case MonsterType::Poseidon:
-        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/three_ways.png", true), 4, false)}};
+        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/poseidon.png", true), 4, false)}};
     case MonsterType::Requin:
-        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/straight.png", true), 4, false)}};
+        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/requin.png", true), 4, false)}};
     }
 }
 

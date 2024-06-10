@@ -18,16 +18,7 @@
 
 using namespace std;
 
-const string Map::ITD_FILE = "../../data/config_map.itd";
-
-vector<string> splitString(string str)
-{
-    stringstream ss(str);
-    istream_iterator<string> begin(ss);
-    istream_iterator<string> end;
-    vector<string> split_line(begin, end);
-    return split_line;
-}
+const string Map::ITD_FILE = "data/config_map.itd";
 
 Color Map::getColorIn()
 {

@@ -40,3 +40,5 @@ ostream &operator<<(ostream &os, vector<T> const &vec)
 
 int getDistanceBetweenTwoPoints(Position p1, Position p2);
 GLfloat glNormalize(GLfloat coord, GLfloat mapSize);
+
+vector<string> splitString(string str);

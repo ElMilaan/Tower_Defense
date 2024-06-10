@@ -30,16 +30,18 @@ private:
     Position position{};
 
 public:
+    static const string ITD_FILE;
+    Monster(MonsterType type, bool is_freeze);
     Position getMonsterPosition();
     double getMaxHealth();
     double getHealthPoints();
     double getSpeed();
     bool getIsBoss();
     bool getIsDead();
-    Monster(double health_points, double speed, MonsterType type, bool is_boss, bool is_freeze);
-    void findPathSprite();
     void changeSpeed(double coeff);
     void takeDamage(double damage);
     void toggleFreeze();
     void toggleBurn();
+    void setAttributes(MonsterType type);
+    void itdMonster();
 };

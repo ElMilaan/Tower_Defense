@@ -59,8 +59,7 @@ void App::update()
     // const double currentTime{glfwGetTime()};
     // const double elapsedTime{currentTime - _previousTime};
     // _previousTime = currentTime;
-
-    // on rappelle cette fonction pour mettre a jour le plus court chemin (si jamais un barrage a été posé)
+    bank.addMoney(0.02);
 
     render();
 }

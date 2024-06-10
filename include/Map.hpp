@@ -66,6 +66,7 @@ private:
     };
 
 public:
+    static const string ITD_FILE;
     Color getColorIn();
     Color getColorOut();
     Color getColorPath();
@@ -74,7 +75,6 @@ public:
     Graph::WeightedGraph getGraph();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
-    static const string ITD_FILE;
     void itdMap();
     void getNodesFromItdFile(vector<string> split_line, bool isBarrage);
     void getColorFromItd(Color &color, vector<string> split_line);

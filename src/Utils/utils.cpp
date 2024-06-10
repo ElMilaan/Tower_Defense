@@ -29,3 +29,12 @@ GLfloat glNormalize(GLfloat coord, GLfloat mapSize)
 {
     return static_cast<GLfloat>(2.0f * coord / mapSize - 1);
 }
+
+vector<string> splitString(string str)
+{
+    stringstream ss(str);
+    istream_iterator<string> begin(ss);
+    istream_iterator<string> end;
+    vector<string> split_line(begin, end);
+    return split_line;
+}

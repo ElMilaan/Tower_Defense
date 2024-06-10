@@ -71,12 +71,9 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
 
 void drawTile(Tile &tile, GLfloat mapSize)
 {
-
     float x = glNormalize(tile.x, mapSize);
     float y = glNormalize(tile.y, mapSize);
     float size = 2.0f / mapSize;
-
-    // cout << x << " , " << y << endl;
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tile.texture);
@@ -99,4 +96,8 @@ void drawTile(Tile &tile, GLfloat mapSize)
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
+}
+
+void drawMonster(Monster &monster)
+{
 }

@@ -166,7 +166,10 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
         glm::vec2 direction{glm::normalize(target_position - this->getPosition())};
         this->shift(direction * this->speed * deltaTime);
 
+        glPushMatrix();
+        glScalef(0.4f, 0.4f, 0.4f);
         drawMonster(*this, 16.0f);
+        glPopMatrix();
 
         if (getDistanceBetweenTwoPoints(this->getPosition(), target_position) < speed * deltaTime)
         {

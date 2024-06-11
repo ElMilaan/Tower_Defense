@@ -59,10 +59,10 @@ void App::setup()
         cout << endl;
     }
 
-    // Barrage b{};
-    // b.setNodeId(8);
-    // map.deployBarrage(b);
-    // map.setVertexesToVisit();
+    Barrage b{};
+    b.setNodeId(8);
+    map.deployBarrage(b);
+    map.setVertexesToVisit();
 
     m = new Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon));
 }

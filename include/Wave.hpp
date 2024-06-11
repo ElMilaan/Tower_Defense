@@ -11,13 +11,14 @@ using namespace std;
 class Wave
 {
 private:
-    double const INTER_TIME{1};
     int id{};
     int nb_monsters;
     vector<Monster> monsters{};
     bool is_boss_wave{};
 
 public:
+    double const INTER_TIME{1};
+
     Wave();
     Wave(int id, unordered_map<MonsterType, GLuint> monster_textures);
 

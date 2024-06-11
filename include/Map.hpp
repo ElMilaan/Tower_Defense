@@ -44,7 +44,7 @@ private:
     Color color_in;
     Color color_out;
     Color color_path;
-    int nbNodes{};
+    int nb_nodes{};
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
     vector<int> shortest_path{};
@@ -66,7 +66,6 @@ private:
     };
 
 public:
-    static const string ITD_FILE;
     Color getColorIn();
     Color getColorOut();
     Color getColorPath();
@@ -75,9 +74,13 @@ public:
     Graph::WeightedGraph getGraph();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
-    void itdMap();
-    void getNodesFromItdFile(vector<string> split_line, bool isBarrage);
-    void getColorFromItd(Color &color, vector<string> split_line);
+
+    void setColorIn(Color in);
+    void setColorOut(Color out);
+    void setColorPath(Color path);
+    void setNbNodes(int nb_nodes);
+    void addNode(Node n);
+
     void createGraphFromNodes();
     void deployBarrage(Barrage b);
     void setVertexesToVisit();

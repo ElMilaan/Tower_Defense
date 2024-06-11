@@ -42,3 +42,9 @@ int getDistanceBetweenTwoPoints(Position p1, Position p2);
 GLfloat glNormalize(GLfloat coord, GLfloat mapSize);
 
 vector<string> splitString(string str);
+
+/* ------------------ RANDOM ------------------ */
+
+int random_int(int min, int max);
+double random_double(double min, double max);
+void set_random_seed(int seed);

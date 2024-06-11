@@ -14,6 +14,9 @@
 
 #include "Bank.hpp"
 #include "Map.hpp"
+#include "Itd.hpp"
+#include "Wave.hpp"
+#include "Monster.hpp"
 
 #include "Barrage.hpp"
 
@@ -42,11 +45,19 @@ void App::setup()
     text_renderer.EnableBlending(true);
 
     // Config de la map
-    map.itdMap();
+    ITD::itdMap(map);
     map.createGraphFromNodes();
     map.setVertexesToVisit();
     map.imgRead();
     map.createTiles(tile_textures);
+
+    ITD::itdWave(waves, monster_textures);
+
+    for (Wave w : waves)
+    {
+        w.display();
+        cout << endl;
+    }
 
     // Barrage b{};
     // b.setNodeId(8);

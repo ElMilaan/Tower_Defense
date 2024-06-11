@@ -8,10 +8,10 @@ using namespace std;
 
 enum class MonsterType
 {
-    Orque,
-    Meduse,
-    Poseidon,
-    Requin,
+    Orque = 0,
+    Meduse = 1,
+    Requin = 2,
+    Poseidon = 3
 };
 
 class Monster
@@ -22,6 +22,7 @@ private:
     double health_points{};
     double speed{};
     MonsterType type{};
+    GLuint texture{};
     bool is_boss{};
     bool is_dead{};
     bool is_moving{};
@@ -31,17 +32,28 @@ private:
 
 public:
     static const string ITD_FILE;
-    Monster(MonsterType type, bool is_freeze);
+    Monster(MonsterType type, GLuint texture);
     Position getMonsterPosition();
     double getMaxHealth();
     double getHealthPoints();
     double getSpeed();
+    MonsterType getType();
+    GLuint getTexture();
     bool getIsBoss();
     bool getIsDead();
+
+    void setMaxHealth(double max_health);
+    void setSpeed(double speed);
+    void setIsBoss(bool is_boss);
+
     void changeSpeed(double coeff);
     void takeDamage(double damage);
     void toggleFreeze();
     void toggleBurn();
-    void setAttributes(MonsterType type);
-    void itdMonster();
+    void setAttributes(MonsterType type, GLuint texture);
+    // void itdMonster(string monster);
+
+    void display();
 };
+
+string monsterTypeToString(MonsterType type);

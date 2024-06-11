@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include <random>
 
 using namespace std;
 
@@ -37,4 +38,27 @@ vector<string> splitString(string str)
     istream_iterator<string> end;
     vector<string> split_line(begin, end);
     return split_line;
+}
+
+static auto &generator()
+{
+    static default_random_engine gen{random_device{}()};
+    return gen;
+}
+
+int random_int(int min, int max)
+{
+    uniform_int_distribution<int> distribution{min, max - 1};
+    return distribution(generator());
+}
+
+double random_double(double min, double max)
+{
+    uniform_real_distribution<double> distribution{min, max};
+    return distribution(generator());
+}
+
+void set_random_seed(int seed)
+{
+    generator().seed(seed);
 }

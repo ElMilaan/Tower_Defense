@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const string Map::ITD_FILE = "data/config_map.itd";
+/* ------------------------- GETTERS ----------------------------*/
 
 Color Map::getColorIn()
 {
@@ -34,7 +34,7 @@ Color Map::getColorPath()
 }
 int Map::getNbNodes()
 {
-    return nbNodes;
+    return nb_nodes;
 }
 vector<Node> Map::getNodes()
 {
@@ -56,84 +56,27 @@ vector<Tile> Map::getTiles()
     return tiles;
 }
 
-/* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
+/* --------------------- SETTERS ----------------------*/
 
-void Map::getColorFromItd(Color &color, vector<string> split_line)
+void Map::setColorIn(Color in)
 {
-    color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+    this->color_in = in;
 }
-
-void Map::getNodesFromItdFile(vector<string> split_line, bool is_barrage)
+void Map::setColorOut(Color out)
 {
-    Node node(stoi(split_line[1]), is_barrage, stoi(split_line[2]), stoi(split_line[3]));
-
-    if (stoi(split_line[1]) != this->nbNodes - 1)
-    {
-        if (stoi(split_line[1]) == 0)
-        {
-            node.setStatus(NodeStatus::Start);
-        }
-        else
-        {
-            node.setStatus(NodeStatus::Path);
-        }
-        for (int i{4}; i < split_line.size(); i++)
-        {
-            node.addNeighbor(stoi(split_line[i]));
-        }
-    }
-    else
-    {
-        node.setStatus(NodeStatus::End);
-    }
-    nodes.push_back(node);
+    this->color_out = out;
 }
-
-void Map::itdMap()
+void Map::setColorPath(Color path)
 {
-    ifstream my_file;
-
-    my_file.open(this->ITD_FILE);
-
-    string my_line;
-
-    if (my_file.is_open())
-    {
-        while (my_file)
-        {
-            getline(my_file, my_line);
-            vector<string> split_line = splitString(my_line);
-
-            if (my_line.starts_with("path"))
-            {
-                getColorFromItd(this->color_path, split_line);
-            }
-            else if (my_line.starts_with("in"))
-            {
-                getColorFromItd(this->color_in, split_line);
-            }
-            else if (my_line.starts_with("out"))
-            {
-                getColorFromItd(this->color_out, split_line);
-            }
-            else if (my_line.starts_with("graph"))
-            {
-                nbNodes = stoi(split_line[1]);
-            }
-            else if (my_line.starts_with("node"))
-            {
-                getNodesFromItdFile(split_line, 0);
-            }
-            else if (my_line.starts_with("barrage"))
-            {
-                getNodesFromItdFile(split_line, 1);
-            }
-        }
-    }
-    else
-    {
-        cout << "Couldn't open file\n";
-    }
+    this->color_path = path;
+}
+void Map::setNbNodes(int nb_nodes)
+{
+    this->nb_nodes = nb_nodes;
+}
+void Map::addNode(Node n)
+{
+    this->nodes.push_back(n);
 }
 
 /* --------------- CONSTRUCTION DU GRAPHE A PARTIR DES NODES RECUPEREES --------------- */
@@ -165,7 +108,7 @@ void Map::deployBarrage(Barrage b)
 void Map::setVertexesToVisit()
 {
     int start{nodes[0].getId()};
-    int end{nodes[nbNodes - 1].getId()};
+    int end{nodes[nb_nodes - 1].getId()};
     unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
     shortest_path = Graph::getNodesIdFromDijkstra(dij, start, end);
     for (int i : shortest_path)

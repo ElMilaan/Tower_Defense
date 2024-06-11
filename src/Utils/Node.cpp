@@ -1,25 +1,25 @@
 #include <iostream>
 #include <vector>
-#include "Position.hpp"
+#include <glm/glm.hpp>
 #include "Node.hpp"
 
 Node::Node()
 {
 }
 
-Node::Node(int id, int x, int y)
+Node::Node(int id, GLfloat x, GLfloat y)
 {
     this->id = id;
-    this->position.x;
-    this->position.y;
+    this->x;
+    this->y;
     this->isBarrage = false;
 }
 
-Node::Node(int id, bool isBarrage, int x, int y)
+Node::Node(int id, bool isBarrage, GLfloat x, GLfloat y)
 {
     this->id = id;
-    this->position.x;
-    this->position.y;
+    this->x = x;
+    this->y = y;
     this->isBarrage = isBarrage;
 }
 
@@ -33,9 +33,9 @@ NodeStatus Node::getStatus()
     return this->status;
 }
 
-Position Node::getPosition()
+glm::vec2 Node::getPosition()
 {
-    return this->position;
+    return {this->x, this->y};
 }
 
 vector<int> Node::getNeighbors()
@@ -53,9 +53,9 @@ void Node::addNeighbor(int neighbor)
     this->neighbors.push_back(neighbor);
 }
 
-int Node::distanceBetweenNodes(Node target)
+GLfloat Node::distanceBetweenNodes(Node target)
 {
-    int diffX{target.getPosition().x - (int)this->getPosition().x};
-    int diffY{target.getPosition().y - (int)this->getPosition().y};
+    GLfloat diffX{static_cast<GLfloat>(target.getPosition().x - this->x)};
+    GLfloat diffY{static_cast<GLfloat>(target.getPosition().y - this->y)};
     return abs(diffX + diffY);
 }

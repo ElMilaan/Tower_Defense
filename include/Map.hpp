@@ -9,7 +9,6 @@
 #include "Color.hpp"
 #include "Pixel.hpp"
 #include "utils.hpp"
-#include "Position.hpp"
 #include "Barrage.hpp"
 #include "Monster.hpp"
 
@@ -47,7 +46,7 @@ private:
     int nb_nodes{};
     vector<Node> nodes{};
     Graph::WeightedGraph graph{};
-    vector<int> shortest_path{};
+    vector<Node> shortest_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
     vector<Tile> tiles{};
     img::Image pixelized_map{img::load(make_absolute_path("images/map.png", true), 4, true)};
@@ -74,6 +73,7 @@ public:
     Graph::WeightedGraph getGraph();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
+    vector<Node> getShortestPath();
 
     void setColorIn(Color in);
     void setColorOut(Color out);
@@ -83,6 +83,7 @@ public:
 
     void createGraphFromNodes();
     void deployBarrage(Barrage b);
+    vector<Node> convertIdToNodes(vector<int> vec);
     void setVertexesToVisit();
     void imgRead();
     void createTiles(unordered_map<TileType, GLuint> &textures);

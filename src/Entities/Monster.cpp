@@ -1,8 +1,11 @@
 #include <iostream>
 #include "Monster.hpp"
-#include "Position.hpp"
 #include "utils.hpp"
 #include "Itd.hpp"
+#include "Node.hpp"
+#include "Draw.hpp"
+
+#include <glm/glm.hpp>
 
 #include <fstream>
 #include <string>
@@ -17,14 +20,14 @@ Monster::Monster(MonsterType type, GLuint texture)
     setAttributes(type, texture);
 }
 
-Position Monster::getMonsterPosition()
-{
-    return position;
-}
-
 MonsterType Monster::getType()
 {
     return this->type;
+}
+
+glm::vec2 Monster::getPosition()
+{
+    return {this->x, this->y};
 }
 
 double Monster::getMaxHealth()
@@ -37,7 +40,7 @@ double Monster::getHealthPoints()
     return this->health_points;
 }
 
-double Monster::getSpeed()
+float Monster::getSpeed()
 {
     return this->speed;
 }
@@ -57,11 +60,17 @@ bool Monster::getIsDead()
     return this->is_dead;
 }
 
+void Monster::shift(glm::vec2 deplacement)
+{
+    this->x += deplacement.x;
+    this->y += deplacement.y;
+}
+
 void Monster::setMaxHealth(double max_health)
 {
     this->max_health = max_health;
 }
-void Monster::setSpeed(double speed)
+void Monster::setSpeed(float speed)
 {
     this->speed = speed;
 }
@@ -70,7 +79,7 @@ void Monster::setIsBoss(bool is_boss)
     this->is_boss = is_boss;
 }
 
-void Monster::changeSpeed(double coeff)
+void Monster::changeSpeed(float coeff)
 {
     speed *= coeff;
 }
@@ -122,6 +131,9 @@ void Monster::setAttributes(MonsterType type, GLuint texture)
     this->is_burning = false;
     this->is_dead = false;
     this->health_points = this->max_health;
+    this->current_node_index = 0;
+    this->x = 7;
+    this->y = 0;
 }
 
 void Monster::display()
@@ -143,5 +155,22 @@ string monsterTypeToString(MonsterType type)
         return "Poseidon";
     case MonsterType::Requin:
         return "Requin";
+    }
+}
+
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size)
+{
+    if (current_node_index < shortest_path.size() - 1)
+    {
+        glm::vec2 target_position{shortest_path[current_node_index + 1].getPosition()};
+        glm::vec2 direction{glm::normalize(target_position - this->getPosition())};
+        this->shift(direction * this->speed * deltaTime);
+
+        drawMonster(*this, 16.0f);
+
+        if (getDistanceBetweenTwoPoints(this->getPosition(), target_position) < speed * deltaTime)
+        {
+            current_node_index++;
+        }
     }
 }

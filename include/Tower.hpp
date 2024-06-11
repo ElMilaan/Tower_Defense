@@ -4,6 +4,10 @@
 #include <vector>
 #include "Monster.hpp"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
 using namespace std;
 
 enum class TowerType
@@ -15,7 +19,8 @@ enum class TowerType
 class Tower
 {
 private:
-    Position position{};
+    GLfloat x;
+    GLfloat y;
     double range{};
     double damage{};
     double attack_speed{};
@@ -25,10 +30,10 @@ private:
     string path_sprite{};
 
 public:
-    Tower(Position position, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
+    Tower(GLfloat x, GLfloat y, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
     void findPathSprite();
     void levelUp(double cost, double bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
-    void build(Position);
+    void build(glm::vec2 position);
     void destruct();
     void attack(Monster monster);
     bool isMonsterInRange(Monster monster);

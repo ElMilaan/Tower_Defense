@@ -19,3 +19,4 @@ unordered_map<TileType, GLuint> setTileTextures();
 unordered_map<MonsterType, GLuint> setMonsterTextures();
 
 void drawTile(Tile &tile, GLfloat mapSize);
+void drawMonster(Monster &monster, GLfloat map_size);

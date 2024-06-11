@@ -4,11 +4,13 @@
 #include "Monster.hpp"
 #include "utils.hpp"
 #include <stack>
-#include "GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-Tower::Tower(Position position, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed)
+Tower::Tower(GLfloat x, GLfloat y, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed)
 {
-    this->position = position;
+    this->x = x;
+    this->y = y;
     this->range = range;
     this->damage = damage;
     this->level = level;
@@ -41,7 +43,7 @@ void Tower::levelUp(double cost, double bank_sold)
     bank_sold -= cost;
 }
 
-void Tower::build(Position position)
+void Tower::build(glm::vec2 position)
 {
 }
 
@@ -52,7 +54,7 @@ void Tower::destruct()
 // update
 bool Tower::isMonsterInRange(Monster monster)
 {
-    if (getDistanceBetweenTwoPoints(position, monster.getMonsterPosition()) < range)
+    if (getDistanceBetweenTwoPoints({this->x, this->y}, monster.getPosition()) < range)
     {
         return 1;
     }

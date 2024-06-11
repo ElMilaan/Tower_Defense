@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "Position.hpp"
+#include <vector>
+#include "Node.hpp"
 #include "GlFW/glfw3.h"
 
 using namespace std;
@@ -18,9 +19,11 @@ class Monster
 {
 
 private:
+    GLfloat x;
+    GLfloat y;
     double max_health{};
     double health_points{};
-    double speed{};
+    float speed{};
     MonsterType type{};
     GLuint texture{};
     bool is_boss{};
@@ -28,30 +31,34 @@ private:
     bool is_moving{};
     bool is_freeze{};
     bool is_burning{};
-    Position position{};
+    int current_node_index{};
 
 public:
     static const string ITD_FILE;
+    Monster();
     Monster(MonsterType type, GLuint texture);
-    Position getMonsterPosition();
+    glm::vec2 getPosition();
     double getMaxHealth();
     double getHealthPoints();
-    double getSpeed();
+    float getSpeed();
     MonsterType getType();
     GLuint getTexture();
     bool getIsBoss();
     bool getIsDead();
 
+    void shift(glm::vec2 deplacement);
+
     void setMaxHealth(double max_health);
-    void setSpeed(double speed);
+    void setSpeed(float speed);
     void setIsBoss(bool is_boss);
 
-    void changeSpeed(double coeff);
+    void changeSpeed(float coeff);
     void takeDamage(double damage);
     void toggleFreeze();
     void toggleBurn();
     void setAttributes(MonsterType type, GLuint texture);
-    // void itdMonster(string monster);
+
+    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size);
 
     void display();
 };

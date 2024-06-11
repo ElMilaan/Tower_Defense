@@ -36,13 +36,13 @@ pair<MonsterType, img::Image> getMatchingMonsterTexture(MonsterType type)
     switch (type)
     {
     case MonsterType::Meduse:
-        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/meduse.png", true), 4, false)}};
+        return {MonsterType::Meduse, img::Image{img::load(make_absolute_path("images/meduse.png", true), 4, true)}};
     case MonsterType::Orque:
-        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/orque.png", true), 4, false)}};
+        return {MonsterType::Orque, img::Image{img::load(make_absolute_path("images/orque.png", true), 4, true)}};
     case MonsterType::Poseidon:
-        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/poseidon.png", true), 4, false)}};
+        return {MonsterType::Poseidon, img::Image{img::load(make_absolute_path("images/poseidon.png", true), 4, true)}};
     case MonsterType::Requin:
-        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/requin.png", true), 4, false)}};
+        return {MonsterType::Requin, img::Image{img::load(make_absolute_path("images/requin.png", true), 4, true)}};
     }
 }
 
@@ -71,26 +71,25 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
 
 void drawTile(Tile &tile, GLfloat mapSize)
 {
-    float x = glNormalize(tile.x, mapSize);
-    float y = glNormalize(tile.y, mapSize);
+    glm::vec2 pos{glNormalize({tile.x, tile.y}, mapSize)};
     float size = 2.0f / mapSize;
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tile.texture);
-    glTranslatef(x + size / 2, y + size / 2, 0.0f);
+    glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
     glRotatef(tile.rotation, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-(x + size / 2), -(y + size / 2), 0.0f);
+    glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
 
     glBegin(GL_QUADS);
 
     glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(x, y);
+    glVertex2f(pos.x, pos.y);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex2f(x + size, y);
+    glVertex2f(pos.x + size, pos.y);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex2f(x + size, y + size);
+    glVertex2f(pos.x + size, pos.y + size);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex2f(x, y + size);
+    glVertex2f(pos.x, pos.y + size);
 
     glEnd();
 
@@ -98,6 +97,32 @@ void drawTile(Tile &tile, GLfloat mapSize)
     glDisable(GL_TEXTURE_2D);
 }
 
-void drawMonster(Monster &monster)
+void drawMonster(Monster &monster, GLfloat map_size)
 {
+    glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size)};
+
+    cout << pos.x << " , " << pos.y << endl;
+    float size = 2.0f / map_size;
+
+    glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+    glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, monster.getTexture());
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(pos.x, pos.y);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(pos.x + size, pos.y);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(pos.x + size, pos.y + size);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(pos.x, pos.y + size);
+
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
 }

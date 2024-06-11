@@ -63,6 +63,8 @@ void App::setup()
     // b.setNodeId(8);
     // map.deployBarrage(b);
     // map.setVertexesToVisit();
+
+    m = new Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon));
 }
 
 void App::update()
@@ -73,6 +75,9 @@ void App::update()
     bank.addMoney(0.02);
 
     render();
+
+    m->update(0.05, map.getShortestPath(), 16.0f);
+    // cout << m->getPosition().x << " , " << m->getPosition().y << endl;
 }
 
 void App::render()

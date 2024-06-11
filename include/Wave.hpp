@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <vector>
-#include "Position.hpp"
 #include "Monster.hpp"
 #include <unordered_map>
 
@@ -15,6 +14,7 @@ private:
     int nb_monsters;
     vector<Monster> monsters{};
     bool is_boss_wave{};
+    double timeSinceLastSpawn{};
 
 public:
     double const INTER_TIME{1};
@@ -30,6 +30,8 @@ public:
     void setNbMonsters(int nb_monsters);
     void setIsBossWave(bool is_boss_wave);
     void addMonster(Monster m);
+
+    void update(double inter_time);
 
     void display();
 };

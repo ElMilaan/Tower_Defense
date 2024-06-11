@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include "Position.hpp"
 #include "Monster.hpp"
 #include "Wave.hpp"
 #include "utils.hpp"
@@ -66,3 +65,18 @@ void Wave::display()
     }
     cout << "}" << endl;
 }
+
+// void Wave::update(double inter_time)
+// {
+//     timeSinceLastSpawn += inter_time;
+//     if (timeSinceLastSpawn >= INTER_TIME)
+//     {
+//         monsters.emplace_back(path, monsterSpeed);
+//         timeSinceLastSpawn = 0.0f;
+//     }
+
+//     for (auto &monster : monsters)
+//     {
+//         monster.update(inter_time);
+//     }
+// }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include "Position.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 

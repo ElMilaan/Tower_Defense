@@ -56,6 +56,11 @@ vector<Tile> Map::getTiles()
     return tiles;
 }
 
+vector<Node> Map::getShortestPath()
+{
+    return shortest_path;
+}
+
 /* --------------------- SETTERS ----------------------*/
 
 void Map::setColorIn(Color in)
@@ -105,15 +110,31 @@ void Map::deployBarrage(Barrage b)
     }
 }
 
+vector<Node> Map::convertIdToNodes(vector<int> vec)
+{
+    vector<Node> result;
+    for (int i : vec)
+    {
+        for (Node n : nodes)
+        {
+            if (i == n.getId())
+            {
+                result.push_back(n);
+            }
+        }
+    }
+    return result;
+}
+
 void Map::setVertexesToVisit()
 {
     int start{nodes[0].getId()};
     int end{nodes[nb_nodes - 1].getId()};
     unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
-    shortest_path = Graph::getNodesIdFromDijkstra(dij, start, end);
-    for (int i : shortest_path)
+    shortest_path = convertIdToNodes(Graph::getNodesIdFromDijkstra(dij, start, end));
+    for (Node n : shortest_path)
     {
-        cout << i << " , ";
+        cout << n.getId() << " , ";
     }
     cout << endl;
 }

@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "Graph.hpp"
-#include "Position.hpp"
 
 using namespace std;
 

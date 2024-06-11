@@ -21,14 +21,15 @@ filesystem::path make_absolute_path(filesystem::path const &path, bool check_pat
     return res;
 }
 
-int getDistanceBetweenTwoPoints(Position p1, Position p2)
+int getDistanceBetweenTwoPoints(glm::vec2 p1, glm::vec2 p2)
 {
-    return abs(p1.x - p2.x + p1.y - p2.y);
+    int a = (int)abs(p1.x - p2.x + p1.y - p2.y);
+    return a;
 }
 
-GLfloat glNormalize(GLfloat coord, GLfloat mapSize)
+glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize)
 {
-    return static_cast<GLfloat>(2.0f * coord / mapSize - 1);
+    return {2.0f * pos.x / mapSize - 1, 2.0f * pos.y / mapSize - 1};
 }
 
 vector<string> splitString(string str)

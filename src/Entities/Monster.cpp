@@ -193,7 +193,7 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
         {
             if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
             {
-                this->shift({0, travel.y * deltaTime * speed});
+                this->shift({0, go.y * deltaTime * speed});
                 cout << target_position.y << " , " << this->getPosition().y << endl;
             }
             else

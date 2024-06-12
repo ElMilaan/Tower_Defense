@@ -85,7 +85,7 @@ void ITD::itdMap(Map &map)
     }
     else
     {
-        cout << "Couldn't open file\n";
+        cout << "Couldn't open map file\n";
     }
 }
 

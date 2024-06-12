@@ -71,7 +71,7 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
 
 void drawTile(Tile &tile, GLfloat mapSize)
 {
-    glm::vec2 pos{glNormalize({tile.x, tile.y}, mapSize)};
+    glm::vec2 pos{glNormalize({tile.x, tile.y}, mapSize, true)};
     float size = 2.0f / mapSize;
 
     glEnable(GL_TEXTURE_2D);
@@ -99,9 +99,10 @@ void drawTile(Tile &tile, GLfloat mapSize)
 
 void drawMonster(Monster &monster, GLfloat map_size)
 {
-    glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size)};
+    glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size, false)};
 
-    cout << pos.x << " , " << pos.y << endl;
+    // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
+
     float size = 2.0f / map_size;
 
     glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);

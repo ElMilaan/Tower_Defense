@@ -5,6 +5,7 @@
 #include "Node.hpp"
 #include "Draw.hpp"
 
+#include <cmath>
 #include <glm/glm.hpp>
 
 #include <fstream>
@@ -133,7 +134,7 @@ void Monster::setAttributes(MonsterType type, GLuint texture)
     this->health_points = this->max_health;
     this->current_node_index = 0;
     this->x = 7;
-    this->y = 0;
+    this->y = 0.5;
 }
 
 void Monster::display()
@@ -160,20 +161,50 @@ string monsterTypeToString(MonsterType type)
 
 void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size)
 {
-    if (current_node_index < shortest_path.size() - 1)
-    {
-        glm::vec2 target_position{shortest_path[current_node_index + 1].getPosition()};
-        glm::vec2 direction{glm::normalize(target_position - this->getPosition())};
-        this->shift(direction * this->speed * deltaTime);
+    // Pour matcher avec le centre des textures du monstre et de la tile
+    float mid_texture{0.5};
+    float mid_tile{0.5};
 
+    // Limite a ne pas dépasser pour ne pas sortir de la map
+    GLfloat const LIMIT{map_size - 0.1f};
+
+    glm::vec2 target_position{shortest_path[current_node_index + 1].getPosition().x, shortest_path[current_node_index + 1].getPosition().y + mid_texture + mid_tile};
+
+    // cout << target.getPosition().x << " , " << target.getPosition().y << endl;
+
+    glm::vec2 go{glm::normalize(target_position - this->getPosition())};
+
+    if (this->getPosition().y < LIMIT)
+    {
+        if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
+        {
+            if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
+            {
+                this->shift({go.x * deltaTime * speed, 0});
+                cout << target_position.x << " , " << this->getPosition().x << endl;
+            }
+            else
+            {
+                current_node_index++;
+                this->x = target_position.x;
+            }
+        }
+        else
+        {
+            if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
+            {
+                this->shift({0, travel.y * deltaTime * speed});
+                cout << target_position.y << " , " << this->getPosition().y << endl;
+            }
+            else
+            {
+                current_node_index++;
+                this->y = target_position.y;
+            }
+        }
         glPushMatrix();
         glScalef(0.4f, 0.4f, 0.4f);
         drawMonster(*this, 16.0f);
         glPopMatrix();
-
-        if (getDistanceBetweenTwoPoints(this->getPosition(), target_position) < speed * deltaTime)
-        {
-            current_node_index++;
-        }
     }
 }

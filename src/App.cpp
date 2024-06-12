@@ -76,7 +76,7 @@ void App::update()
 
     render();
 
-    m->update(0.05, map.getShortestPath(), 16.0f);
+    m->update(0.1, map.getShortestPath(), 16.0f);
     // cout << m->getPosition().x << " , " << m->getPosition().y << endl;
 }
 

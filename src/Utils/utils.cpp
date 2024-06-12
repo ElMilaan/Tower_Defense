@@ -27,9 +27,13 @@ int getDistanceBetweenTwoPoints(glm::vec2 p1, glm::vec2 p2)
     return a;
 }
 
-glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize)
+glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize, bool reverse)
 {
-    return {2.0f * pos.x / mapSize - 1, 2.0f * pos.y / mapSize - 1};
+    if (reverse)
+    {
+        return {2.0f * pos.x / mapSize - 1, 2.0f * pos.y / mapSize - 1};
+    }
+    return {2.0f * pos.x / mapSize - 1, -2.0f * pos.y / mapSize + 1};
 }
 
 vector<string> splitString(string str)

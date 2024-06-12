@@ -39,7 +39,7 @@ ostream &operator<<(ostream &os, vector<T> const &vec)
 }
 
 int getDistanceBetweenTwoPoints(glm::vec2 p1, glm::vec2 p2);
-glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize);
+glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize, bool reverse);
 
 vector<string> splitString(string str);
 

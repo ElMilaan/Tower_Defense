@@ -11,9 +11,9 @@ using namespace std;
 namespace ITD
 {
     /* ------ ITD PATHS ------*/
-    const string ITD_MAP{"data/config_map.itd"};
-    const string ITD_MONSTER{"data/monster.itd"};
-    const string ITD_WAVE{"data/wave.itd"};
+    const string ITD_MAP{"../../data/config_map.itd"};
+    const string ITD_MONSTER{"../../data/monster.itd"};
+    const string ITD_WAVE{"../../data/wave.itd"};
 
     /* ------ MAP ------ */
 

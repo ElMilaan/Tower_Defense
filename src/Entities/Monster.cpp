@@ -16,9 +16,10 @@ using namespace std;
 
 const string Monster::ITD_FILE = "data/monster.itd";
 
-Monster::Monster(MonsterType type, GLuint texture)
+Monster::Monster(MonsterType type, GLuint texture, bool is_last)
 {
     setAttributes(type, texture);
+    this->is_last_of_wave = is_last;
 }
 
 MonsterType Monster::getType()
@@ -61,6 +62,11 @@ bool Monster::getIsDead()
     return this->is_dead;
 }
 
+bool Monster::getIsLast()
+{
+    return this->is_last_of_wave;
+}
+
 void Monster::shift(glm::vec2 deplacement)
 {
     this->x += deplacement.x;
@@ -78,6 +84,11 @@ void Monster::setSpeed(float speed)
 void Monster::setIsBoss(bool is_boss)
 {
     this->is_boss = is_boss;
+}
+
+void Monster::setIsLast()
+{
+    this->is_last_of_wave = true;
 }
 
 void Monster::changeSpeed(float coeff)
@@ -154,12 +165,11 @@ string monsterTypeToString(MonsterType type)
         return "Orque";
     case MonsterType::Poseidon:
         return "Poseidon";
-    case MonsterType::Requin:
-        return "Requin";
     }
+    return "Requin";
 }
 
-void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size)
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave)
 {
     // Pour matcher avec le centre des textures du monstre et de la tile
     float mid_texture{0.5};
@@ -181,7 +191,7 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
             if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
             {
                 this->shift({go.x * deltaTime * speed, 0});
-                cout << target_position.x << " , " << this->getPosition().x << endl;
+                // cout << target_position.x << " , " << this->getPosition().x << endl;
             }
             else
             {
@@ -194,7 +204,7 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
             if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
             {
                 this->shift({0, go.y * deltaTime * speed});
-                cout << target_position.y << " , " << this->getPosition().y << endl;
+                // cout << target_position.y << " , " << this->getPosition().y << endl;
             }
             else
             {
@@ -207,4 +217,10 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
         drawMonster(*this, 16.0f);
         glPopMatrix();
     }
+    else if (is_last_of_wave)
+    {
+        launch_wave = false;
+    }
+
+    // cout << "ID : " << getTexture() << ", IsLast : " << is_last_of_wave << endl;
 }

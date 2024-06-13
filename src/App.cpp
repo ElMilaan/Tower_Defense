@@ -53,11 +53,8 @@ void App::setup()
 
     ITD::itdWave(waves, monster_textures);
 
-    for (Wave w : waves)
-    {
-        w.display();
-        cout << endl;
-    }
+    launch_wave = false;
+    current_wave = 0;
 
     // Barrage b{}, b1{}, b2{}, b3{};
     // b.setNodeId(3);
@@ -70,23 +67,27 @@ void App::setup()
     // map.deployBarrage(b3);
     // map.setVertexesToVisit();
 
-    // m = new Monster(MonsterType::Orque, monster_textures.at(MonsterType::Orque));
+    for (Wave w : waves)
+    {
+        for (Monster m : w.getMonsters())
+        {
+            cout << m.getIsLast() << endl;
+        }
+    }
 }
 
 void App::update()
 {
-    const double currentTime{glfwGetTime()};
-    const double elapsedTime{currentTime - _previousTime};
-    _previousTime = currentTime;
+    current_time = glfwGetTime();
+    // const double elapsedTime{currentTime - _previousTime};
+    // _previousTime = currentTime;
 
     bank.addMoney(0.02);
 
     render();
 
-    waves[0].update(currentTime, 0.1f, map.getShortestPath(), 16.0f);
-
-    // m->update(0.1, map.getShortestPath(), 16.0f);
-    // cout << m->getPosition().x << " , " << m->getPosition().y << endl;
+    if (launch_wave)
+        waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave);
 }
 
 void App::render()
@@ -135,8 +136,22 @@ void App::render()
     text_renderer.Render();
 }
 
-void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)
+void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
 {
+    if (action == GLFW_PRESS)
+    {
+        switch (key)
+        {
+        // Déclancher les waves
+        case GLFW_KEY_W:
+            if (!launch_wave)
+                launch_wave = true;
+            break;
+        // Construire un barrage
+        case GLFW_KEY_B:
+            break;
+        }
+    }
 }
 
 void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/)

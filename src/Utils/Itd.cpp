@@ -144,13 +144,13 @@ void ITD::itdWave(vector<Wave> &waves, unordered_map<MonsterType, GLuint> monste
                 w.setIsBossWave(stoi(split_line[3]));
                 if (stoi(split_line[3]) == 1)
                 {
-                    w.addMonster(Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon)));
+                    w.addMonster(Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon), true));
                 }
                 else
                 {
                     for (int i{0}; i < w.getNbMonsters(); i++)
                     {
-                        w.addMonster(createRandomMonster(monster_textures));
+                        (i == w.getNbMonsters() - 1) ? w.addMonster(createRandomMonster(monster_textures, true)) : w.addMonster(createRandomMonster(monster_textures, false));
                     }
                 }
                 waves.push_back(w);

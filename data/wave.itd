@@ -2,7 +2,7 @@ ITD
 # NOMBRE DE VAGUES
 nb 4
 
-# [1] = id, [2] = nombre de monstres, [3] = vague de bosse (bool)
+# [1] = id, [2] = nombre de monstres, [3] = vague de boss (bool)
 wave 1 3 0
 wave 2 6 0
 wave 3 10 0

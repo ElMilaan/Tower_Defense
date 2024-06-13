@@ -53,11 +53,11 @@ void Wave::addMonster(Monster m)
     this->monsters.push_back(m);
 }
 
-Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures)
+Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures, bool is_last)
 {
     MonsterType randomType{static_cast<MonsterType>(random_int(0, sizeof(MonsterType) - 1))};
     GLuint texture{monster_textures.at(randomType)};
-    return Monster(randomType, texture);
+    return Monster(randomType, texture, is_last);
 }
 
 void Wave::display()
@@ -70,17 +70,20 @@ void Wave::display()
     cout << "}" << endl;
 }
 
-void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size)
+void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave)
 {
-    if (current_time - last_spawn >= INTER_TIME && current_monster_index < monsters.size())
+    if (current_monster_index < monsters.size())
     {
-        monsters_to_update.push_back(monsters[current_monster_index]);
-        last_spawn = current_time;
+        if (current_time - last_spawn >= INTER_TIME)
+        {
+            monsters_to_update.push_back(monsters[current_monster_index]);
+            last_spawn = current_time;
 
-        current_monster_index++;
+            current_monster_index++;
+        }
     }
-    for (Monster m : monsters_to_update)
+    for (Monster &m : monsters_to_update)
     {
-        m.update(delta_time, shortest_path, map_size);
+        m.update(delta_time, shortest_path, map_size, launch_wave);
     }
 }

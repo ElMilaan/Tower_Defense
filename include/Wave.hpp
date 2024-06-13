@@ -19,7 +19,7 @@ private:
     int current_monster_index{};
 
 public:
-    double const INTER_TIME{6};
+    double const INTER_TIME{2};
 
     Wave();
     Wave(int id, unordered_map<MonsterType, GLuint> monster_textures);
@@ -33,9 +33,9 @@ public:
     void setIsBossWave(bool is_boss_wave);
     void addMonster(Monster m);
 
-    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size);
+    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave);
 
     void display();
 };
 
-Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures);
+Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures, bool is_last);

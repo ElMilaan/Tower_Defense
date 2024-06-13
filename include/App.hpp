@@ -30,9 +30,12 @@ private:
     Bank bank{};
     int _width{};
     int _height{};
+    double current_time{};
     double _previousTime{};
     double _viewSize{};
     Map map{};
+    bool launch_wave{};
+    int current_wave{};
     vector<Wave> waves{};
     GLuint _deco_texture;
     unordered_map<TileType, GLuint> tile_textures{};

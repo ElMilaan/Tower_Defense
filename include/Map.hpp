@@ -9,7 +9,7 @@
 #include "Color.hpp"
 #include "Pixel.hpp"
 #include "utils.hpp"
-#include "Barrage.hpp"
+
 #include "Monster.hpp"
 
 #include <glad/glad.h>
@@ -75,7 +75,8 @@ public:
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     vector<Node> getShortestPath();
-    void getBarrageEdges();
+    void setBarrageEdges();
+    vector<Graph::WeightedGraphEdge> getBarrageEdges();
 
     void setColorIn(Color in);
     void setColorOut(Color out);

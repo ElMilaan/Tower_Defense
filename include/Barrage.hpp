@@ -1,8 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "Graph.hpp"
 #include "Map.hpp"
+#include "Graph.hpp"
+#include "Draw.hpp"
 
 using namespace std;
 
@@ -16,5 +17,5 @@ public:
     int getNodeId();
     string getSpritePath();
     void setNodeId(int id);
-    // void deploy(Map &map);
+    void deploy(Map &map, GLuint barrage_texture);
 };

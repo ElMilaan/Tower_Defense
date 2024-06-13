@@ -47,6 +47,7 @@ void App::setup()
     // Config de la map
     ITD::itdMap(map);
     map.createGraphFromNodes();
+    map.setBarrageEdges();
     map.setVertexesToVisit();
     map.imgRead();
     map.createTiles(tile_textures);

@@ -139,7 +139,7 @@ void App::render()
     text_renderer.Render();
 }
 
-void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/) void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
+void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
 {
     if (action == GLFW_PRESS)
     {

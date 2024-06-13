@@ -21,7 +21,7 @@ using namespace std;
 const string Map::ITD_FILE = "../../data/config_map.itd";
 
 vector<string>
-split_string(string str)
+splitString(string str)
 {
     stringstream ss(str);
     istream_iterator<string> begin(ss);
@@ -122,7 +122,7 @@ void Map::itdMap()
         while (my_file)
         {
             getline(my_file, my_line);
-            vector<string> split_line = split_string(my_line);
+            vector<string> split_line = splitString(my_line);
 
             if (my_line.starts_with("path"))
             {

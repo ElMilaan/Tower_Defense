@@ -12,7 +12,7 @@ Bank::Bank()
 
 void Bank::addMoney(double amount_to_add)
 {
-    if (!this->sold + amount_to_add > MAX)
+    if (!(this->sold + amount_to_add > MAX))
     {
         this->sold += amount_to_add;
     }
@@ -34,9 +34,9 @@ void Bank::removeMoney(double amount_to_remove)
     }
 }
 
-double Bank::getBankSold()
+int Bank::getBankSold()
 {
-    return this->sold;
+    return round(this->sold);
 }
 
 void Bank::setBankSold(double new_sold)

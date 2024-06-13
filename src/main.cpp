@@ -4,9 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
-#include "Graph.hpp"
 #include "App.hpp"
-#include "Map.hpp"
 
 using namespace std;
 

@@ -8,11 +8,17 @@
 
 #include "simpletext.h"
 #include "utils.hpp"
+#include "Draw.hpp"
 #include "GLHelpers.hpp"
 #include "Tile.hpp"
 
 #include "Bank.hpp"
 #include "Map.hpp"
+#include "Itd.hpp"
+#include "Wave.hpp"
+#include "Monster.hpp"
+
+#include "Barrage.hpp"
 
 Bank App::getBank()
 {
@@ -23,6 +29,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
+    tile_textures = setTileTextures();
+    monster_textures = setMonsterTextures();
 }
 
 void App::setup()
@@ -36,11 +44,27 @@ void App::setup()
     text_renderer.SetColorf(SimpleText::BACKGROUND_COLOR, 1.f, 1.f, 1.f, 1.f);
     text_renderer.EnableBlending(true);
 
-    map.itdMap();
+    // Config de la map
+    ITD::itdMap(map);
     map.createGraphFromNodes();
-    map.getVertexesToVisit();
+    map.setVertexesToVisit();
     map.imgRead();
-    map.createTiles();
+    map.createTiles(tile_textures);
+
+    ITD::itdWave(waves, monster_textures);
+
+    for (Wave w : waves)
+    {
+        w.display();
+        cout << endl;
+    }
+
+    Barrage b{};
+    b.setNodeId(8);
+    map.deployBarrage(b);
+    map.setVertexesToVisit();
+
+    m = new Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon));
 }
 
 void App::update()
@@ -48,8 +72,12 @@ void App::update()
     // const double currentTime{glfwGetTime()};
     // const double elapsedTime{currentTime - _previousTime};
     // _previousTime = currentTime;
+    bank.addMoney(0.02);
 
     render();
+
+    m->update(0.1, map.getShortestPath(), 16.0f);
+    // cout << m->getPosition().x << " , " << m->getPosition().y << endl;
 }
 
 void App::render()
@@ -59,6 +87,7 @@ void App::render()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // Render de la map
     glPushMatrix();
     for (Tile t : map.getTiles())
     {
@@ -67,7 +96,6 @@ void App::render()
         drawTile(t, 16.0f);
         glPopMatrix();
     }
-
     glScalef(0.8f, 0.8f, 0.8f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();

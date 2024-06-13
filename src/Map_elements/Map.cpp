@@ -18,22 +18,7 @@
 
 using namespace std;
 
-const string Map::ITD_FILE = "../../data/config_map.itd";
-
-vector<string>
-splitString(string str)
-{
-    stringstream ss(str);
-    istream_iterator<string> begin(ss);
-    istream_iterator<string> end;
-    vector<string> split_line(begin, end);
-    return split_line;
-}
-
-Map::Map()
-{
-    setTextures();
-}
+/* ------------------------- GETTERS ----------------------------*/
 
 Color Map::getColorIn()
 {
@@ -49,7 +34,7 @@ Color Map::getColorPath()
 }
 int Map::getNbNodes()
 {
-    return nbNodes;
+    return nb_nodes;
 }
 vector<Node> Map::getNodes()
 {
@@ -59,11 +44,6 @@ vector<Node> Map::getNodes()
 Graph::WeightedGraph Map::getGraph()
 {
     return graph;
-}
-
-unordered_map<TileType, GLuint> Map::getTextures()
-{
-    return textures;
 }
 
 unordered_map<pair<int, int>, Pixel> Map::getPixels()
@@ -76,86 +56,39 @@ vector<Tile> Map::getTiles()
     return tiles;
 }
 
-/* --------------------- RECUPERATION DES DONNEES DE L'ITD --------------------- */
-
-void Map::getColorFromItd(Color &color, vector<string> split_line)
+vector<Node> Map::getShortestPath()
 {
-    color.setColor(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4]));
+    return shortest_path;
 }
 
-void Map::getNodesFromItdFile(vector<string> split_line)
-{
-    Node node(stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]));
+/* --------------------- SETTERS ----------------------*/
 
-    if (stoi(split_line[1]) != this->nbNodes - 1)
-    {
-        if (stoi(split_line[1]) == 0)
-        {
-            node.setStatus(NodeStatus::Start);
-        }
-        else
-        {
-            node.setStatus(NodeStatus::Path);
-        }
-        for (int i{4}; i < split_line.size(); i++)
-        {
-            node.addNeighbor(stoi(split_line[i]));
-        }
-    }
-    else
-    {
-        node.setStatus(NodeStatus::End);
-    }
-    nodes.push_back(node);
+void Map::setColorIn(Color in)
+{
+    this->color_in = in;
 }
-
-void Map::itdMap()
+void Map::setColorOut(Color out)
 {
-    ifstream my_file;
-
-    my_file.open(this->ITD_FILE);
-
-    string my_line;
-
-    if (my_file.is_open())
-    {
-        while (my_file)
-        {
-            getline(my_file, my_line);
-            vector<string> split_line = splitString(my_line);
-
-            if (my_line.starts_with("path"))
-            {
-                getColorFromItd(this->color_path, split_line);
-            }
-            else if (my_line.starts_with("in"))
-            {
-                getColorFromItd(this->color_in, split_line);
-            }
-            else if (my_line.starts_with("out"))
-            {
-                getColorFromItd(this->color_out, split_line);
-            }
-            else if (my_line.starts_with("graph"))
-            {
-                nbNodes = stoi(split_line[1]);
-            }
-            else if (my_line.starts_with("node"))
-            {
-                getNodesFromItdFile(split_line);
-            }
-        }
-    }
-    else
-    {
-        cout << "Couldn't open file\n";
-    }
+    this->color_out = out;
+}
+void Map::setColorPath(Color path)
+{
+    this->color_path = path;
+}
+void Map::setNbNodes(int nb_nodes)
+{
+    this->nb_nodes = nb_nodes;
+}
+void Map::addNode(Node n)
+{
+    this->nodes.push_back(n);
 }
 
 /* --------------- CONSTRUCTION DU GRAPHE A PARTIR DES NODES RECUPEREES --------------- */
 
 void Map::createGraphFromNodes()
 {
+    graph.clear();
     for (Node n : nodes)
     {
         for (int neighbor : n.getNeighbors())
@@ -166,48 +99,44 @@ void Map::createGraphFromNodes()
     }
 }
 
-void Map::getVertexesToVisit()
+void Map::deployBarrage(Barrage b)
+{
+    for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
+    {
+        if (wge.to == b.getNodeId())
+        {
+            wge.isClosed = true;
+        }
+    }
+}
+
+vector<Node> Map::convertIdToNodes(vector<int> vec)
+{
+    vector<Node> result;
+    for (int i : vec)
+    {
+        for (Node n : nodes)
+        {
+            if (i == n.getId())
+            {
+                result.push_back(n);
+            }
+        }
+    }
+    return result;
+}
+
+void Map::setVertexesToVisit()
 {
     int start{nodes[0].getId()};
-    int end{nodes[nbNodes - 1].getId()};
+    int end{nodes[nb_nodes - 1].getId()};
     unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
-    shortest_path = Graph::getNodesIdFromDijkstra(dij, start, end);
-    for (int i : shortest_path)
+    shortest_path = convertIdToNodes(Graph::getNodesIdFromDijkstra(dij, start, end));
+    for (Node n : shortest_path)
     {
-        cout << i << " , ";
+        cout << n.getId() << " , ";
     }
-}
-
-/* --------------- RECUPERATION DES TEXTURES DANS UN TABLEAU D'ID -------------------- */
-
-pair<TileType, img::Image> getMatchingTexture(TileType type)
-{
-    switch (type)
-    {
-    case TileType::Curve:
-        return {TileType::Curve, img::Image{img::load(make_absolute_path("images/curve.png", true), 4, false)}};
-    case TileType::FourWays:
-        return {TileType::FourWays, img::Image{img::load(make_absolute_path("images/four_ways.png", true), 4, false)}};
-    case TileType::ThreeWays:
-        return {TileType::ThreeWays, img::Image{img::load(make_absolute_path("images/three_ways.png", true), 4, false)}};
-    case TileType::Straight:
-        return {TileType::Straight, img::Image{img::load(make_absolute_path("images/straight.png", true), 4, false)}};
-    }
-    return {TileType::Grass, img::Image{img::load(make_absolute_path("images/grass.png", true), 4, false)}};
-}
-
-// CHARGEMENT DES TEXTURES DES DIFFERENTES TILES
-
-void Map::setTextures()
-{
-    cout << endl
-         << "Loading...." << endl;
-
-    for (int i{0}; i < 5; i++)
-    {
-        textures.insert({static_cast<TileType>(i), loadTexture(getMatchingTexture(static_cast<TileType>(i)).second)});
-    }
-    cout << "Done !";
+    cout << endl;
 }
 
 // LECTURE DU SCHEMA DE BASE 16x16
@@ -257,7 +186,7 @@ pair<TileType, int> Map::getPathType(Pixel &p)
     return paths_rotations.at(mask);
 }
 
-void Map::createTiles()
+void Map::createTiles(unordered_map<TileType, GLuint> &textures)
 {
     for (pair p : pixels)
     {

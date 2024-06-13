@@ -1,45 +1,66 @@
 #pragma once
 
 #include <iostream>
-#include "Position.hpp"
+#include <vector>
+#include "Node.hpp"
+#include "GlFW/glfw3.h"
 
 using namespace std;
 
 enum class MonsterType
 {
-    Orque,
-    Meduse,
-    Poseidon,
-    Requin,
+    Orque = 0,
+    Meduse = 1,
+    Requin = 2,
+    Poseidon = 3
 };
 
 class Monster
 {
 
 private:
+    GLfloat x;
+    GLfloat y;
     double max_health{};
     double health_points{};
-    double speed{};
+    float speed{};
     MonsterType type{};
-    string path_sprite{};
+    GLuint texture{};
     bool is_boss{};
     bool is_dead{};
     bool is_moving{};
     bool is_freeze{};
     bool is_burning{};
-    Position position{};
+    int current_node_index{};
 
 public:
-    Position getMonsterPosition();
+    static const string ITD_FILE;
+    Monster();
+    Monster(MonsterType type, GLuint texture);
+    glm::vec2 getPosition();
     double getMaxHealth();
     double getHealthPoints();
-    double getSpeed();
+    float getSpeed();
+    MonsterType getType();
+    GLuint getTexture();
     bool getIsBoss();
     bool getIsDead();
-    Monster(double health_points, double speed, MonsterType type, bool is_boss, bool is_freeze);
-    void findPathSprite();
-    void changeSpeed(double coeff);
+
+    void shift(glm::vec2 deplacement);
+
+    void setMaxHealth(double max_health);
+    void setSpeed(float speed);
+    void setIsBoss(bool is_boss);
+
+    void changeSpeed(float coeff);
     void takeDamage(double damage);
     void toggleFreeze();
     void toggleBurn();
+    void setAttributes(MonsterType type, GLuint texture);
+
+    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size);
+
+    void display();
 };
+
+string monsterTypeToString(MonsterType type);

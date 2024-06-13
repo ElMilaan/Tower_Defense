@@ -1,6 +1,10 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
-#include "Position.hpp"
+#include <glm/glm.hpp>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 
@@ -14,20 +18,23 @@ enum class NodeStatus
 class Node
 {
 private:
+    GLfloat x;
+    GLfloat y;
     int id{};
     NodeStatus status{};
-    Position position{};
     vector<int> neighbors{};
+    bool isBarrage{};
 
 public:
     Node();
-    Node(int id, int x, int y);
-    Node(int id, bool isTowerPlace, bool isBarragePlace, int x, int y);
+    Node(int id, GLfloat x, GLfloat y);
+    Node(int id, bool isBarrage, GLfloat x, GLfloat y);
     int getId();
-    NodeStatus getStatus();
-    Position getPosition();
+    glm::vec2 getPosition();
+    NodeStatus
+    getStatus();
     vector<int> getNeighbors();
     void setStatus(NodeStatus status);
     void addNeighbor(int neighbor);
-    int distanceBetweenNodes(Node target);
+    GLfloat distanceBetweenNodes(Node target);
 };

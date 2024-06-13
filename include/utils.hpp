@@ -1,7 +1,7 @@
 #pragma once
+
 #include <filesystem>
 #include <glm/glm.hpp>
-#include "Position.hpp"
 #include "Tile.hpp"
 
 using namespace std;
@@ -38,6 +38,13 @@ ostream &operator<<(ostream &os, vector<T> const &vec)
     return os << vec.back() << ']';
 }
 
-int getDistanceBetweenTwoPoints(Position p1, Position p2);
-GLfloat glNormalize(GLfloat coord, GLfloat mapSize);
-void drawTile(Tile &tile, GLfloat mapSize);
+int getDistanceBetweenTwoPoints(glm::vec2 p1, glm::vec2 p2);
+glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize, bool reverse);
+
+vector<string> splitString(string str);
+
+/* ------------------ RANDOM ------------------ */
+
+int random_int(int min, int max);
+double random_double(double min, double max);
+void set_random_seed(int seed);

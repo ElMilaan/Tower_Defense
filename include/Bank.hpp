@@ -17,6 +17,6 @@ public:
     Bank();
     void addMoney(double amount_to_add);
     void removeMoney(double amount_to_remove);
-    double getBankSold();
+    int getBankSold();
     void setBankSold(double new_sold);
 };

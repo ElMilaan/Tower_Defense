@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include <random>
 
 using namespace std;
 
@@ -20,44 +21,49 @@ filesystem::path make_absolute_path(filesystem::path const &path, bool check_pat
     return res;
 }
 
-int getDistanceBetweenTwoPoints(Position p1, Position p2)
+int getDistanceBetweenTwoPoints(glm::vec2 p1, glm::vec2 p2)
 {
-    return abs(p1.x - p2.x + p1.y - p2.y);
+    int a = (int)abs(p1.x - p2.x + p1.y - p2.y);
+    return a;
 }
 
-GLfloat glNormalize(GLfloat coord, GLfloat mapSize)
+glm::vec2 glNormalize(glm::vec2 pos, GLfloat mapSize, bool reverse)
 {
-    return static_cast<GLfloat>(2.0f * coord / mapSize - 1);
+    if (reverse)
+    {
+        return {2.0f * pos.x / mapSize - 1, 2.0f * pos.y / mapSize - 1};
+    }
+    return {2.0f * pos.x / mapSize - 1, -2.0f * pos.y / mapSize + 1};
 }
 
-void drawTile(Tile &tile, GLfloat mapSize)
+vector<string> splitString(string str)
 {
+    stringstream ss(str);
+    istream_iterator<string> begin(ss);
+    istream_iterator<string> end;
+    vector<string> split_line(begin, end);
+    return split_line;
+}
 
-    float x = glNormalize(tile.x, mapSize);
-    float y = glNormalize(tile.y, mapSize);
-    float size = 2.0f / mapSize;
+static auto &generator()
+{
+    static default_random_engine gen{random_device{}()};
+    return gen;
+}
 
-    // cout << x << " , " << y << endl;
+int random_int(int min, int max)
+{
+    uniform_int_distribution<int> distribution{min, max - 1};
+    return distribution(generator());
+}
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, tile.texture);
-    glTranslatef(x + size / 2, y + size / 2, 0.0f);
-    glRotatef(tile.rotation, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-(x + size / 2), -(y + size / 2), 0.0f);
+double random_double(double min, double max)
+{
+    uniform_real_distribution<double> distribution{min, max};
+    return distribution(generator());
+}
 
-    glBegin(GL_QUADS);
-
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(x, y);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex2f(x + size, y);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex2f(x + size, y + size);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex2f(x, y + size);
-
-    glEnd();
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_TEXTURE_2D);
+void set_random_seed(int seed)
+{
+    generator().seed(seed);
 }

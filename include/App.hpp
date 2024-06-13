@@ -3,9 +3,12 @@
 #include <glad/glad.h>
 #include <simpletext.h>
 #include <unordered_map>
+#include <vector>
 #include "Bank.hpp"
 #include "Tile.hpp"
 #include "Map.hpp"
+#include "Monster.hpp"
+#include "Wave.hpp"
 
 class App
 {
@@ -30,8 +33,12 @@ private:
     double _previousTime{};
     double _viewSize{};
     Map map{};
+    vector<Wave> waves{};
     GLuint _deco_texture;
+    unordered_map<TileType, GLuint> tile_textures{};
+    unordered_map<MonsterType, GLuint> monster_textures{};
     double _angle{};
     SimpleText text_renderer{};
     void render();
+    Monster *m{};
 };

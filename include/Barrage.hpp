@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Graph.hpp"
+#include "Map.hpp"
 
 using namespace std;
 
@@ -15,4 +16,5 @@ public:
     int getNodeId();
     string getSpritePath();
     void setNodeId(int id);
+    // void deploy(Map &map);
 };

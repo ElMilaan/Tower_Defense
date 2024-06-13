@@ -12,11 +12,15 @@ using namespace std;
 
 Wave::Wave()
 {
+    this->last_spawn = 0;
+    this->current_monster_index = 0;
 }
 
 Wave::Wave(int id, unordered_map<MonsterType, GLuint> monster_textures)
 {
     this->id = id;
+    this->last_spawn = 0;
+    this->current_monster_index = 0;
 }
 int Wave::getId()
 {
@@ -66,17 +70,17 @@ void Wave::display()
     cout << "}" << endl;
 }
 
-// void Wave::update(double inter_time)
-// {
-//     timeSinceLastSpawn += inter_time;
-//     if (timeSinceLastSpawn >= INTER_TIME)
-//     {
-//         monsters.emplace_back(path, monsterSpeed);
-//         timeSinceLastSpawn = 0.0f;
-//     }
+void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size)
+{
+    if (current_time - last_spawn >= INTER_TIME && current_monster_index < monsters.size())
+    {
+        monsters_to_update.push_back(monsters[current_monster_index]);
+        last_spawn = current_time;
 
-//     for (auto &monster : monsters)
-//     {
-//         monster.update(inter_time);
-//     }
-// }
+        current_monster_index++;
+    }
+    for (Monster m : monsters_to_update)
+    {
+        m.update(delta_time, shortest_path, map_size);
+    }
+}

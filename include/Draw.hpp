@@ -7,6 +7,7 @@
 #include "img/img.hpp"
 #include "Monster.hpp"
 #include <unordered_map>
+#include "Barrage.hpp"
 
 using namespace std;
 
@@ -20,3 +21,4 @@ unordered_map<MonsterType, GLuint> setMonsterTextures();
 
 void drawTile(Tile &tile, GLfloat mapSize);
 void drawMonster(Monster &monster, GLfloat map_size);
+void drawBarrage(Barrage &barrage, GLfloat map_size);

@@ -127,3 +127,34 @@ void drawMonster(Monster &monster, GLfloat map_size)
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
 }
+
+// void drawBarrage(Barrage &barrage, GLfloat map_size, )
+// {
+//     glm::vec2 pos{glNormalize({barrage.getPosition().x, barrage.getPosition().y}, map_size, false)};
+
+//     // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
+
+//     float size = 2.0f / map_size;
+
+//     glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+//     glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+
+//     glEnable(GL_TEXTURE_2D);
+//     glBindTexture(GL_TEXTURE_2D, barrage.getTexture());
+
+//     glBegin(GL_QUADS);
+
+//     glTexCoord2f(0.0f, 0.0f);
+//     glVertex2f(pos.x, pos.y);
+//     glTexCoord2f(1.0f, 0.0f);
+//     glVertex2f(pos.x + size, pos.y);
+//     glTexCoord2f(1.0f, 1.0f);
+//     glVertex2f(pos.x + size, pos.y + size);
+//     glTexCoord2f(0.0f, 1.0f);
+//     glVertex2f(pos.x, pos.y + size);
+
+//     glEnd();
+
+//     glBindTexture(GL_TEXTURE_2D, 0);
+//     glDisable(GL_TEXTURE_2D);
+// }

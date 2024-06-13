@@ -44,7 +44,8 @@ private:
     Color color_out;
     Color color_path;
     int nb_nodes{};
-    vector<Node> nodes{};
+    unordered_map<int, Node> nodes{};
+    vector<Graph::WeightedGraphEdge> edges_barrage{};
     Graph::WeightedGraph graph{};
     vector<Node> shortest_path{};
     unordered_map<pair<int, int>, Pixel> pixels;
@@ -69,11 +70,12 @@ public:
     Color getColorOut();
     Color getColorPath();
     int getNbNodes();
-    vector<Node> getNodes();
+    unordered_map<int, Node> getNodes();
     Graph::WeightedGraph getGraph();
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     vector<Node> getShortestPath();
+    void getBarrageEdges();
 
     void setColorIn(Color in);
     void setColorOut(Color out);
@@ -82,7 +84,7 @@ public:
     void addNode(Node n);
 
     void createGraphFromNodes();
-    void deployBarrage(Barrage b);
+    // void deployBarrage(Barrage b);
     vector<Node> convertIdToNodes(vector<int> vec);
     void setVertexesToVisit();
     void imgRead();

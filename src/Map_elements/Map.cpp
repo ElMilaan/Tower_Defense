@@ -36,7 +36,7 @@ int Map::getNbNodes()
 {
     return nb_nodes;
 }
-vector<Node> Map::getNodes()
+unordered_map<int, Node> Map::getNodes()
 {
     return nodes;
 }
@@ -81,7 +81,7 @@ void Map::setNbNodes(int nb_nodes)
 }
 void Map::addNode(Node n)
 {
-    this->nodes.push_back(n);
+    this->nodes.insert({n.getId(), n});
 }
 
 /* --------------- CONSTRUCTION DU GRAPHE A PARTIR DES NODES RECUPEREES --------------- */
@@ -89,23 +89,37 @@ void Map::addNode(Node n)
 void Map::createGraphFromNodes()
 {
     graph.clear();
-    for (Node n : nodes)
+    for (pair p : nodes)
     {
-        for (int neighbor : n.getNeighbors())
+        for (int neighbor : p.second.getNeighbors())
         {
-            double dist = n.distanceBetweenNodes(nodes[neighbor]);
-            graph.addDirectedEdge(n.getId(), neighbor, dist);
+            double dist = p.second.distanceBetweenNodes(nodes[neighbor]);
+            graph.addDirectedEdge(p.first, neighbor, dist);
         }
     }
 }
 
-void Map::deployBarrage(Barrage b)
+// void Map::deployBarrage(Barrage b)
+// {
+//     for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
+//     {
+//         if (wge.to == b.getNodeId())
+//         {
+//             wge.isClosed = true;
+//         }
+//     }
+// }
+
+void Map::getBarrageEdges()
 {
-    for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
+    for (pair p : graph.adjacency_list)
     {
-        if (wge.to == b.getNodeId())
+        for (Graph::WeightedGraphEdge &wge : p.second)
         {
-            wge.isClosed = true;
+            if (wge.to == 3 or wge.to == 8 or wge.to == 13 or wge.to == 18)
+            {
+                edges_barrage.push_back(wge);
+            }
         }
     }
 }
@@ -115,13 +129,7 @@ vector<Node> Map::convertIdToNodes(vector<int> vec)
     vector<Node> result;
     for (int i : vec)
     {
-        for (Node n : nodes)
-        {
-            if (i == n.getId())
-            {
-                result.push_back(n);
-            }
-        }
+        result.push_back(nodes.at(i));
     }
     return result;
 }

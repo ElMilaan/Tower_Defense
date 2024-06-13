@@ -13,11 +13,13 @@ private:
     int id{};
     int nb_monsters;
     vector<Monster> monsters{};
+    vector<Monster> monsters_to_update{};
     bool is_boss_wave{};
-    double timeSinceLastSpawn{};
+    double last_spawn{};
+    int current_monster_index{};
 
 public:
-    double const INTER_TIME{1};
+    double const INTER_TIME{6};
 
     Wave();
     Wave(int id, unordered_map<MonsterType, GLuint> monster_textures);
@@ -31,7 +33,7 @@ public:
     void setIsBossWave(bool is_boss_wave);
     void addMonster(Monster m);
 
-    void update(double inter_time);
+    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size);
 
     void display();
 };

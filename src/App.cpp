@@ -59,24 +59,33 @@ void App::setup()
         cout << endl;
     }
 
-    Barrage b{};
-    b.setNodeId(8);
-    map.deployBarrage(b);
-    map.setVertexesToVisit();
+    // Barrage b{}, b1{}, b2{}, b3{};
+    // b.setNodeId(3);
+    // b1.setNodeId(8);
+    // b2.setNodeId(13);
+    // b3.setNodeId(18);
+    // map.deployBarrage(b);
+    // map.deployBarrage(b1);
+    // map.deployBarrage(b2);
+    // map.deployBarrage(b3);
+    // map.setVertexesToVisit();
 
-    m = new Monster(MonsterType::Poseidon, monster_textures.at(MonsterType::Poseidon));
+    // m = new Monster(MonsterType::Orque, monster_textures.at(MonsterType::Orque));
 }
 
 void App::update()
 {
-    // const double currentTime{glfwGetTime()};
-    // const double elapsedTime{currentTime - _previousTime};
-    // _previousTime = currentTime;
+    const double currentTime{glfwGetTime()};
+    const double elapsedTime{currentTime - _previousTime};
+    _previousTime = currentTime;
+
     bank.addMoney(0.02);
 
     render();
 
-    m->update(0.1, map.getShortestPath(), 16.0f);
+    waves[0].update(currentTime, 0.1f, map.getShortestPath(), 16.0f);
+
+    // m->update(0.1, map.getShortestPath(), 16.0f);
     // cout << m->getPosition().x << " , " << m->getPosition().y << endl;
 }
 

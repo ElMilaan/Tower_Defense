@@ -69,6 +69,15 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
     return monster_textures;
 }
 
+// unordered_map<MonsterType, GLuint> setBarrageTextures()
+// {
+//     unordered_map<MonsterType, GLuint> barrage_textures{};
+//     
+//     barrage_texture.insert();
+//     
+//     return barrage_texture;
+// }
+
 void drawTile(Tile &tile, GLfloat mapSize)
 {
     glm::vec2 pos{glNormalize({tile.x, tile.y}, mapSize, true)};

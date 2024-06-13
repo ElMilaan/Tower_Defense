@@ -31,6 +31,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
+    // img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
+    //barrage_texture = setBarrageTexture();
 }
 
 void App::setup()
@@ -136,8 +138,17 @@ void App::render()
     text_renderer.Render();
 }
 
-void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)
+void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
 {
+    if(action == GLFW_PRESS){
+        if (key == GLFW_KEY_B)
+        {
+            //faire dessiner le barrage
+            Barrage barrage{};
+            barrage.deploy(map, barrage_texture);
+        }
+        
+    }
 }
 
 void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/)

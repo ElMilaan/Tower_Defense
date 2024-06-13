@@ -61,6 +61,11 @@ vector<Node> Map::getShortestPath()
     return shortest_path;
 }
 
+
+vector<Graph::WeightedGraphEdge> Map::getBarrageEdges(){
+    return edges_barrage;
+};
+
 /* --------------------- SETTERS ----------------------*/
 
 void Map::setColorIn(Color in)
@@ -110,7 +115,7 @@ void Map::createGraphFromNodes()
 //     }
 // }
 
-void Map::getBarrageEdges()
+void Map::setBarrageEdges()
 {
     for (pair p : graph.adjacency_list)
     {

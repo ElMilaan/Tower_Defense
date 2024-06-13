@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Barrage.hpp"
 #include "Graph.hpp"
+#include "Map.hpp"
+
 
 using namespace std;
 
@@ -19,54 +21,25 @@ void Barrage::setNodeId(int id)
     node_id = id;
 }
 
-// void Barrage::deploy(Map &map)
-// {
-//     if (map.graph.adjency_list.at(1).isclosed == true)
-//     {
-//         // A FAIRE
-//         if (map.nodes(8).isclosed == true)
-//         {
-//             // A FAIRE
-//             if (map.nodes(13).isclosed == true)
-//             {
-//                 // A FAIRE
-//                 if (map.nodes(18).isclosed == true)
-//                 {
-//                     // A FAIRE
-//                 }
-//                 else
-//                 {
-//                     map.nodes(18).isclosed = true;
-//                     glPushMatrix();
-//                     glScalef(0.4f, 0.4f, 0.4f);
-//                     drawBarrage(*this, 16.0f);
-//                     glPopMatrix();
-//                 }
-//             }
-//             else
-//             {
-//                 map.nodes(13).isclosed = true;
-//                 glPushMatrix();
-//                 glScalef(0.4f, 0.4f, 0.4f);
-//                 drawBarrage(*this, 16.0f);
-//                 glPopMatrix();
-//             }
-//         }
-//         else
-//         {
-//             map.nodes(8).isclosed = true;
-//             glPushMatrix();
-//             glScalef(0.4f, 0.4f, 0.4f);
-//             drawBarrage(*this, 16.0f);
-//             glPopMatrix();
-//         }
-//     }
-//     else
-//     {
-//         map.nodes(3).isclosed = true;
-//         glPushMatrix();
-//         glScalef(0.4f, 0.4f, 0.4f);
-//         drawBarrage(*this, 16.0f);
-//         glPopMatrix();
-//     }
-// }
+void Barrage::deploy(Map &map, GLuint barrage_texture)
+{
+    for (Graph::WeightedGraphEdge &wge : map.getBarrageEdges())
+    {
+        for (int i = 0; i < map.getBarrageEdges().size(); i++)
+        {
+            if (!map.getBarrageEdges()[i].isClosed)
+            {
+                map.getBarrageEdges()[i].isClosed = true;
+                glPushMatrix();
+                glScalef(0.4f, 0.4f, 0.4f);
+                drawBarrage(barrage_texture, 16.0f, map.getNodes().at(i));
+                glPopMatrix();
+                // bank -= barrage.cost;
+                break;
+            }
+            
+        }
+        
+        
+    }
+}

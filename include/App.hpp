@@ -38,6 +38,7 @@ private:
     int current_wave{};
     vector<Wave> waves{};
     GLuint _deco_texture;
+    GLuint barrage_texture;
     unordered_map<TileType, GLuint> tile_textures{};
     unordered_map<MonsterType, GLuint> monster_textures{};
     double _angle{};

@@ -69,6 +69,15 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
     return monster_textures;
 }
 
+// unordered_map<MonsterType, GLuint> setBarrageTextures()
+// {
+//     unordered_map<MonsterType, GLuint> barrage_textures{};
+//     
+//     barrage_texture.insert();
+//     
+//     return barrage_texture;
+// }
+
 void drawTile(Tile &tile, GLfloat mapSize)
 {
     glm::vec2 pos{glNormalize({tile.x, tile.y}, mapSize, true)};
@@ -128,33 +137,34 @@ void drawMonster(Monster &monster, GLfloat map_size)
     glDisable(GL_TEXTURE_2D);
 }
 
-// void drawBarrage(Barrage &barrage, GLfloat map_size, )
-// {
-//     glm::vec2 pos{glNormalize({barrage.getPosition().x, barrage.getPosition().y}, map_size, false)};
+void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
+{
+    
+    glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y}, map_size, false)};
 
-//     // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
+    // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
 
-//     float size = 2.0f / map_size;
+    float size = 2.0f / map_size;
 
-//     glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
-//     glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+    glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+    glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
 
-//     glEnable(GL_TEXTURE_2D);
-//     glBindTexture(GL_TEXTURE_2D, barrage.getTexture());
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, barrage_texture);
 
-//     glBegin(GL_QUADS);
+    glBegin(GL_QUADS);
 
-//     glTexCoord2f(0.0f, 0.0f);
-//     glVertex2f(pos.x, pos.y);
-//     glTexCoord2f(1.0f, 0.0f);
-//     glVertex2f(pos.x + size, pos.y);
-//     glTexCoord2f(1.0f, 1.0f);
-//     glVertex2f(pos.x + size, pos.y + size);
-//     glTexCoord2f(0.0f, 1.0f);
-//     glVertex2f(pos.x, pos.y + size);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(pos.x, pos.y);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(pos.x + size, pos.y);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(pos.x + size, pos.y + size);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(pos.x, pos.y + size);
 
-//     glEnd();
+    glEnd();
 
-//     glBindTexture(GL_TEXTURE_2D, 0);
-//     glDisable(GL_TEXTURE_2D);
-// }
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
+}

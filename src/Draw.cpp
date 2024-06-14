@@ -139,7 +139,9 @@ void drawMonster(Monster &monster, GLfloat map_size)
 
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
 {
-    glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y}, map_size, false)};
+    float mid_barrage {0.5};
+    float mid_tile {0.5};
+    glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y + mid_barrage + mid_tile}, map_size, false)};
 
     // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
 

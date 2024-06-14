@@ -70,6 +70,7 @@ void App::setup()
     // map.deployBarrage(b2);
     // map.deployBarrage(b3);
     // map.setVertexesToVisit();
+    
 }
 
 void App::update()
@@ -86,6 +87,12 @@ void App::update()
     {
         waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave);
     }
+
+    for (Barrage b : barrages)
+    {
+        b.update(map.getNodes().at(b.getNodeId()));
+    }
+    
 }
 
 void App::render()
@@ -149,11 +156,13 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
             break;
         case GLFW_KEY_B:
             // faire dessiner le barrage
-            if (!launch_wave)
+            if (!launch_wave && barrages.size() < map.getBarrageEdges().size())
             {
                 Barrage b{barrage_texture};
                 map.deployBarrage(b);
+                barrages.push_back(b);
                 map.setVertexesToVisit();
+                cout << "size barrages " << barrages.size() << " size map.tralala" << map.getBarrageEdges().size() << endl;
             }
         case GLFW_KEY_D:
             cout << "IsLauched : ";

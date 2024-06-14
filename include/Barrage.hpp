@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-// #include "Map.hpp"
 #include "Graph.hpp"
 #include "Draw.hpp"
 
@@ -11,13 +10,12 @@ class Barrage
 {
 private:
     GLuint texture{};
+    int node_id{};
 
 public:
+    void update(Node node);
+    void setNodeId(int node_id);
     int getNodeId();
-    string getSpritePath();
-    void setNodeId(int id);
-    void deploy(Map &map, GLuint barrage_texture);
-    void Barrage::update(double current_time, float delta_time, GLuint barrage_texture, Node &node);
     Barrage(GLuint texture);
     GLuint getTexture();
 };

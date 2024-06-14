@@ -70,14 +70,11 @@ void App::setup()
     // map.deployBarrage(b2);
     // map.deployBarrage(b3);
     // map.setVertexesToVisit();
-    
 }
 
 void App::update()
 {
     current_time = glfwGetTime();
-    // const double elapsedTime{currentTime - _previousTime};
-    // _previousTime = currentTime;
 
     bank.addMoney(0.02);
 
@@ -92,7 +89,6 @@ void App::update()
     {
         b.update(map.getNodes().at(b.getNodeId()));
     }
-    
 }
 
 void App::render()

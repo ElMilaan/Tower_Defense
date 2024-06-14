@@ -117,7 +117,7 @@ void Map::deployBarrage(Barrage &b)
                 if (wge_g.to == wge.to)
                 {
                     wge_g.isClosed = true;
-                    b.setNodeId(wge.to); //afin de dessiner au bon endroit on fait + 2
+                    b.setNodeId(wge.to);
                 }
             }
             glPushMatrix();

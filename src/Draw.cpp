@@ -106,27 +106,6 @@ void drawTile(Tile &tile, GLfloat mapSize)
     glDisable(GL_TEXTURE_2D);
 }
 
-void drawLifeLine(glm::vec2 monster_pos, float health)
-{
-    // Dessiner la barre de vie
-    glColor3f(1.0f, 0.0f, 0.0f); // Couleur rouge pour la vie restante
-    glBegin(GL_QUADS);
-    glVertex2f(monster_pos.x - 0.05f / 2, monster_pos.y + 0.1f);
-    glVertex2f(monster_pos.x - 0.05f / 2 + 0.05f * health, monster_pos.y + 0.1f);
-    glVertex2f(monster_pos.x - 0.05f / 2 + 0.05f * health, monster_pos.y + 0.1f + 0.01f);
-    glVertex2f(monster_pos.x - 0.05f / 2, monster_pos.y + 0.1f + 0.01f);
-    glEnd();
-
-    // Dessiner la partie grise pour la vie manquante
-    glColor3f(0.5f, 0.5f, 0.5f); // Couleur grise pour la vie manquante
-    glBegin(GL_QUADS);
-    glVertex2f(monster_pos.x - 0.05f / 2 + 0.05f * health, monster_pos.y + 0.1f);
-    glVertex2f(monster_pos.x + 0.05f / 2, monster_pos.y + 0.1f);
-    glVertex2f(monster_pos.x + 0.05f / 2, monster_pos.y + 0.1f + 0.01f);
-    glVertex2f(monster_pos.x - 0.05f / 2 + 0.05f * health, monster_pos.y + 0.1f + 0.01f);
-    glEnd();
-}
-
 void drawMonster(Monster &monster, GLfloat map_size)
 {
     glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size, false)};
@@ -140,8 +119,6 @@ void drawMonster(Monster &monster, GLfloat map_size)
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, monster.getTexture());
-
-    drawLifeLine(pos, monster.getHealthPoints());
 
     glBegin(GL_QUADS);
 
@@ -162,8 +139,8 @@ void drawMonster(Monster &monster, GLfloat map_size)
 
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
 {
-    float mid_barrage {0.5};
-    float mid_tile {0.5};
+    float mid_barrage{0.5};
+    float mid_tile{0.5};
     glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y + mid_barrage + mid_tile}, map_size, false)};
 
     // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
@@ -191,4 +168,8 @@ void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
+}
+
+void drawLifeLine(glm::vec2)
+{
 }

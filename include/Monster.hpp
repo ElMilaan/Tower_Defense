@@ -21,8 +21,8 @@ class Monster
 private:
     GLfloat x;
     GLfloat y;
-    double max_health{};
-    double health_points{};
+    float max_health{};
+    float health_points{};
     float speed{};
     MonsterType type{};
     GLuint texture{};
@@ -39,8 +39,8 @@ public:
     Monster();
     Monster(MonsterType type, GLuint texture, bool is_last);
     glm::vec2 getPosition();
-    double getMaxHealth();
-    double getHealthPoints();
+    float getMaxHealth();
+    float getHealthPoints();
     float getSpeed();
     MonsterType getType();
     GLuint getTexture();

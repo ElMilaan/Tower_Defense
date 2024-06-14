@@ -32,12 +32,12 @@ glm::vec2 Monster::getPosition()
     return {this->x, this->y};
 }
 
-double Monster::getMaxHealth()
+float Monster::getMaxHealth()
 {
     return this->max_health;
 }
 
-double Monster::getHealthPoints()
+float Monster::getHealthPoints()
 {
     return this->health_points;
 }
@@ -182,7 +182,7 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
 
     glm::vec2 go{glm::normalize(target_position - this->getPosition())};
 
-    if (this->getPosition().y < LIMIT)
+    if (this->getPosition().y < LIMIT && !this->is_dead)
     {
         if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
         {
@@ -213,9 +213,13 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
         drawMonster(*this, 16.0f);
         glPopMatrix();
     }
-    else if (is_last_of_wave)
+    else
     {
-        launch_wave = false;
-        current_wave++;
+        if (is_last_of_wave)
+        {
+            launch_wave = false;
+            current_wave++;
+        }
+        // delete this;
     }
 }

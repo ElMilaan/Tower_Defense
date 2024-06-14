@@ -18,4 +18,5 @@ public:
     string getSpritePath();
     void setNodeId(int id);
     void deploy(Map &map, GLuint barrage_texture);
+    void Barrage::update(double current_time, float delta_time, GLuint barrage_texture, Node &node);
 };

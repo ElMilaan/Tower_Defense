@@ -91,6 +91,8 @@ void App::update()
 
     if (launch_wave)
         waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave);
+    
+    
 }
 
 void App::render()
@@ -154,6 +156,7 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
             // faire dessiner le barrage
             Barrage barrage{};
             barrage.deploy(map, barrage_texture);
+            break;
         }
     }
 }

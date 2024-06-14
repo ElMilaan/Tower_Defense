@@ -117,11 +117,11 @@ void Map::deployBarrage(Barrage &b)
                 if (wge_g.to == wge.to)
                 {
                     wge_g.isClosed = true;
-                    b.setNodeId(wge.to); //afin de dessiner au bon endroit on fait + 2
+                    b.setNodeId(wge.to);
                 }
             }
             glPushMatrix();
-            glScalef(0.4f, 0.4f, 0.4f);
+            //glScalef(0.4f, 0.4f, 0.4f);
             drawBarrage(b.getTexture(), 16.0f, nodes.at(wge.to));
             glPopMatrix();
             break;

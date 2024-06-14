@@ -59,17 +59,6 @@ void App::setup()
     launch_wave = false;
     current_wave = 0;
     life = 5;
-
-    // Barrage b{}, b1{}, b2{}, b3{};
-    // b.setNodeId(3);
-    // b1.setNodeId(8);
-    // b2.setNodeId(13);
-    // b3.setNodeId(18);
-    // map.deployBarrage(b);
-    // map.deployBarrage(b1);
-    // map.deployBarrage(b2);
-    // map.deployBarrage(b3);
-    // map.setVertexesToVisit();
     
 }
 
@@ -107,11 +96,11 @@ void App::render()
     for (Tile t : map.getTiles())
     {
         glPushMatrix();
-        glScalef(0.4f, 0.4f, 0.4f);
+        //glScalef(0.4f, 0.4f, 0.4f);
         drawTile(t, 16.0f);
         glPopMatrix();
     }
-    glScalef(0.8f, 0.8f, 0.8f);
+    glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();
 
@@ -198,10 +187,10 @@ void App::size_callback(int width, int height)
     glLoadIdentity();
     if (aspectRatio > 1.0f)
     {
-        glOrtho(-_viewSize / 5.0f * aspectRatio, _viewSize / 5.0f * aspectRatio, -_viewSize / 5.0f, _viewSize / 5.0f, -1.0f, 1.0f);
+        glOrtho(-_viewSize / 2.0f * aspectRatio, _viewSize / 2.0f * aspectRatio, -_viewSize / 2.0f, _viewSize / 2.0f, -1.0f, 1.0f);
     }
     else
     {
-        glOrtho(-_viewSize / 5.0f, _viewSize / 5.0f, -_viewSize / 5.0f / aspectRatio, _viewSize / 5.0f / aspectRatio, -1.0f, 1.0f);
+        glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
     }
 }

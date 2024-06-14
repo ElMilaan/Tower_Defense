@@ -86,7 +86,7 @@ public:
     void addNode(Node n);
 
     void createGraphFromNodes();
-    void deployBarrage(Barrage b);
+    void deployBarrage(Barrage &b);
     vector<Node> convertIdToNodes(vector<int> vec);
     void setVertexesToVisit();
     void imgRead();

@@ -9,6 +9,7 @@
 #include "Map.hpp"
 #include "Monster.hpp"
 #include "Wave.hpp"
+#include "Barrage.hpp"
 
 class App
 {
@@ -45,4 +46,5 @@ private:
     SimpleText text_renderer{};
     void render();
     int life{};
+    vector<Barrage> barrages{};
 };

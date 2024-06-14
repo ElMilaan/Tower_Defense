@@ -7,6 +7,15 @@ using namespace std;
 Barrage::Barrage(GLuint texture)
 {
     this->texture = texture;
+
+}
+
+int Barrage::getNodeId(){
+    return this->node_id;
+}
+
+void Barrage::setNodeId(int node_id){
+    this->node_id = node_id;
 }
 
 GLuint Barrage::getTexture()
@@ -14,10 +23,11 @@ GLuint Barrage::getTexture()
     return this->texture;
 }
 
-void Barrage::update(double current_time, float delta_time, GLuint barrage_texture, Node &node)
+void Barrage::update(Node node)
 {
     glPushMatrix();
     glScalef(0.4f, 0.4f, 0.4f);
-    drawBarrage(barrage_texture, 16.0f, node);
+    drawBarrage(this->texture, 16.0f, node);
     glPopMatrix();
 }
+

@@ -108,7 +108,7 @@ void ITD::itdMonster(string monster_name, Monster &monster)
             if (my_line.starts_with(monster_name))
             {
                 monster.setMaxHealth(stod(split_line[1]));
-                monster.setSpeed(stod(split_line[2]));
+                monster.setSpeed(stof(split_line[2]));
                 monster.setIsBoss(stoi(split_line[3]));
             }
         }

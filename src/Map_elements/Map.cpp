@@ -9,6 +9,7 @@
 #include "Color.hpp"
 #include "Pixel.hpp"
 #include "Graph.hpp"
+#include "Barrage.hpp"
 
 #include <stb_image/stb_image.h>
 #include <img/img.hpp>
@@ -61,8 +62,8 @@ vector<Node> Map::getShortestPath()
     return shortest_path;
 }
 
-
-vector<Graph::WeightedGraphEdge> Map::getBarrageEdges(){
+vector<Graph::WeightedGraphEdge> Map::getBarrageEdges()
+{
     return edges_barrage;
 };
 
@@ -104,16 +105,28 @@ void Map::createGraphFromNodes()
     }
 }
 
-// void Map::deployBarrage(Barrage b)
-// {
-//     for (Graph::WeightedGraphEdge &wge : graph.adjacency_list.at(b.getNodeId() - 2))
-//     {
-//         if (wge.to == b.getNodeId())
-//         {
-//             wge.isClosed = true;
-//         }
-//     }
-// }
+void Map::deployBarrage(Barrage b)
+{
+    for (Graph::WeightedGraphEdge &wge : edges_barrage)
+    {
+        if (!wge.isClosed)
+        {
+            wge.isClosed = true;
+            for (Graph::WeightedGraphEdge &wge_g : graph.adjacency_list.at(wge.to - 2))
+            {
+                if (wge_g.to == wge.to)
+                {
+                    wge_g.isClosed = true;
+                }
+            }
+            glPushMatrix();
+            glScalef(0.4f, 0.4f, 0.4f);
+            drawBarrage(b.getTexture(), 16.0f, nodes.at(wge.to));
+            glPopMatrix();
+            break;
+        }
+    }
+}
 
 void Map::setBarrageEdges()
 {

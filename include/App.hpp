@@ -44,5 +44,5 @@ private:
     double _angle{};
     SimpleText text_renderer{};
     void render();
-    Monster *m{};
+    int life{};
 };

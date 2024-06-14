@@ -72,9 +72,9 @@ unordered_map<MonsterType, GLuint> setMonsterTextures()
 // unordered_map<MonsterType, GLuint> setBarrageTextures()
 // {
 //     unordered_map<MonsterType, GLuint> barrage_textures{};
-//     
+//
 //     barrage_texture.insert();
-//     
+//
 //     return barrage_texture;
 // }
 
@@ -139,7 +139,6 @@ void drawMonster(Monster &monster, GLfloat map_size)
 
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
 {
-    
     glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y}, map_size, false)};
 
     // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;

@@ -169,7 +169,7 @@ string monsterTypeToString(MonsterType type)
     return "Requin";
 }
 
-void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave)
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave)
 {
     // Pour matcher avec le centre des textures du monstre et de la tile
     float mid_texture{0.5};
@@ -180,8 +180,6 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
 
     glm::vec2 target_position{shortest_path[current_node_index + 1].getPosition().x, shortest_path[current_node_index + 1].getPosition().y + mid_texture + mid_tile};
 
-    // cout << target.getPosition().x << " , " << target.getPosition().y << endl;
-
     glm::vec2 go{glm::normalize(target_position - this->getPosition())};
 
     if (this->getPosition().y < LIMIT)
@@ -191,7 +189,6 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
             if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
             {
                 this->shift({go.x * deltaTime * speed, 0});
-                // cout << target_position.x << " , " << this->getPosition().x << endl;
             }
             else
             {
@@ -204,7 +201,6 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
             if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
             {
                 this->shift({0, go.y * deltaTime * speed});
-                // cout << target_position.y << " , " << this->getPosition().y << endl;
             }
             else
             {
@@ -220,7 +216,6 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
     else if (is_last_of_wave)
     {
         launch_wave = false;
+        current_wave++;
     }
-
-    // cout << "ID : " << getTexture() << ", IsLast : " << is_last_of_wave << endl;
 }

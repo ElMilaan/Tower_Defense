@@ -9,6 +9,7 @@
 #include "Color.hpp"
 #include "Pixel.hpp"
 #include "utils.hpp"
+#include "Barrage.hpp"
 
 #include "Monster.hpp"
 
@@ -75,17 +76,17 @@ public:
     unordered_map<pair<int, int>, Pixel> getPixels();
     vector<Tile> getTiles();
     vector<Node> getShortestPath();
-    void setBarrageEdges();
     vector<Graph::WeightedGraphEdge> getBarrageEdges();
 
     void setColorIn(Color in);
     void setColorOut(Color out);
     void setColorPath(Color path);
     void setNbNodes(int nb_nodes);
+    void setBarrageEdges();
     void addNode(Node n);
 
     void createGraphFromNodes();
-    // void deployBarrage(Barrage b);
+    void deployBarrage(Barrage b);
     vector<Node> convertIdToNodes(vector<int> vec);
     void setVertexesToVisit();
     void imgRead();

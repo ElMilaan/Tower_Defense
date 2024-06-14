@@ -70,7 +70,7 @@ void Wave::display()
     cout << "}" << endl;
 }
 
-void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave)
+void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave)
 {
     if (current_monster_index < monsters.size())
     {
@@ -84,6 +84,6 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
     }
     for (Monster &m : monsters_to_update)
     {
-        m.update(delta_time, shortest_path, map_size, launch_wave);
+        m.update(delta_time, shortest_path, map_size, launch_wave, current_wave);
     }
 }

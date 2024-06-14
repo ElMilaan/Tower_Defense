@@ -28,11 +28,11 @@ Bank App::getBank()
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
+    img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
-    // img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
-    // barrage_texture = setBarrageTexture();
+    barrage_texture = loadTexture(barrage);
 }
 
 void App::setup()
@@ -58,6 +58,7 @@ void App::setup()
 
     launch_wave = false;
     current_wave = 0;
+    life = 5;
 
     // Barrage b{}, b1{}, b2{}, b3{};
     // b.setNodeId(3);
@@ -69,14 +70,6 @@ void App::setup()
     // map.deployBarrage(b2);
     // map.deployBarrage(b3);
     // map.setVertexesToVisit();
-
-    for (Wave w : waves)
-    {
-        for (Monster m : w.getMonsters())
-        {
-            cout << m.getIsLast() << endl;
-        }
-    }
 }
 
 void App::update()
@@ -89,8 +82,10 @@ void App::update()
 
     render();
 
-    if (launch_wave)
-        waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave);
+    if (launch_wave && current_wave < waves.size())
+    {
+        waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave);
+    }
 }
 
 void App::render()
@@ -148,12 +143,21 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
         // Déclancher les waves
         case GLFW_KEY_W:
             if (!launch_wave)
+            {
                 launch_wave = true;
+            }
             break;
         case GLFW_KEY_B:
             // faire dessiner le barrage
-            Barrage barrage{};
-            barrage.deploy(map, barrage_texture);
+            if (!launch_wave)
+            {
+                Barrage b{barrage_texture};
+                map.deployBarrage(b);
+                map.setVertexesToVisit();
+            }
+        case GLFW_KEY_D:
+            cout << "IsLauched : ";
+            (launch_wave) ? cout << "oui !" << endl : cout << "non !" << endl;
         }
     }
 }

@@ -33,7 +33,7 @@ public:
     void setIsBossWave(bool is_boss_wave);
     void addMonster(Monster m);
 
-    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave);
+    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave);
 
     void display();
 };

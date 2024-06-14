@@ -1,45 +1,16 @@
 #include <iostream>
 #include "Barrage.hpp"
 #include "Graph.hpp"
-#include "Map.hpp"
-
+// #include "Map.hpp"
 
 using namespace std;
 
-int Barrage::getNodeId()
+Barrage::Barrage(GLuint texture)
 {
-    return node_id;
+    this->texture = texture;
 }
 
-string Barrage::getSpritePath()
+GLuint Barrage::getTexture()
 {
-    return sprite_path;
-}
-
-void Barrage::setNodeId(int id)
-{
-    node_id = id;
-}
-
-void Barrage::deploy(Map &map, GLuint barrage_texture)
-{
-    for (Graph::WeightedGraphEdge &wge : map.getBarrageEdges())
-    {
-        for (int i = 0; i < map.getBarrageEdges().size(); i++)
-        {
-            if (!map.getBarrageEdges()[i].isClosed)
-            {
-                map.getBarrageEdges()[i].isClosed = true;
-                glPushMatrix();
-                glScalef(0.4f, 0.4f, 0.4f);
-                drawBarrage(barrage_texture, 16.0f, map.getNodes().at(i));
-                glPopMatrix();
-                // bank -= barrage.cost;
-                break;
-            }
-            
-        }
-        
-        
-    }
+    return this->texture;
 }

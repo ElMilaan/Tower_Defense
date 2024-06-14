@@ -143,15 +143,6 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
 {
     if (action == GLFW_PRESS)
     {
-        if (key == GLFW_KEY_B)
-        {
-            // faire dessiner le barrage
-            Barrage barrage{};
-            barrage.deploy(map, barrage_texture);
-        }
-    }
-    if (action == GLFW_PRESS)
-    {
         switch (key)
         {
         // Déclancher les waves
@@ -159,9 +150,10 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
             if (!launch_wave)
                 launch_wave = true;
             break;
-        // Construire un barrage
         case GLFW_KEY_B:
-            break;
+            // faire dessiner le barrage
+            Barrage barrage{};
+            barrage.deploy(map, barrage_texture);
         }
     }
 }

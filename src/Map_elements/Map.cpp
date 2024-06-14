@@ -121,7 +121,7 @@ void Map::deployBarrage(Barrage &b)
                 }
             }
             glPushMatrix();
-            glScalef(0.4f, 0.4f, 0.4f);
+            //glScalef(0.4f, 0.4f, 0.4f);
             drawBarrage(b.getTexture(), 16.0f, nodes.at(wge.to));
             glPopMatrix();
             break;

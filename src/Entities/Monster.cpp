@@ -209,7 +209,7 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
             }
         }
         glPushMatrix();
-        glScalef(0.4f, 0.4f, 0.4f);
+        //glScalef(0.4f, 0.4f, 0.4f);
         drawMonster(*this, 16.0f);
         glPopMatrix();
     }

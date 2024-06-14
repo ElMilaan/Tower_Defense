@@ -27,7 +27,7 @@ GLuint Barrage::getTexture()
 void Barrage::update(Node node)
 {
     glPushMatrix();
-    glScalef(0.4f, 0.4f, 0.4f);
+    //glScalef(0.4f, 0.4f, 0.4f);
     drawBarrage(this->texture, 16.0f, node);
     glPopMatrix();
 }

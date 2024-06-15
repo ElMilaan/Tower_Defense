@@ -169,7 +169,7 @@ string monsterTypeToString(MonsterType type)
     return "Requin";
 }
 
-void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave)
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, int &game_life)
 {
     // Pour matcher avec le centre des textures du monstre et de la tile
     float mid_texture{0.5};
@@ -182,44 +182,31 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
 
     glm::vec2 go{glm::normalize(target_position - this->getPosition())};
 
-    if (this->getPosition().y < LIMIT && !this->is_dead)
+    if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
     {
-        if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
+        if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
         {
-            if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
-            {
-                this->shift({go.x * deltaTime * speed, 0});
-            }
-            else
-            {
-                current_node_index++;
-                this->x = target_position.x;
-            }
+            this->shift({go.x * deltaTime * speed, 0});
         }
         else
         {
-            if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
-            {
-                this->shift({0, go.y * deltaTime * speed});
-            }
-            else
-            {
-                current_node_index++;
-                this->y = target_position.y;
-            }
+            current_node_index++;
+            this->x = target_position.x;
         }
-        glPushMatrix();
-        //glScalef(0.4f, 0.4f, 0.4f);
-        drawMonster(*this, 16.0f);
-        glPopMatrix();
     }
     else
     {
-        if (is_last_of_wave)
+        if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
         {
-            launch_wave = false;
-            current_wave++;
+            this->shift({0, go.y * deltaTime * speed});
         }
-        // delete this;
+        else
+        {
+            current_node_index++;
+            this->y = target_position.y;
+        }
     }
+    glPushMatrix();
+    drawMonster(*this, map_size);
+    glPopMatrix();
 }

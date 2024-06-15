@@ -169,7 +169,7 @@ string monsterTypeToString(MonsterType type)
     return "Requin";
 }
 
-void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, int &game_life)
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave)
 {
     // Pour matcher avec le centre des textures du monstre et de la tile
     float mid_texture{0.5};

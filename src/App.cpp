@@ -27,12 +27,19 @@ Bank App::getBank()
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
+    nb_hearts = 5;
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
+    img::Image heart{img::load(make_absolute_path("images/heart.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
     barrage_texture = loadTexture(barrage);
+    GLuint heart_texture = loadTexture(heart);
+    for (int i{0}; i < nb_hearts; i++)
+    {
+        life.push_back(heart_texture);
+    }
 }
 
 void App::setup()
@@ -58,7 +65,6 @@ void App::setup()
 
     launch_wave = false;
     current_wave = 0;
-    life = 5;
 }
 
 void App::update()
@@ -68,15 +74,17 @@ void App::update()
     bank.addMoney(0.02);
 
     render();
-
-    if (launch_wave && current_wave < waves.size())
+    if (life.size() > 0)
     {
-        waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
-    }
+        if (launch_wave && current_wave < waves.size())
+        {
+            waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
+        }
 
-    for (Barrage b : barrages)
-    {
-        b.update(map.getNodes().at(b.getNodeId()));
+        for (Barrage b : barrages)
+        {
+            b.update(map.getNodes().at(b.getNodeId()));
+        }
     }
 }
 
@@ -96,6 +104,7 @@ void App::render()
         drawTile(t, 16.0f);
         glPopMatrix();
     }
+    drawLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();

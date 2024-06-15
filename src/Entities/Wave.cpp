@@ -70,7 +70,7 @@ void Wave::display()
     cout << "}" << endl;
 }
 
-void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, int &game_life)
+void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life)
 {
     if (current_monster_index < monsters.size())
     {
@@ -87,7 +87,7 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
     {
         if (monsters_to_update[i].getPosition().y < LIMIT && !monsters_to_update[i].getIsDead())
         {
-            monsters_to_update[i].update(delta_time, shortest_path, map_size, launch_wave, current_wave, game_life);
+            monsters_to_update[i].update(delta_time, shortest_path, map_size, launch_wave, current_wave);
         }
         else
         {
@@ -96,10 +96,9 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
                 launch_wave = false;
                 current_wave++;
             }
-            game_life--;
-            cout << "Life : " << game_life << endl;
-            cout << "Position : " << monsters_to_update[i].getPosition().x << " , " << monsters_to_update[i].getPosition().y << endl;
+            game_life.pop_back();
             monsters_to_update.erase(monsters_to_update.begin() + i);
+            cout << "Life : " << game_life.size() << endl;
         }
     }
 }

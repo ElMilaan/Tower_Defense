@@ -61,7 +61,7 @@ public:
     void toggleBurn();
     void setAttributes(MonsterType type, GLuint texture);
 
-    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, int &game_life);
+    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave);
 
     void display();
 };

@@ -31,6 +31,7 @@ private:
     Bank bank{};
     int _width{};
     int _height{};
+    int nb_hearts{};
     double current_time{};
     double _previousTime{};
     double _viewSize{};
@@ -45,6 +46,6 @@ private:
     double _angle{};
     SimpleText text_renderer{};
     void render();
-    int life{};
     vector<Barrage> barrages{};
+    vector<GLuint> life{};
 };

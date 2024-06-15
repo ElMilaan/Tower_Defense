@@ -143,8 +143,6 @@ void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
     float mid_tile{0.5};
     glm::vec2 pos{glNormalize({node.getPosition().x, node.getPosition().y + mid_barrage + mid_tile}, map_size, false)};
 
-    // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
-
     float size = 2.0f / map_size;
 
     glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
@@ -172,4 +170,37 @@ void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
 
 void drawLifeLine(glm::vec2)
 {
+}
+
+void drawLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size)
+{
+    float size = 2.0f / map_size;
+    int gap{0};
+    for (GLuint heart : life)
+    {
+        glm::vec2 pos{glNormalize({global_position.x + gap, global_position.y + 2}, map_size, false)};
+
+        glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+        glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, heart);
+
+        glBegin(GL_QUADS);
+
+        glTexCoord2f(0.0f, 0.0f);
+        glVertex2f(pos.x, pos.y);
+        glTexCoord2f(1.0f, 0.0f);
+        glVertex2f(pos.x + size, pos.y);
+        glTexCoord2f(1.0f, 1.0f);
+        glVertex2f(pos.x + size, pos.y + size);
+        glTexCoord2f(0.0f, 1.0f);
+        glVertex2f(pos.x, pos.y + size);
+
+        glEnd();
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+        gap++;
+    }
 }

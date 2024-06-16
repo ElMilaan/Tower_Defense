@@ -68,7 +68,7 @@ int main()
     glfwSetWindowUserPointer(window, &app);
 
     glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
-                       { window_as_app(window).key_callback(key, scancode, action, mods); });
+                       { window_as_app(window).key_callback(key, scancode, action, mods, window); });
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods)
                                { window_as_app(window).mouse_button_callback(button, action, mods); });

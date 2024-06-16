@@ -1,0 +1,11 @@
+ITD
+
+range 4
+power 2
+cost 30
+attack_speed 1
+
+tower 9 2 ice
+tower 5 5 fire
+tower 9 8 ice
+tower 5 11 fire

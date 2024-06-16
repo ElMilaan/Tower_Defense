@@ -162,3 +162,56 @@ void ITD::itdWave(vector<Wave> &waves, unordered_map<MonsterType, GLuint> monste
         cout << "Couldn't open wave file\n";
     }
 }
+
+/* -------------------------- TOWER -------------------------- */
+
+void ITD::itdTower(unordered_map<int, pair<Tower, bool>> &towers, GLuint tower_texture)
+{
+    ifstream my_file;
+
+    my_file.open(ITD::ITD_TOWER);
+
+    string my_line;
+
+    if (my_file.is_open())
+    {
+        TowerType type;
+        double range;
+        double power;
+        float attack_speed;
+        double cost;
+        int tower_id{0};
+        while (getline(my_file, my_line))
+        {
+            vector<string> split_line = splitString(my_line);
+
+            if (my_line.starts_with("range"))
+            {
+                range = stod(split_line[1]);
+            }
+            if (my_line.starts_with("power"))
+            {
+                power = stod(split_line[1]);
+            }
+            if (my_line.starts_with("cost"))
+            {
+                cost = stod(split_line[1]);
+            }
+            if (my_line.starts_with("attack_speed"))
+            {
+                attack_speed = stof(split_line[1]);
+            }
+            if (my_line.starts_with("tower"))
+            {
+                (split_line[3] == "ice") ? type = TowerType::Ice : type = TowerType::Fire;
+                Tower t{stof(split_line[1]), stof(split_line[2]), range, power, type, cost, attack_speed, tower_texture};
+                towers.insert({tower_id, {t, 0}});
+                tower_id++;
+            }
+        }
+    }
+    else
+    {
+        cout << "Couldn't open monster file\n";
+    }
+}

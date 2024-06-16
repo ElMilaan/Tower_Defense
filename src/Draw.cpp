@@ -106,6 +106,10 @@ void drawTile(Tile &tile, GLfloat mapSize)
     glDisable(GL_TEXTURE_2D);
 }
 
+void drawLifeLine(glm::vec2)
+{
+}
+
 void drawMonster(Monster &monster, GLfloat map_size)
 {
     glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size, false)};
@@ -168,11 +172,38 @@ void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)
     glDisable(GL_TEXTURE_2D);
 }
 
-void drawLifeLine(glm::vec2)
+void drawTower(Tower t, GLfloat map_size)
 {
+    float mid_barrage{0.5};
+    float mid_tile{0.5};
+    glm::vec2 pos{glNormalize({t.getPosition().x, t.getPosition().y + mid_barrage + mid_tile}, map_size, false)};
+
+    float size = 2.0f / map_size;
+
+    glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+    glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, t.getTexture());
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(pos.x, pos.y);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(pos.x + size, pos.y);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(pos.x + size, pos.y + size);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(pos.x, pos.y + size);
+
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
 }
 
-void drawLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size)
+void drawGameLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size)
 {
     float size = 2.0f / map_size;
     int gap{0};

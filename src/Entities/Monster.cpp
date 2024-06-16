@@ -91,6 +91,21 @@ void Monster::setIsLast()
     this->is_last_of_wave = true;
 }
 
+void Monster::setIsBurn(bool is_burn)
+{
+    this->is_burn = is_burn;
+}
+
+void Monster::setIsFreeze(bool is_freeze)
+{
+    this->is_freeze = is_freeze;
+}
+
+void Monster::setHealth(float new_health)
+{
+    this->health_points = new_health;
+}
+
 void Monster::changeSpeed(float coeff)
 {
     speed *= coeff;
@@ -103,15 +118,6 @@ void Monster::takeDamage(double damage)
     {
         this->is_dead = true;
     }
-}
-
-void Monster::toggleFreeze()
-{
-    is_freeze = !is_freeze;
-}
-void Monster::toggleBurn()
-{
-    is_burning = !is_burning;
 }
 
 void Monster::setAttributes(MonsterType type, GLuint texture)
@@ -140,7 +146,8 @@ void Monster::setAttributes(MonsterType type, GLuint texture)
         break;
     }
     this->is_moving = true;
-    this->is_burning = false;
+    this->is_burn = false;
+    this->is_freeze = false;
     this->is_dead = false;
     this->health_points = this->max_health;
     this->current_node_index = 0;

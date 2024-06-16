@@ -31,10 +31,12 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image deco{img::load(make_absolute_path("images/deco.png", true), 4, true)};
     img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
     img::Image heart{img::load(make_absolute_path("images/heart.png", true), 4, true)};
+    img::Image tower{img::load(make_absolute_path("images/tower.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
     barrage_texture = loadTexture(barrage);
+    tower_texture = loadTexture(tower);
     GLuint heart_texture = loadTexture(heart);
     for (int i{0}; i < nb_hearts; i++)
     {
@@ -62,9 +64,11 @@ void App::setup()
     map.createTiles(tile_textures);
 
     ITD::itdWave(waves, monster_textures);
+    ITD::itdTower(towers, tower_texture);
 
     launch_wave = false;
     current_wave = 0;
+    current_tower = 0;
 }
 
 void App::update()
@@ -85,6 +89,11 @@ void App::update()
         {
             b.update(map.getNodes().at(b.getNodeId()));
         }
+        for (pair p : towers)
+        {
+            if (p.second.second)
+                map.deployTower(p.second.first);
+        }
     }
 }
 
@@ -104,7 +113,7 @@ void App::render()
         drawTile(t, 16.0f);
         glPopMatrix();
     }
-    drawLife(life, {-6, 0}, 16.0f);
+    drawGameLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
     glPopMatrix();
@@ -135,7 +144,7 @@ void App::render()
     text_renderer.Render();
 }
 
-void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
+void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFWwindow *&window)
 {
     if (action == GLFW_PRESS)
     {
@@ -156,11 +165,20 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/)
                 map.deployBarrage(b);
                 barrages.push_back(b);
                 map.setVertexesToVisit();
-                cout << "size barrages " << barrages.size() << " size map.tralala" << map.getBarrageEdges().size() << endl;
             }
-        case GLFW_KEY_D:
-            cout << "IsLauched : ";
-            (launch_wave) ? cout << "oui !" << endl : cout << "non !" << endl;
+            break;
+        case GLFW_KEY_T:
+            if (!launch_wave && current_tower < towers.size())
+            {
+                towers.at(current_tower).second = true;
+                cout << "Tower : " << towers.at(current_tower).first.getPosition() << endl;
+                current_tower++;
+            }
+            break;
+        case GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+            cout << "On ferme" << endl;
+            break;
         }
     }
 }

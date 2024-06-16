@@ -10,6 +10,7 @@
 #include "Pixel.hpp"
 #include "utils.hpp"
 #include "Barrage.hpp"
+#include "Tower.hpp"
 
 #include "Monster.hpp"
 
@@ -86,6 +87,7 @@ public:
     void addNode(Node n);
 
     void createGraphFromNodes();
+    void deployTower(Tower &t);
     void deployBarrage(Barrage &b);
     vector<Node> convertIdToNodes(vector<int> vec);
     void setVertexesToVisit();

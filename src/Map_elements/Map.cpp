@@ -105,6 +105,13 @@ void Map::createGraphFromNodes()
     }
 }
 
+void Map::deployTower(Tower &t)
+{
+    glPushMatrix();
+    drawTower(t, 16.0f);
+    glPopMatrix();
+}
+
 void Map::deployBarrage(Barrage &b)
 {
     for (Graph::WeightedGraphEdge &wge : edges_barrage)
@@ -120,10 +127,6 @@ void Map::deployBarrage(Barrage &b)
                     b.setNodeId(wge.to);
                 }
             }
-            glPushMatrix();
-            // glScalef(0.4f, 0.4f, 0.4f);
-            drawBarrage(b.getTexture(), 16.0f, nodes.at(wge.to));
-            glPopMatrix();
             break;
         }
     }

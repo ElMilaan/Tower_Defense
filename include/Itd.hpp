@@ -5,6 +5,7 @@
 #include "Map.hpp"
 #include "Color.hpp"
 #include "Wave.hpp"
+#include "Tower.hpp"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ namespace ITD
     const string ITD_MAP{"../../data/config_map.itd"};
     const string ITD_MONSTER{"../../data/monster.itd"};
     const string ITD_WAVE{"../../data/wave.itd"};
+    const string ITD_TOWER{"../../data/tower.itd"};
 
     /* ------ MAP ------ */
 
@@ -28,4 +30,9 @@ namespace ITD
     /* ------ WAVES ------*/
 
     void itdWave(vector<Wave> &waves, unordered_map<MonsterType, GLuint> monster_textures);
+
+    /* ----- TOWERS ------*/
+
+    void itdTower(unordered_map<int, pair<Tower, bool>> &towers, GLuint tower_texture);
+
 }

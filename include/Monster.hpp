@@ -30,7 +30,7 @@ private:
     bool is_dead{};
     bool is_moving{};
     bool is_freeze{};
-    bool is_burning{};
+    bool is_burn{};
     int current_node_index{};
     bool is_last_of_wave{};
 
@@ -54,6 +54,9 @@ public:
     void setSpeed(float speed);
     void setIsBoss(bool is_boss);
     void setIsLast();
+    void setHealth(float new_health);
+    void setIsBurn(bool is_burn);
+    void setIsFreeze(bool is_freeze);
 
     void changeSpeed(float coeff);
     void takeDamage(double damage);

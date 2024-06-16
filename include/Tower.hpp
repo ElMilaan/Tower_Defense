@@ -19,22 +19,24 @@ enum class TowerType
 class Tower
 {
 private:
-    GLfloat x;
-    GLfloat y;
+    GLfloat x{};
+    GLfloat y{};
+    GLuint texture{};
     double range{};
-    double damage{};
-    double attack_speed{};
+    double power{};
+    float attack_speed{};
     double construction_cost{};
     double level{};
     TowerType type{};
-    string path_sprite{};
 
 public:
-    Tower(GLfloat x, GLfloat y, double range, double damage, double level, TowerType type, double construction_cost, double attack_speed); // constructor
-    void findPathSprite();
-    void levelUp(double cost, double bank_sold); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
+    Tower(GLfloat x, GLfloat y, double range, double power, TowerType type, double construction_cost, float attack_speed, GLuint texture); // constructor
+    glm::vec2 getPosition();
+    GLuint getTexture();
+    void levelUp(double cost, double bank_sold, GLuint new_texture); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
     void build(glm::vec2 position);
     void destruct();
-    void attack(Monster monster);
+    void attack(Monster &monster);
+    void inflictDamage(Monster &monster);
     bool isMonsterInRange(Monster monster);
 };

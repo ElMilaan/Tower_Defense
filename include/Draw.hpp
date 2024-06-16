@@ -9,6 +9,7 @@
 #include "Monster.hpp"
 #include <unordered_map>
 #include "Barrage.hpp"
+#include "Tower.hpp"
 
 using namespace std;
 
@@ -23,4 +24,5 @@ unordered_map<MonsterType, GLuint> setMonsterTextures();
 void drawTile(Tile &tile, GLfloat mapSize);
 void drawMonster(Monster &monster, GLfloat map_size);
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node);
-void drawLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size);
+void drawTower(Tower t, GLfloat map_size);
+void drawGameLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size);

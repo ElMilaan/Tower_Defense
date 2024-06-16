@@ -18,9 +18,8 @@ public:
     void setup();
     void update();
     Bank getBank();
-
     // GLFW callbacks binding
-    void key_callback(int key, int scancode, int action, int mods);
+    void key_callback(int key, int scancode, int action, int mods, GLFWwindow *&window);
     void mouse_button_callback(int button, int action, int mods);
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(double xpos, double ypos);
@@ -38,9 +37,12 @@ private:
     Map map{};
     bool launch_wave{};
     int current_wave{};
+    int current_tower{};
     vector<Wave> waves{};
-    GLuint _deco_texture;
-    GLuint barrage_texture;
+    unordered_map<int, pair<Tower, bool>> towers;
+    GLuint _deco_texture{};
+    GLuint barrage_texture{};
+    GLuint tower_texture{};
     unordered_map<TileType, GLuint> tile_textures{};
     unordered_map<MonsterType, GLuint> monster_textures{};
     double _angle{};

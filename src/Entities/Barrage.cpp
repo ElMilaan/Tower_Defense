@@ -24,10 +24,10 @@ GLuint Barrage::getTexture()
     return this->texture;
 }
 
-void Barrage::update(Node node)
+void Barrage::render(Node node)
 {
     glPushMatrix();
-    //glScalef(0.4f, 0.4f, 0.4f);
+    // glScalef(0.4f, 0.4f, 0.4f);
     drawBarrage(this->texture, 16.0f, node);
     glPopMatrix();
 }

@@ -81,7 +81,6 @@ void App::setup()
 void App::update()
 {
     current_time = glfwGetTime();
-
     render();
     if (!pause)
     {
@@ -103,12 +102,6 @@ void App::update()
             if (launch_wave && current_wave < waves.size())
             {
                 waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
-            }
-
-            // Update des barrages
-            for (Barrage b : barrages)
-            {
-                b.update(map.getNodes().at(b.getNodeId()));
             }
         }
     }
@@ -140,6 +133,10 @@ void App::render()
             glPopMatrix();
         }
     }
+    for (Barrage b : barrages)
+    {
+        b.render(map.getNodes().at(b.getNodeId()));
+    }
 
     drawGameLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
@@ -148,7 +145,7 @@ void App::render()
     {
         draw_quad_with_texture(_pause_texture);
     }
-    if (current_wave == 5 && life.size() > 0)
+    if ((current_wave == 4 && life.size() > 0))
     {
         draw_quad_with_texture(victoire_texture);
     }

@@ -64,7 +64,7 @@ void Tower::attack(Monster &monster)
     monster.takeDamage(power);
 }
 
-void Tower::update(double current_time, Monster &m, GLfloat map_size)
+void Tower::update(double current_time, Monster &m)
 {
     if (current_time - last_shot >= 2) //(double)(CADENCE / attack_speed)
     {

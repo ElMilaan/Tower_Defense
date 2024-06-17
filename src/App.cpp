@@ -83,7 +83,7 @@ void App::update()
         // Update des Tours
         for (pair p : towers)
         {
-            if (p.second.second)
+            if (p.second.second && current_wave < waves.size())
             {
                 for (Monster &m : waves[current_wave].monsters_to_update)
                 {
@@ -182,18 +182,21 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
             if (!launch_wave && barrages.size() < map.getBarrageEdges().size())
             {
                 Barrage b{barrage_texture};
-                map.deployBarrage(b);
-                barrages.push_back(b);
-                map.setVertexesToVisit();
-                bank.removeMoney(b.COST);
+                if (bank.getBankSold() - b.COST >= 0)
+                {
+                    map.deployBarrage(b);
+                    barrages.push_back(b);
+                    map.setVertexesToVisit();
+                    bank.removeMoney(b.COST);
+                }
             }
             break;
         case GLFW_KEY_T:
-            if (!launch_wave && current_tower < towers.size())
+            if (!launch_wave && current_tower < towers.size() && bank.getBankSold() - towers.at(current_tower).first.COSTS[0] >= 0)
             {
                 towers.at(current_tower).second = true;
-                current_tower++;
                 bank.removeMoney(towers.at(current_tower).first.COSTS[0]);
+                current_tower++;
             }
             break;
         case GLFW_KEY_ESCAPE:

@@ -230,6 +230,35 @@ void drawTower(Tower t, GLfloat map_size)
     glDisable(GL_TEXTURE_2D);
 }
 
+void drawProjectile(glm::vec2 projectile_pos, GLfloat map_size)
+{
+    glm::vec2 pos{glNormalize(projectile_pos, map_size, false)};
+
+    float size = 2.0f / map_size;
+
+    glTranslatef(pos.x + size / 2, pos.y + size / 2, 0.0f);
+    glTranslatef(-(pos.x + size / 2), -(pos.y + size / 2), 0.0f);
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 3);
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(pos.x, pos.y);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(pos.x + size, pos.y);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(pos.x + size, pos.y + size);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(pos.x, pos.y + size);
+
+    glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
+}
+
 void drawGameLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size)
 {
     float size = 2.0f / map_size;

@@ -80,7 +80,7 @@ void App::setup()
 
 void App::update()
 {
-    if (is_paused)
+    if (pause)
     {
         glPushMatrix();
         glScalef(2.0f, 2.0f, 2.0f);
@@ -121,6 +121,7 @@ void App::update()
             }
         }
     }
+}
 }
 
 void App::render()
@@ -245,14 +246,14 @@ void App::mouse_button_callback(int button, int action, int /*mods*/)
 
 void App::cursor_position_callback(double xpos, double ypos, GLFWwindow *&window)
 {
-    if (is_paused && xpos <= 820 && xpos >= 450 && ypos <= 460 && ypos >= 400)
+    if (pause && xpos <= 820 && xpos >= 450 && ypos <= 460 && ypos >= 400)
     {
             glfwSetWindowShouldClose(window, GLFW_TRUE);
             cout << "On ferme" << endl;
     }
-    else if (is_paused && xpos <= 820 && xpos >= 450 && ypos <= 360 && ypos >= 300)
+    else if (pause && xpos <= 820 && xpos >= 450 && ypos <= 360 && ypos >= 300)
     {
-            is_paused = !is_paused;
+            pause = !pause;
             cout << "On continue ?" << endl;
     }
     

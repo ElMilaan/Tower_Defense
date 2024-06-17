@@ -93,7 +93,7 @@ void App::update()
                 {
                     for (Monster &m : waves[current_wave].monsters_to_update)
                     {
-                        p.second.first.update(current_time, m, 16.0f);
+                        p.second.first.update(current_time, m);
                     }
                 }
             }

@@ -64,7 +64,7 @@ void Tower::attack(Monster &monster)
     monster.takeDamage(power);
 }
 
-void Tower::update(double current_time, Monster &m, bool launch_wave, GLfloat map_size)
+void Tower::update(double current_time, Monster &m, GLfloat map_size)
 {
     if (current_time - last_shot >= (double)(CADENCE / attack_speed))
     {
@@ -72,8 +72,7 @@ void Tower::update(double current_time, Monster &m, bool launch_wave, GLfloat ma
         last_shot = current_time;
         cout << m.getHealthPoints() << endl;
     }
-
-    glPushMatrix();
-    drawTower(*this, map_size);
-    glPopMatrix();
+    // glPushMatrix();
+    // drawTower(*this, map_size);
+    // glPopMatrix();
 }

@@ -76,19 +76,18 @@ void App::update()
     current_time = glfwGetTime();
 
     bank.addMoney(0.02);
-
     render();
+
     if (life.size() > 0)
     {
-
         // Update des Tours
         for (pair p : towers)
         {
             if (p.second.second)
             {
-                for (Monster &m : waves[current_wave].monsters)
+                for (Monster &m : waves[current_wave].monsters_to_update)
                 {
-                    p.second.first.update(current_time, m, launch_wave, 16.0f);
+                    p.second.first.update(current_time, m, 16.0f);
                 }
             }
         }
@@ -123,6 +122,17 @@ void App::render()
         drawTile(t, 16.0f);
         glPopMatrix();
     }
+
+    for (pair p : towers)
+    {
+        if (p.second.second)
+        {
+            glPushMatrix();
+            drawTower(p.second.first, 16.0f);
+            glPopMatrix();
+        }
+    }
+
     drawGameLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
@@ -183,6 +193,7 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
             {
                 towers.at(current_tower).second = true;
                 current_tower++;
+                bank.removeMoney(towers.at(current_tower).first.COSTS[0]);
             }
             break;
         case GLFW_KEY_ESCAPE:

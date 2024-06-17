@@ -106,15 +106,40 @@ void drawTile(Tile &tile, GLfloat mapSize)
     glDisable(GL_TEXTURE_2D);
 }
 
-void drawLifeLine(glm::vec2)
+void drawLifeLine(glm::vec2 pos, GLfloat map_size, float life, float max_life)
 {
+    float size = 2.0f / map_size;
+
+    float barWidth = size;    // La largeur de la barre de vie est la même que la taille du monstre
+    float barHeight = 0.02f;  // Hauteur de la barre de vie
+    float barOffsetY = 0.05f; // Offset au-dessus du monstre
+
+    float lifeRatio = static_cast<float>(life) / max_life;
+    float lifeWidth = barWidth * lifeRatio;
+
+    // Dessiner la vie restante en vert
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glBegin(GL_QUADS);
+    glVertex2f(pos.x, pos.y + size + barOffsetY);
+    glVertex2f(pos.x + lifeWidth, pos.y + size + barOffsetY);
+    glVertex2f(pos.x + lifeWidth, pos.y + size + barOffsetY + barHeight);
+    glVertex2f(pos.x, pos.y + size + barOffsetY + barHeight);
+    glEnd();
+
+    // Dessiner la vie perdue en gris
+    glColor3f(0.5f, 0.5f, 0.5f);
+    glBegin(GL_QUADS);
+    glVertex2f(pos.x + lifeWidth, pos.y + size + barOffsetY);
+    glVertex2f(pos.x + barWidth, pos.y + size + barOffsetY);
+    glVertex2f(pos.x + barWidth, pos.y + size + barOffsetY + barHeight);
+    glVertex2f(pos.x + lifeWidth, pos.y + size + barOffsetY + barHeight);
+    glEnd();
+    glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 void drawMonster(Monster &monster, GLfloat map_size)
 {
     glm::vec2 pos{glNormalize({monster.getPosition().x, monster.getPosition().y}, map_size, false)};
-
-    // cout << "NormalizedPosition : " << pos.x << " , " << pos.y << endl;
 
     float size = 2.0f / map_size;
 
@@ -139,6 +164,8 @@ void drawMonster(Monster &monster, GLfloat map_size)
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
+
+    drawLifeLine(pos, map_size, monster.getHealthPoints(), monster.getMaxHealth());
 }
 
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node)

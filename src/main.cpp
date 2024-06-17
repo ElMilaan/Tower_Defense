@@ -77,7 +77,7 @@ int main()
                           { window_as_app(window).scroll_callback(xoffset, yoffset); });
 
     glfwSetCursorPosCallback(window, [](GLFWwindow *window, double xpos, double ypos)
-                             { window_as_app(window).cursor_position_callback(xpos, ypos); });
+                             { window_as_app(window).cursor_position_callback(xpos, ypos, window); });
 
     glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height)
                               { window_as_app(window).size_callback(width, height); });

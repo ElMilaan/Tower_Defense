@@ -42,6 +42,12 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     {
         life.push_back(heart_texture);
     } 
+    img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
+    game_over_texture = loadTexture(game_over);
+    img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
+    _pause_texture = loadTexture(pause);
+    img::Image victoire{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
+    victoire_texture = loadTexture(victoire);
 }
 
 void App::setup()
@@ -75,57 +81,66 @@ void App::setup()
 
 void App::update()
 {
-    current_time = glfwGetTime();
-
-    bank.addMoney(0.02);
-    render();
-
-    if (life.size() > 0)
+    if (is_paused)
     {
-        // Update des Tours
-        for (pair p : towers)
+        glPushMatrix();
+        glScalef(2.0f, 2.0f, 2.0f);
+        draw_quad_with_texture(_pause_texture);
+        glPopMatrix();
+    }
+    else
+    {
+         current_time = glfwGetTime();
+
+        bank.addMoney(0.02);
+        render();
+
+        if (life.size() > 0)
         {
-            if (p.second.second)
+            // Update des Tours
+            for (pair p : towers)
             {
-                for (Monster &m : waves[current_wave].monsters_to_update)
+                if (p.second.second)
                 {
-                    p.second.first.update(current_time, m, 16.0f);
+                    for (Monster &m : waves[current_wave].monsters_to_update)
+                    {
+                        p.second.first.update(current_time, m, 16.0f);
+                    }
                 }
+            }
+
+            // Update des waves
+            if (launch_wave && current_wave < waves.size())
+            {
+                waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
+            }
+
+            // Update des barrages
+            for (Barrage b : barrages)
+            {
+                b.update(map.getNodes().at(b.getNodeId()));
             }
         }
 
-        // Update des waves
-        if (launch_wave && current_wave < waves.size())
+        if (nb_hearts == 0)
         {
-            waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
+            glPushMatrix();
+            glScalef(2.0f, 2.0f, 2.0f);
+            draw_quad_with_texture(game_over_texture);
+            glPopMatrix();
         }
-
-        // Update des barrages
-        for (Barrage b : barrages)
+        
+        
+        if (current_wave == 4 && nb_hearts != 0)
         {
-            b.update(map.getNodes().at(b.getNodeId()));
+            glPushMatrix();
+            glScalef(2.0f, 2.0f, 2.0f);
+            draw_quad_with_texture(victoire_texture);
+            glPopMatrix();
         }
+        
     }
-
-    if (nb_hearts == 0)
-    {
-        img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
-        game_over_texture = loadTexture(game_over);
-    }
-    
-    if (is_paused)
-    {
-        img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
-        _pause_texture = loadTexture(pause);
-        current_time = 0;
-    }
-    
-    if (current_wave == 4 && nb_hearts != 0)
-    {
-        img::Image victoire{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
-        victoire_texture = loadTexture(victoire);
-    }
-    
+   
 }
 
 void App::render()
@@ -225,17 +240,30 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
     }
 }
 
-void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/)
+void App::mouse_button_callback(int button, int action, int /*mods*/)
 {
     // glfwSetWindowShouldClose(window, GLFW_TRUE);
     //         cout << "On ferme" << endl;
 }
 
-void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
+
+
+void App::cursor_position_callback(double xpos, double ypos, GLFWwindow *&window)
 {
+    if (is_paused && xpos <= 820 && xpos >= 450 && ypos <= 460 && ypos >= 400)
+    {
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+            cout << "On ferme" << endl;
+    }
+    else if (is_paused && xpos <= 820 && xpos >= 450 && ypos <= 360 && ypos >= 300)
+    {
+            is_paused = !is_paused;
+            cout << "On continue ?" << endl;
+    }
+    
 }
 
-void App::cursor_position_callback(double /*xpos*/, double /*ypos*/)
+void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 {
 }
 

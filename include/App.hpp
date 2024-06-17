@@ -38,11 +38,15 @@ private:
     bool launch_wave{};
     int current_wave{};
     int current_tower{};
+    bool is_paused{false};
     vector<Wave> waves{};
     unordered_map<int, pair<Tower, bool>> towers;
     GLuint _deco_texture{};
+    GLuint _pause_texture{};
+    GLuint game_over_texture{};
     GLuint barrage_texture{};
     GLuint tower_texture{};
+    GLuint victoire_texture{};
     unordered_map<TileType, GLuint> tile_textures{};
     unordered_map<MonsterType, GLuint> monster_textures{};
     double _angle{};

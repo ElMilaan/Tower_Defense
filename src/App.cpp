@@ -41,7 +41,7 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     for (int i{0}; i < nb_hearts; i++)
     {
         life.push_back(heart_texture);
-    }
+    } 
 }
 
 void App::setup()
@@ -69,6 +69,8 @@ void App::setup()
     launch_wave = false;
     current_wave = 0;
     current_tower = 0;
+
+   
 }
 
 void App::update()
@@ -104,6 +106,26 @@ void App::update()
             b.update(map.getNodes().at(b.getNodeId()));
         }
     }
+
+    if (nb_hearts == 0)
+    {
+        img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
+        game_over_texture = loadTexture(game_over);
+    }
+    
+    if (is_paused)
+    {
+        img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
+        _pause_texture = loadTexture(pause);
+        current_time = 0;
+    }
+    
+    if (current_wave == 4 && nb_hearts != 0)
+    {
+        img::Image victoire{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
+        victoire_texture = loadTexture(victoire);
+    }
+    
 }
 
 void App::render()
@@ -200,8 +222,7 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
             }
             break;
         case GLFW_KEY_ESCAPE:
-            glfwSetWindowShouldClose(window, GLFW_TRUE);
-            cout << "On ferme" << endl;
+            is_paused = !is_paused;
             break;
         }
     }
@@ -209,6 +230,8 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
 
 void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/)
 {
+    // glfwSetWindowShouldClose(window, GLFW_TRUE);
+    //         cout << "On ferme" << endl;
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)

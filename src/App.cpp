@@ -222,6 +222,9 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
         }
     }
 }
+void cursor_position_callback(double xpos, double ypos, GLFWwindow *&window)
+{
+}
 
 void App::mouse_button_callback(int button, int action, int /*mods*/)
 {

@@ -32,6 +32,9 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
     img::Image heart{img::load(make_absolute_path("images/heart.png", true), 4, true)};
     img::Image tower{img::load(make_absolute_path("images/tower.png", true), 4, true)};
+    img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
+    img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
+    img::Image victory{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
@@ -41,13 +44,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     for (int i{0}; i < nb_hearts; i++)
     {
         life.push_back(heart_texture);
-    } 
-    img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
+    }
     game_over_texture = loadTexture(game_over);
-    img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
     _pause_texture = loadTexture(pause);
-    img::Image victoire{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
-    victoire_texture = loadTexture(victoire);
+    victoire_texture = loadTexture(victory);
 }
 
 void App::setup()
@@ -75,8 +75,7 @@ void App::setup()
     launch_wave = false;
     current_wave = 0;
     current_tower = 0;
-
-   
+    pause = false;
 }
 
 void App::update()
@@ -92,15 +91,15 @@ void App::update()
     {
          current_time = glfwGetTime();
 
-        bank.addMoney(0.02);
-        render();
-
+    render();
+    if (!pause)
+    {
         if (life.size() > 0)
         {
             // Update des Tours
             for (pair p : towers)
             {
-                if (p.second.second)
+                if (p.second.second && current_wave < waves.size())
                 {
                     for (Monster &m : waves[current_wave].monsters_to_update)
                     {
@@ -121,26 +120,7 @@ void App::update()
                 b.update(map.getNodes().at(b.getNodeId()));
             }
         }
-
-        if (nb_hearts == 0)
-        {
-            glPushMatrix();
-            glScalef(2.0f, 2.0f, 2.0f);
-            draw_quad_with_texture(game_over_texture);
-            glPopMatrix();
-        }
-        
-        
-        if (current_wave == 4 && nb_hearts != 0)
-        {
-            glPushMatrix();
-            glScalef(2.0f, 2.0f, 2.0f);
-            draw_quad_with_texture(victoire_texture);
-            glPopMatrix();
-        }
-        
     }
-   
 }
 
 void App::render()
@@ -173,6 +153,18 @@ void App::render()
     drawGameLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
+    if (pause)
+    {
+        draw_quad_with_texture(_pause_texture);
+    }
+    if (current_wave == 5 && life.size() > 0)
+    {
+        draw_quad_with_texture(victoire_texture);
+    }
+    if (life.size() == 0)
+    {
+        draw_quad_with_texture(game_over_texture);
+    }
     glPopMatrix();
 
     std::string bank_amount_text{100};
@@ -219,22 +211,25 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
             if (!launch_wave && barrages.size() < map.getBarrageEdges().size())
             {
                 Barrage b{barrage_texture};
-                map.deployBarrage(b);
-                barrages.push_back(b);
-                map.setVertexesToVisit();
-                bank.removeMoney(b.COST);
+                if (bank.getBankSold() - b.COST >= 0)
+                {
+                    map.deployBarrage(b);
+                    barrages.push_back(b);
+                    map.setVertexesToVisit();
+                    bank.removeMoney(b.COST);
+                }
             }
             break;
         case GLFW_KEY_T:
-            if (!launch_wave && current_tower < towers.size())
+            if (!launch_wave && current_tower < towers.size() && bank.getBankSold() - towers.at(current_tower).first.COSTS[0] >= 0)
             {
                 towers.at(current_tower).second = true;
-                current_tower++;
                 bank.removeMoney(towers.at(current_tower).first.COSTS[0]);
+                current_tower++;
             }
             break;
         case GLFW_KEY_ESCAPE:
-            is_paused = !is_paused;
+            pause = !pause;
             break;
         }
     }

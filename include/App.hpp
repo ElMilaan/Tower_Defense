@@ -38,7 +38,7 @@ private:
     bool launch_wave{};
     int current_wave{};
     int current_tower{};
-    bool is_paused{false};
+    bool pause{};
     vector<Wave> waves{};
     unordered_map<int, pair<Tower, bool>> towers;
     GLuint _deco_texture{};

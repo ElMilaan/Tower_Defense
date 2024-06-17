@@ -95,17 +95,14 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
         }
         else
         {
-            if (monsters_to_update[i].getIsDead())
-            {
-                if (monsters_to_update[i].getIsLast())
-                {
-                    launch_wave = false;
-                    current_wave++;
-                }
-            }
-            else
+            if (!monsters_to_update[i].getIsDead())
             {
                 game_life.pop_back();
+            }
+            if (monsters_to_update[i].getIsLast())
+            {
+                launch_wave = false;
+                current_wave++;
             }
             monsters_to_update.erase(monsters_to_update.begin() + i);
             cout << "Life : " << game_life.size() << endl;

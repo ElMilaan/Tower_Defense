@@ -25,4 +25,5 @@ void drawTile(Tile &tile, GLfloat mapSize);
 void drawMonster(Monster &monster, GLfloat map_size);
 void drawBarrage(GLuint barrage_texture, GLfloat map_size, Node &node);
 void drawTower(Tower t, GLfloat map_size);
+void drawProjectile(glm::vec2 projectile_pos, GLfloat map_size);
 void drawGameLife(vector<GLuint> life, glm::vec2 global_position, GLfloat map_size);

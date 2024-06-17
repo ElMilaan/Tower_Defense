@@ -32,6 +32,9 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     img::Image barrage{img::load(make_absolute_path("images/barrage6464.png", true), 4, true)};
     img::Image heart{img::load(make_absolute_path("images/heart.png", true), 4, true)};
     img::Image tower{img::load(make_absolute_path("images/tower.png", true), 4, true)};
+    img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
+    img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
+    img::Image victory{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
     _deco_texture = loadTexture(deco);
     tile_textures = setTileTextures();
     monster_textures = setMonsterTextures();
@@ -41,7 +44,10 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     for (int i{0}; i < nb_hearts; i++)
     {
         life.push_back(heart_texture);
-    } 
+    }
+    game_over_texture = loadTexture(game_over);
+    _pause_texture = loadTexture(pause);
+    victoire_texture = loadTexture(victory);
 }
 
 void App::setup()
@@ -69,63 +75,43 @@ void App::setup()
     launch_wave = false;
     current_wave = 0;
     current_tower = 0;
-
-   
+    pause = false;
 }
 
 void App::update()
 {
     current_time = glfwGetTime();
 
-    bank.addMoney(0.02);
     render();
-
-    if (life.size() > 0)
+    if (!pause)
     {
-        // Update des Tours
-        for (pair p : towers)
+        if (life.size() > 0)
         {
-            if (p.second.second && current_wave < waves.size())
+            // Update des Tours
+            for (pair p : towers)
             {
-                for (Monster &m : waves[current_wave].monsters_to_update)
+                if (p.second.second && current_wave < waves.size())
                 {
-                    p.second.first.update(current_time, m, 16.0f);
+                    for (Monster &m : waves[current_wave].monsters_to_update)
+                    {
+                        p.second.first.update(current_time, m, 16.0f);
+                    }
                 }
             }
-        }
 
-        // Update des waves
-        if (launch_wave && current_wave < waves.size())
-        {
-            waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
-        }
+            // Update des waves
+            if (launch_wave && current_wave < waves.size())
+            {
+                waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
+            }
 
-        // Update des barrages
-        for (Barrage b : barrages)
-        {
-            b.update(map.getNodes().at(b.getNodeId()));
+            // Update des barrages
+            for (Barrage b : barrages)
+            {
+                b.update(map.getNodes().at(b.getNodeId()));
+            }
         }
     }
-
-    if (nb_hearts == 0)
-    {
-        img::Image game_over{img::load(make_absolute_path("images/game_over.png", true), 4, true)};
-        game_over_texture = loadTexture(game_over);
-    }
-    
-    if (is_paused)
-    {
-        img::Image pause{img::load(make_absolute_path("images/resume_quit.png", true), 4, true)};
-        _pause_texture = loadTexture(pause);
-        current_time = 0;
-    }
-    
-    if (current_wave == 4 && nb_hearts != 0)
-    {
-        img::Image victoire{img::load(make_absolute_path("images/victoire.png", true), 4, true)};
-        victoire_texture = loadTexture(victoire);
-    }
-    
 }
 
 void App::render()
@@ -158,6 +144,18 @@ void App::render()
     drawGameLife(life, {-6, 0}, 16.0f);
     glScalef(2.0f, 2.0f, 2.0f);
     draw_quad_with_texture(_deco_texture);
+    if (pause)
+    {
+        draw_quad_with_texture(_pause_texture);
+    }
+    if (current_wave == 5 && life.size() > 0)
+    {
+        draw_quad_with_texture(victoire_texture);
+    }
+    if (life.size() == 0)
+    {
+        draw_quad_with_texture(game_over_texture);
+    }
     glPopMatrix();
 
     std::string bank_amount_text{100};
@@ -222,7 +220,7 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
             }
             break;
         case GLFW_KEY_ESCAPE:
-            is_paused = !is_paused;
+            pause = !pause;
             break;
         }
     }

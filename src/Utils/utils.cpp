@@ -3,7 +3,7 @@
 #include <iostream>
 #include <filesystem>
 #include <random>
-#include "../../../../../../../../mingw64/include/c++/13.2.0/bits/stream_iterator.h" //include pour faire fonctionner le pc de Nolan le noob
+// #include "../../../../../../../../mingw64/include/c++/13.2.0/bits/stream_iterator.h" //include pour faire fonctionner le pc de Nolan le noob
 
 using namespace std;
 

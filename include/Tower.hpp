@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Monster.hpp"
+#include "Wave.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -27,16 +28,16 @@ private:
     float attack_speed{};
     double construction_cost{};
     double level{};
+    double last_shot{};
     TowerType type{};
 
 public:
+    const float CADENCE{5.0f};
     Tower(GLfloat x, GLfloat y, double range, double power, TowerType type, double construction_cost, float attack_speed, GLuint texture); // constructor
     glm::vec2 getPosition();
     GLuint getTexture();
     void levelUp(double cost, double bank_sold, GLuint new_texture); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
-    void build(glm::vec2 position);
-    void destruct();
     void attack(Monster &monster);
-    void inflictDamage(Monster &monster);
     bool isMonsterInRange(Monster monster);
+    void update(double current_time, Monster &m, bool launch_wave, GLfloat map_size);
 };

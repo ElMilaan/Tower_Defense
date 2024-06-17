@@ -7,9 +7,8 @@
 
 using namespace std;
 
-class Wave
+struct Wave
 {
-private:
     int id{};
     int nb_monsters;
     vector<Monster> monsters{};
@@ -18,15 +17,10 @@ private:
     double last_spawn{};
     int current_monster_index{};
 
-public:
     double const INTER_TIME{2};
 
     Wave();
     Wave(int id, unordered_map<MonsterType, GLuint> monster_textures);
-
-    int getId();
-    int getNbMonsters();
-    vector<Monster> getMonsters();
 
     void setId(int id);
     void setNbMonsters(int nb_monsters);
@@ -36,6 +30,7 @@ public:
     void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life);
 
     void display();
+    void launchAttackOnMonster(int monster_index, double power, bool freeze, bool burn);
 };
 
 Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures, bool is_last);

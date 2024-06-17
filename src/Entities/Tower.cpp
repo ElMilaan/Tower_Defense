@@ -2,7 +2,9 @@
 #include <vector>
 #include "Tower.hpp"
 #include "Monster.hpp"
+#include "Wave.hpp"
 #include "utils.hpp"
+#include "Draw.hpp"
 #include <stack>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -18,6 +20,7 @@ Tower::Tower(GLfloat x, GLfloat y, double range, double power, TowerType type, d
     this->attack_speed = attack_speed;
     this->construction_cost = construction_cost;
     this->type = type;
+    this->last_shot = 0;
 }
 
 glm::vec2 Tower::getPosition()
@@ -38,45 +41,39 @@ void Tower::levelUp(double cost, double bank_sold, GLuint new_texture)
     texture = new_texture;
 }
 
-void Tower::build(glm::vec2 position)
-{
-}
-
-void Tower::destruct()
-{
-}
-
 bool Tower::isMonsterInRange(Monster monster)
 {
-    if (getDistanceBetweenTwoPoints({this->x, this->y}, monster.getPosition()) < range)
+    if (getDistanceBetweenTwoPoints({this->x, this->y}, monster.getPosition()) <= range)
     {
-        return 1;
+        return true;
     }
-    else
-    {
-        return 0;
-    }
+    return false;
 }
 
 void Tower::attack(Monster &monster)
 {
-
-    if (isMonsterInRange(monster))
+    switch (type)
     {
-        switch (type)
-        {
-        case TowerType::Fire:
-            monster.setIsBurn(true);
-            break;
-        case TowerType::Ice:
-            monster.setIsFreeze(true);
-            break;
-        }
-        inflictDamage(monster);
+    case TowerType::Fire:
+        monster.setIsBurn(true);
+        break;
+    case TowerType::Ice:
+        monster.setIsFreeze(true);
+        break;
     }
+    monster.takeDamage(power);
 }
 
-void Tower::inflictDamage(Monster &monster)
+void Tower::update(double current_time, Monster &m, bool launch_wave, GLfloat map_size)
 {
-    (monster.getHealthPoints() - power < 0) ? monster.setHealth(0) : monster.setHealth(monster.getHealthPoints() - power);
+    if (current_time - last_shot >= (double)(CADENCE / attack_speed))
+    {
+        attack(m);
+        last_shot = current_time;
+        cout << m.getHealthPoints() << endl;
+    }
+
+    glPushMatrix();
+    drawTower(*this, map_size);
+    glPopMatrix();
 }

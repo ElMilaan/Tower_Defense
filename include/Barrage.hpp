@@ -13,6 +13,7 @@ private:
     int node_id{};
 
 public:
+    const double COST{30};
     void update(Node node);
     void setNodeId(int node_id);
     int getNodeId();

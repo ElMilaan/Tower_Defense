@@ -80,19 +80,29 @@ void App::update()
     render();
     if (life.size() > 0)
     {
+
+        // Update des Tours
+        for (pair p : towers)
+        {
+            if (p.second.second)
+            {
+                for (Monster &m : waves[current_wave].monsters)
+                {
+                    p.second.first.update(current_time, m, launch_wave, 16.0f);
+                }
+            }
+        }
+
+        // Update des waves
         if (launch_wave && current_wave < waves.size())
         {
             waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
         }
 
+        // Update des barrages
         for (Barrage b : barrages)
         {
             b.update(map.getNodes().at(b.getNodeId()));
-        }
-        for (pair p : towers)
-        {
-            if (p.second.second)
-                map.deployTower(p.second.first);
         }
     }
 }
@@ -165,13 +175,13 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
                 map.deployBarrage(b);
                 barrages.push_back(b);
                 map.setVertexesToVisit();
+                bank.removeMoney(b.COST);
             }
             break;
         case GLFW_KEY_T:
             if (!launch_wave && current_tower < towers.size())
             {
                 towers.at(current_tower).second = true;
-                cout << "Tower : " << towers.at(current_tower).first.getPosition() << endl;
                 current_tower++;
             }
             break;

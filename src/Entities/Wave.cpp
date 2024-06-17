@@ -3,6 +3,7 @@
 #include "Monster.hpp"
 #include "Wave.hpp"
 #include "utils.hpp"
+#include "Bank.hpp"
 
 #include <fstream>
 #include <string>
@@ -22,27 +23,17 @@ Wave::Wave(int id, unordered_map<MonsterType, GLuint> monster_textures)
     this->last_spawn = 0;
     this->current_monster_index = 0;
 }
-int Wave::getId()
-{
-    return this->id;
-}
-int Wave::getNbMonsters()
-{
-    return this->nb_monsters;
-}
-vector<Monster> Wave::getMonsters()
-{
-    return this->monsters;
-}
 
 void Wave::setId(int id)
 {
     this->id = id;
 }
+
 void Wave::setNbMonsters(int nb_monsters)
 {
     this->nb_monsters = nb_monsters;
 }
+
 void Wave::setIsBossWave(bool is_boss_wave)
 {
     this->is_boss_wave = is_boss_wave;
@@ -70,6 +61,19 @@ void Wave::display()
     cout << "}" << endl;
 }
 
+void Wave::launchAttackOnMonster(int monster_index, double power, bool freeze, bool burn)
+{
+    monsters[monster_index].takeDamage(power);
+    if (freeze)
+    {
+        monsters[monster_index].setIsFreeze(true);
+    }
+    if (burn)
+    {
+        monsters[monster_index].setIsBurn(true);
+    }
+}
+
 void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life)
 {
     if (current_monster_index < monsters.size())
@@ -87,7 +91,7 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
     {
         if (monsters_to_update[i].getPosition().y < LIMIT && !monsters_to_update[i].getIsDead())
         {
-            monsters_to_update[i].update(delta_time, shortest_path, map_size, launch_wave, current_wave);
+            monsters_to_update[i].update(delta_time, shortest_path, map_size);
         }
         else
         {

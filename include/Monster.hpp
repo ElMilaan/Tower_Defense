@@ -60,11 +60,9 @@ public:
 
     void changeSpeed(float coeff);
     void takeDamage(double damage);
-    void toggleFreeze();
-    void toggleBurn();
     void setAttributes(MonsterType type, GLuint texture);
 
-    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave);
+    void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size);
 
     void display();
 };

@@ -1,6 +1,6 @@
 ITD
 
-meduse 100 0.45 0
-orque 200 0.45 0
-requin 150 0.45 0
-poseidon 5000 0.3 1
+meduse 100 0.45 0 20
+orque 200 0.45 0 25
+requin 150 0.45 0 30
+poseidon 5000 0.3 1 100

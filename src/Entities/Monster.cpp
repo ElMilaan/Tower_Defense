@@ -113,7 +113,7 @@ void Monster::changeSpeed(float coeff)
 
 void Monster::takeDamage(double damage)
 {
-    health_points -= damage;
+    health_points -= float(damage);
     if (health_points <= 0)
     {
         this->is_dead = true;
@@ -176,7 +176,7 @@ string monsterTypeToString(MonsterType type)
     return "Requin";
 }
 
-void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave)
+void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_size)
 {
     // Pour matcher avec le centre des textures du monstre et de la tile
     float mid_texture{0.5};
@@ -189,31 +189,35 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
 
     glm::vec2 go{glm::normalize(target_position - this->getPosition())};
 
-    if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
+    if (!is_dead)
     {
-        if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
+        if (abs(this->getPosition().x - target_position.x) > abs(this->getPosition().y - target_position.y))
         {
-            this->shift({go.x * deltaTime * speed, 0});
+            if (round(target_position.x * 10) / 10.0f != round(this->getPosition().x * 10) / 10.0f)
+            {
+                this->shift({go.x * deltaTime * speed, 0});
+            }
+            else
+            {
+                current_node_index++;
+                this->x = target_position.x;
+            }
         }
         else
         {
-            current_node_index++;
-            this->x = target_position.x;
+            if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
+            {
+                this->shift({0, go.y * deltaTime * speed});
+            }
+            else
+            {
+                current_node_index++;
+                this->y = target_position.y;
+            }
         }
+        glPushMatrix();
+        drawMonster(*this, map_size);
+        glPopMatrix();
+        cout << "Monster : " << health_points << ", IsDead : " << is_dead << endl;
     }
-    else
-    {
-        if (round(target_position.y * 10) / 10.f != round(this->getPosition().y * 10) / 10.f)
-        {
-            this->shift({0, go.y * deltaTime * speed});
-        }
-        else
-        {
-            current_node_index++;
-            this->y = target_position.y;
-        }
-    }
-    glPushMatrix();
-    drawMonster(*this, map_size);
-    glPopMatrix();
 }

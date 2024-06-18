@@ -13,15 +13,15 @@ using namespace std;
 namespace ITD
 {
     /* ------ ITD PATHS ------*/
-    const string ITD_MAP{"../../data/config_map.itd"};
-    const string ITD_MONSTER{"../../data/monster.itd"};
-    const string ITD_WAVE{"../../data/wave.itd"};
-    const string ITD_TOWER{"../../data/tower.itd"};
+    const string ITD_MAP_1{"../../data/config_map.itd"};
+    const string ITD_MONSTER_1{"../../data/monster.itd"};
+    const string ITD_WAVE_1{"../../data/wave.itd"};
+    const string ITD_TOWER_1{"../../data/tower.itd"};
 
-    // const string ITD_MAP{"data/config_map.itd"};
-    // const string ITD_MONSTER{"data/monster.itd"};
-    // const string ITD_WAVE{"data/wave.itd"};
-    // const string ITD_TOWER{"data/tower.itd"};
+    const string ITD_MAP_2{"data/config_map.itd"};
+    const string ITD_MONSTER_2{"data/monster.itd"};
+    const string ITD_WAVE_2{"data/wave.itd"};
+    const string ITD_TOWER_2{"data/tower.itd"};
 
     /* ------ MAP ------ */
 

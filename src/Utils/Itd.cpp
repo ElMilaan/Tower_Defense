@@ -12,6 +12,16 @@ using namespace std;
 
 /* -------------------------- MAP -------------------------- */
 
+bool openFile(std::ifstream &file, const std::string &path1, const std::string &path2)
+{
+    file.open(path1);
+    if (!file.is_open())
+    {
+        file.open(path2);
+    }
+    return file.is_open();
+}
+
 Color ITD::getColorFromItd(vector<string> &split_line)
 {
     return {stoi(split_line[1]), stoi(split_line[2]), stoi(split_line[3]), stoi(split_line[4])};
@@ -47,12 +57,9 @@ void ITD::itdMap(Map &map)
 {
     ifstream my_file;
 
-    my_file.open(ITD::ITD_MAP);
-
-    string my_line;
-
-    if (my_file.is_open())
+    if (openFile(my_file, ITD::ITD_MAP_1, ITD::ITD_MAP_2))
     {
+        string my_line;
         while (getline(my_file, my_line))
         {
             vector<string> split_line = splitString(my_line);
@@ -95,12 +102,9 @@ void ITD::itdMonster(string monster_name, Monster &monster)
 {
     ifstream my_file;
 
-    my_file.open(ITD::ITD_MONSTER);
-
-    string my_line;
-
-    if (my_file.is_open())
+    if (openFile(my_file, ITD::ITD_MONSTER_1, ITD::ITD_MONSTER_2))
     {
+        string my_line;
         while (getline(my_file, my_line))
         {
             vector<string> split_line = splitString(my_line);
@@ -126,12 +130,9 @@ void ITD::itdWave(vector<Wave> &waves, unordered_map<MonsterType, GLuint> monste
 {
     ifstream my_file;
 
-    my_file.open(ITD::ITD_WAVE);
-
-    string my_line;
-
-    if (my_file.is_open())
+    if (openFile(my_file, ITD::ITD_WAVE_1, ITD::ITD_WAVE_2))
     {
+        string my_line;
         while (getline(my_file, my_line))
         {
             Wave w{};
@@ -170,12 +171,9 @@ void ITD::itdTower(unordered_map<int, pair<Tower, bool>> &towers, GLuint tower_t
 {
     ifstream my_file;
 
-    my_file.open(ITD::ITD_TOWER);
-
-    string my_line;
-
-    if (my_file.is_open())
+    if (openFile(my_file, ITD::ITD_TOWER_1, ITD::ITD_TOWER_2))
     {
+        string my_line;
         TowerType type;
         double range;
         double power;

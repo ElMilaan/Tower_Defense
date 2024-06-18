@@ -81,31 +81,6 @@ namespace Graph
         return graph;
     }
 
-    void WeightedGraph::printBFS(int const start) const
-    {
-        queue<int> q{};
-        vector<int> vertexAlreadyPrint{start};
-        q.push(start);
-        while (!q.empty())
-        {
-            int current{q.front()};
-            cout << current << " ";
-            q.pop();
-            if (adjacency_list.find(current) != adjacency_list.end())
-            {
-                for (WeightedGraphEdge adjVertex : adjacency_list.at(current))
-                {
-                    // On vérifie que le sommet à ajouter à la pile n'a pas déjà été affiché
-                    if (!isIn(vertexAlreadyPrint, adjVertex.to))
-                    {
-                        q.push(adjVertex.to);
-                        vertexAlreadyPrint.push_back(adjVertex.to);
-                    }
-                }
-            }
-        }
-    }
-
     unordered_map<int, pair<double, int>> WeightedGraph::dijkstra(int const &start, int const &end)
     {
         unordered_map<int, pair<double, int>> tab{};
@@ -234,27 +209,4 @@ bool isIn(const std::vector<int> &vec, int val)
         }
     }
     return false;
-}
-
-void AdjacencyMatrix::setMatrix()
-{
-    matrix = {
-        {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 }

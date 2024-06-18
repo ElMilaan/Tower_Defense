@@ -19,7 +19,7 @@ Color ITD::getColorFromItd(vector<string> &split_line)
 
 void ITD::getNodesFromItdFile(vector<string> &split_line, bool const &is_barrage, Map &map)
 {
-    Node node(stoi(split_line[1]), is_barrage, stoi(split_line[2]), stoi(split_line[3]));
+    Node node(stoi(split_line[1]), is_barrage, stof(split_line[2]), stof(split_line[3]));
 
     if (stoi(split_line[1]) != map.getNbNodes() - 1)
     {
@@ -110,6 +110,7 @@ void ITD::itdMonster(string monster_name, Monster &monster)
                 monster.setMaxHealth(stod(split_line[1]));
                 monster.setSpeed(stof(split_line[2]));
                 monster.setIsBoss(stoi(split_line[3]));
+                monster.setReward(stod(split_line[4]));
             }
         }
     }

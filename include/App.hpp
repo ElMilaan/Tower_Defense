@@ -20,7 +20,7 @@ public:
     Bank getBank();
     // GLFW callbacks binding
     void key_callback(int key, int scancode, int action, int mods, GLFWwindow *&window);
-    void mouse_button_callback(int button, int action, int mods);
+    void mouse_button_callback(int button, int action, int mods, GLFWwindow *&window);
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(double xpos, double ypos, GLFWwindow *&window);
     void size_callback(int width, int height);
@@ -54,4 +54,6 @@ private:
     void render();
     vector<Barrage> barrages{};
     vector<GLuint> life{};
+    vector<double> coord_btn_resume{285, 850, 355, 455};
+    vector<double> coord_btn_quit{400, 840, 470, 440};
 };

@@ -14,12 +14,12 @@
 
 using namespace std;
 
-const string Monster::ITD_FILE = "data/monster.itd";
-
 Monster::Monster(MonsterType type, GLuint texture, bool is_last)
 {
     setAttributes(type, texture);
     this->is_last_of_wave = is_last;
+    this->max_speed = speed;
+    this->min_speed = speed * 0.6f;
 }
 
 MonsterType Monster::getType()
@@ -67,6 +67,21 @@ bool Monster::getIsLast()
     return this->is_last_of_wave;
 }
 
+double Monster::getReward()
+{
+    return this->reward;
+}
+
+bool Monster::getIsFreeze()
+{
+    return this->is_freeze;
+}
+
+double Monster::getTimeIsFreeze()
+{
+    return this->time_is_freeze;
+}
+
 void Monster::shift(glm::vec2 deplacement)
 {
     this->x += deplacement.x;
@@ -96,14 +111,20 @@ void Monster::setIsBurn(bool is_burn)
     this->is_burn = is_burn;
 }
 
-void Monster::setIsFreeze(bool is_freeze)
+void Monster::setIsFreeze(bool is_freeze, double current_time)
 {
     this->is_freeze = is_freeze;
+    this->time_is_freeze = current_time;
 }
 
 void Monster::setHealth(float new_health)
 {
     this->health_points = new_health;
+}
+
+void Monster::setReward(double reward)
+{
+    this->reward = reward;
 }
 
 void Monster::changeSpeed(float coeff)
@@ -153,6 +174,18 @@ void Monster::setAttributes(MonsterType type, GLuint texture)
     this->current_node_index = 0;
     this->x = 7;
     this->y = 0.5;
+}
+
+void Monster::freezing(double current_time, double start_freeze)
+{
+    if (current_time - start_freeze < ALTERATION_DURATION)
+    {
+        this->speed = min_speed;
+    }
+    else
+    {
+        this->speed = max_speed;
+    }
 }
 
 void Monster::display()
@@ -218,6 +251,5 @@ void Monster::update(float deltaTime, vector<Node> shortest_path, GLfloat map_si
         glPushMatrix();
         drawMonster(*this, map_size);
         glPopMatrix();
-        cout << "Monster : " << health_points << ", IsDead : " << is_dead << endl;
     }
 }

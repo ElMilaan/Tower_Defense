@@ -61,20 +61,7 @@ void Wave::display()
     cout << "}" << endl;
 }
 
-void Wave::launchAttackOnMonster(int monster_index, double power, bool freeze, bool burn)
-{
-    monsters[monster_index].takeDamage(power);
-    if (freeze)
-    {
-        monsters[monster_index].setIsFreeze(true);
-    }
-    if (burn)
-    {
-        monsters[monster_index].setIsBurn(true);
-    }
-}
-
-void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life)
+void Wave::update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life, Bank &bank)
 {
     if (current_monster_index < monsters.size())
     {
@@ -91,6 +78,10 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
     {
         if (monsters_to_update[i].getPosition().y < LIMIT && !monsters_to_update[i].getIsDead())
         {
+            if (monsters_to_update[i].getIsFreeze())
+            {
+                monsters_to_update[i].freezing(current_time, monsters_to_update[i].getTimeIsFreeze());
+            }
             monsters_to_update[i].update(delta_time, shortest_path, map_size);
         }
         else
@@ -99,13 +90,16 @@ void Wave::update(double current_time, float delta_time, vector<Node> shortest_p
             {
                 game_life.pop_back();
             }
+            else
+            {
+                bank.addMoney(monsters_to_update[i].getReward());
+            }
             if (monsters_to_update[i].getIsLast())
             {
                 launch_wave = false;
                 current_wave++;
             }
             monsters_to_update.erase(monsters_to_update.begin() + i);
-            cout << "Life : " << game_life.size() << endl;
         }
     }
 }

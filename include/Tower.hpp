@@ -38,7 +38,7 @@ public:
     glm::vec2 getPosition();
     GLuint getTexture();
     void levelUp(double cost, double bank_sold, GLuint new_texture); // tous les levels up valent le meme prix ? sinon il faut faire une autre fonction
-    void attack(Monster &monster);
+    void attack(Monster &monster, double current_time);
     bool isMonsterInRange(Monster monster);
     void update(double current_time, Monster &m);
 };

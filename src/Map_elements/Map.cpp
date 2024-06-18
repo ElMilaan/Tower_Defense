@@ -162,11 +162,6 @@ void Map::setVertexesToVisit()
     int end{nodes[nb_nodes - 1].getId()};
     unordered_map<int, pair<double, int>> dij{graph.dijkstra(start, end)};
     shortest_path = convertIdToNodes(Graph::getNodesIdFromDijkstra(dij, start, end));
-    for (Node n : shortest_path)
-    {
-        cout << n.getId() << " , ";
-    }
-    cout << endl;
 }
 
 // LECTURE DU SCHEMA DE BASE 16x16

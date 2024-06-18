@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "Monster.hpp"
+#include "Bank.hpp"
 #include <unordered_map>
 
 using namespace std;
@@ -27,10 +28,9 @@ struct Wave
     void setIsBossWave(bool is_boss_wave);
     void addMonster(Monster m);
 
-    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life);
+    void update(double current_time, float delta_time, vector<Node> shortest_path, GLfloat map_size, bool &launch_wave, int &current_wave, vector<GLuint> &game_life, Bank &bank);
 
     void display();
-    void launchAttackOnMonster(int monster_index, double power, bool freeze, bool burn);
 };
 
 Monster createRandomMonster(unordered_map<MonsterType, GLuint> monster_textures, bool is_last);

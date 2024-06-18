@@ -101,7 +101,7 @@ void App::update()
             // Update des waves
             if (launch_wave && current_wave < waves.size())
             {
-                waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life);
+                waves[current_wave].update(current_time, 0.1f, map.getShortestPath(), 16.0f, launch_wave, current_wave, life, bank);
             }
         }
     }
@@ -161,9 +161,8 @@ void App::render()
     bank_amount_text = stream2.str();
 
     text_renderer.Label(bank_amount_text.c_str(), _width / 2.6, _height / 19, SimpleText::CENTER);
-    text_renderer.Label("30", _width / 1.335, _height / 2.5, SimpleText::CENTER);
-    text_renderer.Label("10", _width / 1.335, _height / 2, SimpleText::CENTER);
-    text_renderer.Label("20", _width / 1.335, _height / 1.665, SimpleText::CENTER);
+    text_renderer.Label("50", _width / 1.335, _height / 2.5, SimpleText::CENTER);
+    text_renderer.Label("30", _width / 1.335, _height / 2, SimpleText::CENTER);
 
     // Without set precision
     // const std::string angle_label_text { "Angle: " + std::to_string(_angle) };
@@ -222,14 +221,30 @@ void App::key_callback(int key, int /*scancode*/, int action, int /*mods*/, GLFW
         }
     }
 }
-void cursor_position_callback(double xpos, double ypos, GLFWwindow *&window)
+
+void App::cursor_position_callback(double xpos, double ypos, GLFWwindow *&window)
 {
 }
 
-void App::mouse_button_callback(int button, int action, int /*mods*/)
+void App::mouse_button_callback(int button, int action, int /*mods*/, GLFWwindow *&window)
 {
-    // glfwSetWindowShouldClose(window, GLFW_TRUE);
-    //         cout << "On ferme" << endl;
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && pause)
+    {
+        double xpos, ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        // Si on clique sur Resume
+        if (xpos >= coord_btn_resume[3] && xpos <= coord_btn_resume[1] && ypos >= coord_btn_resume[0] && ypos <= coord_btn_resume[2])
+        {
+            pause = !pause;
+        }
+
+        // Si on clique sur Quit
+        else if (xpos >= coord_btn_quit[3] && xpos <= coord_btn_quit[1] && ypos >= coord_btn_quit[0] && ypos <= coord_btn_quit[2])
+        {
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+    }
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)

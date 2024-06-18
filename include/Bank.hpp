@@ -1,8 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include "Tower.hpp"
-#include "Monster.hpp"
 
 using namespace std;
 

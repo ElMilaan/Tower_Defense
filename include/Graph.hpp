@@ -35,12 +35,9 @@ namespace Graph
         bool operator==(WeightedGraph const &other) const;
         bool operator!=(WeightedGraph const &other) const;
 
-        void printBFS(int const start) const;
-
         unordered_map<int, pair<double, int>> dijkstra(int const &start, int const &end);
     };
 
-    WeightedGraph buildFromAdjacencyMatrix(vector<vector<double>> const &adjacency_matrix);
     void displayShortestPath(unordered_map<int, pair<double, int>> tab, int start, int end);
     vector<int> getNodesIdFromDijkstra(unordered_map<int, pair<double, int>> tab, int start, int end);
 
@@ -50,9 +47,3 @@ ostream &operator<<(ostream &os, const Graph::WeightedGraph graph);
 ostream &operator<<(ostream &os, const vector<vector<double>> adj_mat);
 ostream &operator<<(ostream &os, const unordered_map<int, pair<double, int>> map);
 bool isIn(const vector<int> &vec, int val);
-
-struct AdjacencyMatrix
-{
-    vector<vector<double>> matrix;
-    void setMatrix();
-};

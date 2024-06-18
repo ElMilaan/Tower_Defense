@@ -50,7 +50,7 @@ bool Tower::isMonsterInRange(Monster monster)
     return false;
 }
 
-void Tower::attack(Monster &monster)
+void Tower::attack(Monster &monster, double current_time)
 {
     switch (type)
     {
@@ -58,7 +58,7 @@ void Tower::attack(Monster &monster)
         monster.setIsBurn(true);
         break;
     case TowerType::Ice:
-        monster.setIsFreeze(true);
+        monster.setIsFreeze(true, current_time);
         break;
     }
     monster.takeDamage(power);
@@ -66,9 +66,11 @@ void Tower::attack(Monster &monster)
 
 void Tower::update(double current_time, Monster &m)
 {
-    if (current_time - last_shot >= 2) //(double)(CADENCE / attack_speed)
+    double interval{current_time - last_shot};
+    if (interval >= (double)(CADENCE / attack_speed) && isMonsterInRange(m))
     {
-        attack(m);
+        attack(m, current_time);
         last_shot = current_time;
     }
+    cout << "Interval : " << interval << " || " << (double)(CADENCE / attack_speed) << endl;
 }

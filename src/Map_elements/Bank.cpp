@@ -7,7 +7,7 @@ using namespace std;
 
 Bank::Bank()
 {
-    this->sold = 200;
+    this->sold = (50);
 }
 
 void Bank::addMoney(double amount_to_add)

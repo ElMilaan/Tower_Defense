@@ -71,7 +71,7 @@ int main()
                        { window_as_app(window).key_callback(key, scancode, action, mods, window); });
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods)
-                               { window_as_app(window).mouse_button_callback(button, action, mods); });
+                               { window_as_app(window).mouse_button_callback(button, action, mods, window); });
 
     glfwSetScrollCallback(window, [](GLFWwindow *window, double xoffset, double yoffset)
                           { window_as_app(window).scroll_callback(xoffset, yoffset); });

@@ -24,6 +24,8 @@ private:
     float max_health{};
     float health_points{};
     float speed{};
+    float min_speed{};
+    float max_speed{};
     MonsterType type{};
     GLuint texture{};
     bool is_boss{};
@@ -33,9 +35,11 @@ private:
     bool is_burn{};
     int current_node_index{};
     bool is_last_of_wave{};
+    double reward{};
+    double time_is_freeze{};
 
 public:
-    static const string ITD_FILE;
+    static const int ALTERATION_DURATION{3};
     Monster();
     Monster(MonsterType type, GLuint texture, bool is_last);
     glm::vec2 getPosition();
@@ -47,6 +51,9 @@ public:
     bool getIsBoss();
     bool getIsDead();
     bool getIsLast();
+    double getReward();
+    bool getIsFreeze();
+    double getTimeIsFreeze();
 
     void shift(glm::vec2 deplacement);
 
@@ -56,11 +63,13 @@ public:
     void setIsLast();
     void setHealth(float new_health);
     void setIsBurn(bool is_burn);
-    void setIsFreeze(bool is_freeze);
+    void setIsFreeze(bool is_freeze, double current_time);
+    void setReward(double reward);
 
     void changeSpeed(float coeff);
     void takeDamage(double damage);
     void setAttributes(MonsterType type, GLuint texture);
+    void freezing(double current_time, double start_freeze);
 
     void update(float deltaTime, vector<Node> shortest_path, GLfloat map_size);
 

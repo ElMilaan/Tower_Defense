@@ -97,7 +97,6 @@ int main()
     {
         // Get time (in second) at loop beginning
         double startTime{glfwGetTime()};
-        app.getBank().addMoney(0.005);
         app.update();
 
         // Swap front and back buffers
